@@ -1,4 +1,4 @@
-# nf-core/mag: Output
+# MetaBP: Output
 
 ## Introduction
 
@@ -347,7 +347,7 @@ Besides the reference files or output files created by BUSCO, the following summ
 
 ### CAT
 
-[CAT](https://github.com/dutilh/CAT) is a toolkit for annotating contigs and bins from metagenome-assembled-genomes. The MAG pipeline uses CAT to assign taxonomy to genome bins based on the taxnomy of the contigs.
+[CAT](https://github.com/dutilh/CAT) is a toolkit for annotating contigs and bins from metagenome-assembled-genomes. The MetaBP pipeline uses CAT to assign taxonomy to genome bins based on the taxnomy of the contigs.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -375,7 +375,7 @@ If the parameters `--cat_db_generate` and `--save_cat_db` are set, additionally 
 
 ### GTDB-Tk
 
-[GTDB-Tk](https://github.com/Ecogenomics/GTDBTk) is a toolkit for assigning taxonomic classifications to bacterial and archaeal genomes based on the Genome Database Taxonomy [GTDB](https://gtdb.ecogenomic.org/). nf-core/mag uses GTDB-Tk to classify binned genomes which satisfy certain quality criteria (i.e. completeness and contamination assessed with the BUSCO analysis).
+[GTDB-Tk](https://github.com/Ecogenomics/GTDBTk) is a toolkit for assigning taxonomic classifications to bacterial and archaeal genomes based on the Genome Database Taxonomy [GTDB](https://gtdb.ecogenomic.org/). MetaBP uses GTDB-Tk to classify binned genomes which satisfy certain quality criteria (i.e. completeness and contamination assessed with the BUSCO analysis).
 
 <details markdown="1">
 <summary>Output files</summary>
