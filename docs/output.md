@@ -46,7 +46,33 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 
 ### fastp
 
-[fastp](https://github.com/OpenGene/fastp) is a all-in-one fastq preprocessor for read/adapter trimming and quality control. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the results folder and part of the MultiQC report.
+[fastp](https://github.com/OpenGene/fastp) is a all-in-one fastq preprocessor for read/adapter trimming and quality control. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the intermediate folder and part of the MultiQC report.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+* `QC_shortreads/fastp/[sample]/`
+    * `fastp.html`: Interactive report
+    * `fastp.json`: Report in json format
+
+</details>
+
+### Cutadapt
+
+[Cutadapt](https://github.com/marcelm/cutadapt/) finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from high-throughput sequencing reads. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the intermediate folder and part of the MultiQC report.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+* `QC_shortreads/fastp/[sample]/`
+    * `fastp.html`: Interactive report
+    * `fastp.json`: Report in json format
+
+</details>
+
+### Trimmomatic
+
+[Trimmomatic](https://github.com/usadellab/Trimmomatic) performs a variety of useful trimming tasks for paired-end and single ended data. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the intermediate folder and part of the MultiQC report.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -76,50 +102,18 @@ The pipeline uses bowtie2 to map short reads against the host reference genome s
 <details markdown="1">
 <summary>Output files</summary>
 
-* `QC_shortreads/remove_host/`
+* `QC_shortreads/remove_host/` 
     * `[sample].host_removed.bowtie2.log`: Contains the bowtie2 log file indicating how many reads have been mapped as well as a file listing the read ids of discarded reads.
 
 </details>
 
-### Remove Phage Lambda sequences from long reads
 
-The pipeline uses Nanolyse to map the reads against the Lambda phage and removes mapped reads.
-
-<details markdown="1">
-<summary>Output files</summary>
-
-* `QC_longreads/NanoLyse/`
-    * `[sample]_nanolyse.log`: Contains a brief log file indicating how many reads have been retained.
-
-</details>
-
-### Filtlong and porechop
-
-The pipeline uses filtlong and porechop to perform quality control of the long reads that are eventually provided with the TSV input file.
-
-No direct host read removal is performed for long reads.
-However, since within this pipeline filtlong uses a read quality based on k-mer matches to the already filtered short reads, reads not overlapping those short reads might be discarded.
-The lower the parameter `--longreads_length_weight`, the higher the impact of the read qualities for filtering.
-For further documentation see the [filtlong online documentation](https://github.com/rrwick/Filtlong).
-
-### Quality visualisation for long reads
-
-NanoPlot is used to calculate various metrics and plots about the quality and length distribution of long reads. For more information about NanoPlot see the [online documentation](https://github.com/wdecoster/NanoPlot).
-
-<details markdown="1">
-<summary>Output files</summary>
-
-* `QC_longreads/NanoPlot/[sample]/`
-    * `raw_*.[png/html/txt]`: Plots and reports for raw data
-    * `filtered_*.[png/html/txt]`: Plots and reports for filtered data
-
-</details>
 
 ## Taxonomic classification of trimmed reads
 
 ### Kraken
 
-Kraken2 classifies reads using a k-mer based approach as well as assigns taxonomy using a Lowest Common Ancestor (LCA) algorithm.
+[Kraken2](https://github.com/DerrickWood/kraken2) classifies reads using a k-mer based approach as well as assigns taxonomy using a Lowest Common Ancestor (LCA) algorithm.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -130,21 +124,6 @@ Kraken2 classifies reads using a k-mer based approach as well as assigns taxonom
 
 </details>
 
-### Centrifuge
-
-Centrifuge is commonly used for the classification of DNA sequences from microbial samples. It uses an indexing scheme based on the Burrows-Wheeler transform (BWT) and the Ferragina-Manzini (FM) index.
-
-More information on the [Centrifuge](https://ccb.jhu.edu/software/centrifuge/) website
-
-<details markdown="1">
-<summary>Output files</summary>
-
-* `Taxonomy/centrifuge/[sample]/`
-    * `report.txt`: Tab-delimited result file. See the [centrifuge manual](https://ccb.jhu.edu/software/centrifuge/manual.shtml#centrifuge-classification-output) for information about the fields
-    * `kreport.txt`: Classification in the Kraken report format. See the [kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#output-formats) for more details
-    * `taxonomy.krona.html`: Interactive pie chart produced by [KronaTools](https://github.com/marbl/Krona/wiki)
-
-</details>
 
 ## Assembly
 
@@ -184,23 +163,6 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 
 </details>
 
-### SPAdesHybrid
-
-SPAdesHybrid is a part of the [SPAdes](http://cab.spbu.ru/software/spades/) software and is used when the user provides both long and short reads.
-
-<details markdown="1">
-<summary>Output files</summary>
-
-* `Assembly/SPAdesHybrid/`
-    * `[sample/group]_scaffolds.fasta.gz`: Compressed assembled scaffolds in fasta format
-    * `[sample/group]_graph.gfa.gz`: Compressed assembly graph in gfa format
-    * `[sample/group]_contigs.fasta.gz`: Compressed assembled contigs in fasta format
-    * `[sample/group].log`: Log file
-    * `QC/[sample/group]/`: Directory containing QUAST files and Bowtie2 mapping logs
-        * `SPAdesHybrid-[sample].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
-        * `SPAdesHybrid-[sample/group]-[sampleToMap].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the respective sample ("sampleToMap").
-
-</details>
 
 ### Metagenome QC with QUAST
 
@@ -219,6 +181,10 @@ SPAdesHybrid is a part of the [SPAdes](http://cab.spbu.ru/software/spades/) soft
 ## Gene prediction
 
 Protein-coding genes are predicted for each assembly.
+
+### Prodigal
+
+[Prodigal](https://github.com/hyattpd/Prodigal) is a protein-coding gene prediction software tool for bacterial and archaeal genomes. 
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -345,33 +311,18 @@ Besides the reference files or output files created by BUSCO, the following summ
 
 ## Taxonomic classification of binned genomes
 
-### CAT
 
-[CAT](https://github.com/dutilh/CAT) is a toolkit for annotating contigs and bins from metagenome-assembled-genomes. The MetaBP pipeline uses CAT to assign taxonomy to genome bins based on the taxnomy of the contigs.
+### Sourmash
 
-<details markdown="1">
+[Sourmash](https://github.com/sourmash-bio/sourmash) is a k-mer based taxonomic exploration and classification routines for genome and metagenome analysis.
+
+details markdown="1">
 <summary>Output files</summary>
 
-* `Taxonomy/CAT/[assembler]/`
-    * `[assembler]-[sample/group].ORF2LCA.names.txt.gz`: Tab-delimited files containing the lineage of each contig, with full lineage names
-    * `[assembler]-[sample/group].bin2classification.names.txt.gz`: Taxonomy classification of the genome bins, with full lineage names
-* `Taxonomy/CAT/[assembler]/raw/`
-    * `[assembler]-[sample/group].concatenated.predicted_proteins.faa.gz`: Predicted protein sequences for each genome bin, in fasta format
-    * `[assembler]-[sample/group].concatenated.predicted_proteins.gff.gz`: Predicted protein features for each genome bin, in gff format
-    * `[assembler]-[sample/group].ORF2LCA.txt.gz`: Tab-delimited files containing the lineage of each contig
-    * `[assembler]-[sample/group].bin2classification.txt.gz`: Taxonomy classification of the genome bins
-    * `[assembler]-[sample/group].log`: Log files
+* `GenomeBinning/QC/`
+    * `busco_summary.tsv`: A summary table of the BUSCO results, with % of marker genes found. If run in automated lineage selection mode, both the results for the selected domain and for the selected more specific lineage will be given, if available.
 
-</details>
-
-If the parameters `--cat_db_generate` and `--save_cat_db` are set, additionally the generated CAT database is stored:
-
-<details markdown="1">
-<summary>Output files</summary>
-
-* `Taxonomy/CAT/CAT_prepare_*.tar.gz`: Generated and used CAT database.
-
-</details>
+</details
 
 ### GTDB-Tk
 
