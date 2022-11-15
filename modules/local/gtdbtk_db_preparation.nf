@@ -9,9 +9,9 @@ process GTDBTK_DB_PREPARATION {
 
     conda (params.enable_conda ? "conda-forge::sed=4.7" : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img"
+        container "https://depot.galaxyproject.org/singularity/ubuntu:20.04"
     } else {
-        container "biocontainers/biocontainers:v1.2.0_cv1"
+        container "ubuntu:20.04"
     }
 
     input:
@@ -24,5 +24,10 @@ process GTDBTK_DB_PREPARATION {
     """
     mkdir database
     tar -xzf ${database} -C database --strip 1
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        tar: \$(tar --version 2>&1 | sed -n 1p | sed 's/tar (GNU tar) //')
+    END_VERSIONS
     """
 }

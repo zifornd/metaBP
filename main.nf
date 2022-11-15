@@ -25,13 +25,13 @@ WorkflowMain.initialise(workflow, params, log)
 ========================================================================================
 */
 
-include { MAG } from './workflows/mag'
+include { METABP } from './workflows/metaBPx'
 
 //
 // WORKFLOW: Run main nf-core/mag analysis pipeline
 //
-workflow NFCORE_MAG {
-    MAG ()
+workflow ZIFO_METABP {
+    METABP ()
 }
 
 /*
@@ -45,7 +45,7 @@ workflow NFCORE_MAG {
 // See: https://github.com/nf-core/rnaseq/issues/619
 //
 workflow {
-    NFCORE_MAG ()
+    ZIFO_METABP ()
 }
 
 /*
