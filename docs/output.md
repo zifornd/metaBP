@@ -340,7 +340,7 @@ Besides the reference files or output files created by BUSCO, the following summ
 * `Results/Sourmash/`
     * `sample.csv`: 
 
-</details
+</details>
 
 ### GTDB-Tk
 
