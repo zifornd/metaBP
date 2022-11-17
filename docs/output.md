@@ -36,9 +36,9 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `QC_shortreads/fastqc/`
+* `Intermediate Outputs/FastQC`
     * `[sample]_[1/2]_fastqc.html`: FastQC report, containing quality metrics for your untrimmed raw fastq files
-    * `[sample].trimmed_[1/2]_fastqc.html`: FastQC report, containing quality metrics for trimmed and, if specified, filtered read files
+    * `[sample]_[1/2]_fastqc.html`: FastQC report, containing quality metrics for trimmed and, if specified, filtered read.
 
 </details>
 
@@ -51,7 +51,7 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `QC_shortreads/fastp/[sample]/`
+* `Intermediate Outputs/fastp/`
     * `fastp.html`: Interactive report
     * `fastp.json`: Report in json format
 
@@ -64,9 +64,9 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `QC_shortreads/fastp/[sample]/`
-    * `fastp.html`: Interactive report
-    * `fastp.json`: Report in json format
+* `Intermediate Outputs/Cutadapt/`
+    * `[sample].cutadapt.log`: Report in log file
+
 
 </details>
 
@@ -77,9 +77,8 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `QC_shortreads/fastp/[sample]/`
-    * `fastp.html`: Interactive report
-    * `fastp.json`: Report in json format
+* `Intermediate Outputs/Trimmomatic/`
+    * `[sample].trimmomatic.log`: Report in log file
 
 </details>
 
@@ -90,7 +89,7 @@ The pipeline uses bowtie2 to map the reads against PhiX and removes mapped reads
 <details markdown="1">
 <summary>Output files</summary>
 
-* `QC_shortreads/remove_phix/`
+* `Intermediate Outputs/phiX Removal/`
     * `[sample].phix_removed.bowtie2.log`: Contains a brief log file indicating how many reads have been retained.
 
 </details>
@@ -102,7 +101,7 @@ The pipeline uses bowtie2 to map short reads against the host reference genome s
 <details markdown="1">
 <summary>Output files</summary>
 
-* `QC_shortreads/remove_host/` 
+* `Intermediate Outputs/Host Removal` 
     * `[sample].host_removed.bowtie2.log`: Contains the bowtie2 log file indicating how many reads have been mapped as well as a file listing the read ids of discarded reads.
 
 </details>
@@ -118,11 +117,25 @@ The pipeline uses bowtie2 to map short reads against the host reference genome s
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Taxonomy/kraken2/[sample]/`
-    * `kraken2.report`: Classification in the Kraken report format. See the [kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#output-formats) for more details
-    * `taxonomy.krona.html`: Interactive pie chart produced by [KronaTools](https://github.com/marbl/Krona/wiki)
-
+* `Results/Kraken2/`
+    * `sample_kraken2.report.txt`: Classification in the Kraken report format. See the [kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#output-formats) for more details
+     
+    
 </details>
+
+### Krona
+
+[Krona](https://github.com/marbl/Krona) allows hierarchical data to be explored with zooming, multi-layered pie charts. Krona charts can be created using an Excel template or KronaTools, which includes support for several bioinformatics tools and raw data formats. The interactive charts are self-contained and can be viewed with any modern web browser.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+* `Results/Krona/`
+    * `taxonomy.krona.html`: Interactive pie chart of the cutadapt output produced by [KronaTools](https://github.com/marbl/Krona/wiki)
+     
+</details>
+
+
 
 
 ## Assembly
@@ -136,9 +149,11 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Assembly/MEGAHIT/`
+
+* `Intermediate Outputs/MEGAHIT/`
     * `[sample/group].contigs.fa.gz`: Compressed metagenome assembly in fasta format
     * `[sample/group].log`: Log file
+    
     * `QC/[sample/group]/`: Directory containing QUAST files and Bowtie2 mapping logs
         * `MEGAHIT-[sample].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
         * `MEGAHIT-[sample/group]-[sampleToMap].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the respective sample ("sampleToMap").
@@ -152,13 +167,13 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Assembly/SPAdes/`
+* `Intermediate Outputs/SPAdes/`
     * `[sample/group]_scaffolds.fasta.gz`: Compressed assembled scaffolds in fasta format
     * `[sample/group]_graph.gfa.gz`: Compressed assembly graph in gfa format
     * `[sample/group]_contigs.fasta.gz`: Compressed assembled contigs in fasta format
-    * `[sample/group].log`: Log file
+    * `[sample/group]pt.log`: Log file
     * `QC/[sample/group]/`: Directory containing QUAST files and Bowtie2 mapping logs
-        * `SPAdes-[sample].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
+        * `SPAdes-[sample].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the trimmomatic output sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
         * `SPAdes-[sample/group]-[sampleToMap].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the respective sample ("sampleToMap").
 
 </details>
@@ -171,7 +186,7 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Assembly/[assembler]/QC/[sample/group]/`
+* `Intermediate Outputs/QUAST`
     * `report.*`: QUAST report in various formats, such as html, txt, tsv or tex
     * `quast.log`: QUAST log file
     * `predicted_genes/[assembler]-[sample/group].rna.gff`: Contig positions for rRNA genes in gff version 3 format
@@ -189,13 +204,16 @@ Protein-coding genes are predicted for each assembly.
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Prodigal/`
+* `Results/Prodigal`
     * `[sample/group].gff`: Gene Coordinates in GFF format
     * `[sample/group].faa`: The protein translation file consists of all the proteins from all the sequences in multiple FASTA format.
     * `[sample/group].fna`: Nucleotide sequences of the predicted proteins using the DNA alphabet, not mRNA (so you will see 'T' in the output and not 'U').
     * `[sample/group]_all.txt`: Information about start positions of genes.
 
 </details>
+
+
+
 
 ## Binning
 
@@ -218,7 +236,7 @@ Sequencing depth per contig and sample is generated by `jgi_summarize_bam_contig
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/MetaBAT2/`
+* `Intermediate Outputs/MetaBAT2/`
     * `[assembler]-[sample/group].*.fa`: Genome bins retrieved from input assembly
     * `[assembler]-[sample/group].unbinned.*.fa`: Contigs that were not binned with other contigs but considered interesting. By default, these are at least 1 Mbp (`--min_length_unbinned_contigs`) in length and at most the 100 longest contigs (`--max_unbinned_contigs`) are reported
 
@@ -229,7 +247,7 @@ All the files and contigs in this folder will be assessed by QUAST and BUSCO.
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/MetaBAT2/discarded/`
+* `Intermediate Outputs/MetaBAT2/discarded/`
     * `*.lowDepth.fa.gz`: Low depth contigs that are filtered by MetaBat2
     * `*.tooShort.fa.gz`: Too short contigs that are filtered by MetaBat2
     * `*.unbinned.pooled.fa.gz`: Pooled unbinned contigs equal or above `--min_contig_size`, by default 1500 bp.
@@ -261,7 +279,7 @@ For each genome bin the median sequencing depth is computed based on the corresp
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/QC/QUAST/[assembler]-[bin]/`
+* `Intermediate Output/QUAST/[assembler]-[bin]/`
     * `report.*`: QUAST report in various formats, such as html, txt, tsv or tex
     * `quast.log`: QUAST log file
     * `predicted_genes/[assembler]-[sample/group].rna.gff`: Contig positions for rRNA genes in gff version 3 format
@@ -319,8 +337,8 @@ Besides the reference files or output files created by BUSCO, the following summ
 details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/QC/`
-    * `busco_summary.tsv`: A summary table of the BUSCO results, with % of marker genes found. If run in automated lineage selection mode, both the results for the selected domain and for the selected more specific lineage will be given, if available.
+* `Results/Sourmash/`
+    * `sample.csv`:.
 
 </details
 
@@ -352,7 +370,7 @@ Whole genome annotation is the process of identifying features of interest in a 
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Prokka/[assembler]/[bin]/`
+* `Results/Prokka/[assembler]/[bin]/`
     * `[bin].gff`: annotation in GFF3 format, containing both sequences and annotations
     * `[bin].gbk`: annotation in GenBank format, containing both sequences and annotations
     * `[bin].fna`: nucleotide FASTA file of the input contig sequences
