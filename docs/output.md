@@ -334,11 +334,11 @@ Besides the reference files or output files created by BUSCO, the following summ
 
 [Sourmash](https://github.com/sourmash-bio/sourmash) is a k-mer based taxonomic exploration and classification routines for genome and metagenome analysis.
 
-details markdown="1">
+<details markdown="1">
 <summary>Output files</summary>
 
 * `Results/Sourmash/`
-    * `sample.csv`:.
+    * `sample.csv`: 
 
 </details
 
