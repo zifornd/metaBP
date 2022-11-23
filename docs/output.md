@@ -4,7 +4,7 @@
 
 This document describes the output produced by the pipeline. Most of the plots are taken from the MultiQC report, which summarises results at the end of the pipeline.
 
-The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
+The directories listed below will be created in the Intermediate_Outputs and Results directory after the pipeline has finished. The tools giving the final output of the pipeline are stored in Results directory whereas reat all tools giving intermediate outputs are stored in Intermediate_Outputs directory. All paths are relative to the top-level Intermediate_Outputs and Results directory.
 
 ## Pipeline overview
 
@@ -36,7 +36,7 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/FastQC`
+* `Intermediate_Outputs/FastQC`
     * `[sample]_[1/2]_fastqc.html`: FastQC report, containing quality metrics for your untrimmed raw fastq files
     * `[sample]_[1/2]_fastqc.html`: FastQC report, containing quality metrics for trimmed and, if specified, filtered read.
 
@@ -46,12 +46,12 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 
 ### fastp
 
-[fastp](https://github.com/OpenGene/fastp) is a all-in-one fastq preprocessor for read/adapter trimming and quality control. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the intermediate folder and part of the MultiQC report.
+[fastp](https://github.com/OpenGene/fastp) is a all-in-one fastq preprocessor for read/adapter trimming and quality control. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the Intermediate_Outputs folder and part of the MultiQC report.
 
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/fastp/`
+* `Intermediate_Outputs/fastp/`
     * `fastp.html`: Interactive report
     * `fastp.json`: Report in json format
 
@@ -59,12 +59,12 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 
 ### Cutadapt
 
-[Cutadapt](https://github.com/marcelm/cutadapt/) finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from high-throughput sequencing reads. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the intermediate folder and part of the MultiQC report.
+[Cutadapt](https://github.com/marcelm/cutadapt/) finds and removes adapter sequences, primers, poly-A tails and other types of unwanted sequence from high-throughput sequencing reads. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the Intermediate_Outputs folder and part of the MultiQC report.
 
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/Cutadapt/`
+* `Intermediate_Outputs/Cutadapt/`
     * `[sample].cutadapt.log`: Report in log file
 
 
@@ -72,12 +72,12 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 
 ### Trimmomatic
 
-[Trimmomatic](https://github.com/usadellab/Trimmomatic) performs a variety of useful trimming tasks for paired-end and single ended data. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the intermediate folder and part of the MultiQC report.
+[Trimmomatic](https://github.com/usadellab/Trimmomatic) performs a variety of useful trimming tasks for paired-end and single ended data. It is used in this pipeline for trimming adapter sequences and discard low-quality reads. Its output is in the Intermediate_Outputs folder and part of the MultiQC report.
 
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/Trimmomatic/`
+* `Intermediate_Outputs/Trimmomatic/`
     * `[sample].trimmomatic.log`: Report in log file
 
 </details>
@@ -89,7 +89,7 @@ The pipeline uses bowtie2 to map the reads against PhiX and removes mapped reads
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/phiX Removal/`
+* `Intermediate_Outputs/phiX Removal/`
     * `[sample].phix_removed.bowtie2.log`: Contains a brief log file indicating how many reads have been retained.
 
 </details>
@@ -101,7 +101,7 @@ The pipeline uses bowtie2 to map short reads against the host reference genome s
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/Host Removal` 
+* `Intermediate_Outputs/Host Removal` 
     * `[sample].host_removed.bowtie2.log`: Contains the bowtie2 log file indicating how many reads have been mapped as well as a file listing the read ids of discarded reads.
 
 </details>
@@ -150,7 +150,7 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <summary>Output files</summary>
 
 
-* `Intermediate Outputs/MEGAHIT/`
+* `Intermediate_Outputs/MEGAHIT/`
     * `[sample/group].contigs.fa.gz`: Compressed metagenome assembly in fasta format
     * `[sample/group].log`: Log file
     
@@ -167,7 +167,7 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/SPAdes/`
+* `Intermediate_Outputs/SPAdes/`
     * `[sample/group]_scaffolds.fasta.gz`: Compressed assembled scaffolds in fasta format
     * `[sample/group]_graph.gfa.gz`: Compressed assembly graph in gfa format
     * `[sample/group]_contigs.fasta.gz`: Compressed assembled contigs in fasta format
@@ -186,7 +186,7 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/QUAST`
+* `Intermediate_Outputs/QUAST`
     * `report.*`: QUAST report in various formats, such as html, txt, tsv or tex
     * `quast.log`: QUAST log file
     * `predicted_genes/[assembler]-[sample/group].rna.gff`: Contig positions for rRNA genes in gff version 3 format
@@ -224,8 +224,8 @@ Sequencing depth per contig and sample is generated by `jgi_summarize_bam_contig
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/`
-    * `[assembler]-[sample/group]-depth.txt.gz`: Sequencing depth for each contig and sample or group, only for short reads.
+* `Binning/`
+    * `[assembler]-[trimmer]-[sample/group]-depth.txt.gz`: Sequencing depth for each contig and sample or group, only for short reads.
 
 </details>
 
@@ -236,7 +236,7 @@ Sequencing depth per contig and sample is generated by `jgi_summarize_bam_contig
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/MetaBAT2/`
+* `Intermediate_Outputs/MetaBAT2/`
     * `[assembler]-[sample/group].*.fa`: Genome bins retrieved from input assembly
     * `[assembler]-[sample/group].unbinned.*.fa`: Contigs that were not binned with other contigs but considered interesting. By default, these are at least 1 Mbp (`--min_length_unbinned_contigs`) in length and at most the 100 longest contigs (`--max_unbinned_contigs`) are reported
 
@@ -247,7 +247,7 @@ All the files and contigs in this folder will be assessed by QUAST and BUSCO.
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Outputs/MetaBAT2/discarded/`
+* `Intermediate_Outputs/MetaBAT2/discarded/`
     * `*.lowDepth.fa.gz`: Low depth contigs that are filtered by MetaBat2
     * `*.tooShort.fa.gz`: Too short contigs that are filtered by MetaBat2
     * `*.unbinned.pooled.fa.gz`: Pooled unbinned contigs equal or above `--min_contig_size`, by default 1500 bp.
@@ -261,7 +261,7 @@ Files in these two folders contain all contigs of an assembly.
 
 ### Bin sequencing depth
 
-For each genome bin the median sequencing depth is computed based on the corresponding contig depths given in `GenomeBinning/[assembler]-[sample/group]-depth.txt.gz`.
+For each genome bin the median sequencing depth is computed based on the corresponding contig depths given in `Binning/[assembler]-[trimmer]-[sample/group]-depth.txt.gz`.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -279,7 +279,7 @@ For each genome bin the median sequencing depth is computed based on the corresp
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate Output/QUAST/[assembler]-[bin]/`
+* `Intermediate_Outputs/QUAST/[assembler]-[bin]/`
     * `report.*`: QUAST report in various formats, such as html, txt, tsv or tex
     * `quast.log`: QUAST log file
     * `predicted_genes/[assembler]-[sample/group].rna.gff`: Contig positions for rRNA genes in gff version 3 format
@@ -311,8 +311,8 @@ If the parameter `--save_busco_reference` is set, additionally the used BUSCO li
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/QC/BUSCO/`
-    * `busco_downloads/`: All files and lineage datasets downloaded by BUSCO when run in automated lineage selection mode. (Can currently not be used to reproduce analysis, see the [nf-core/mag website documentation](https://nf-co.re/mag/usage#reproducibility) how to achieve reproducible BUSCO results).
+* `Intermediate_Outputs/BUSCO/`
+    * `busco_downloads/`: All files and lineage datasets downloaded by BUSCO when run in automated lineage selection mode. (Can currently not be used to reproduce analysis.
     * `reference/*.tar.gz`: BUSCO reference lineage dataset that was provided via `--busco_reference`.
 
 </details>
@@ -322,8 +322,8 @@ Besides the reference files or output files created by BUSCO, the following summ
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/QC/`
-    * `busco_summary.tsv`: A summary table of the BUSCO results, with % of marker genes found. If run in automated lineage selection mode, both the results for the selected domain and for the selected more specific lineage will be given, if available.
+* `Intermediate_Outputs/Binning/`
+    * `[assembler]-[trimmer]-busco_summary.tsv`: A summary table of the BUSCO results, with % of marker genes found. If run in automated lineage selection mode, both the results for the selected domain and for the selected more specific lineage will be given, if available.
 
 </details>
 
@@ -338,7 +338,7 @@ Besides the reference files or output files created by BUSCO, the following summ
 <summary>Output files</summary>
 
 * `Results/Sourmash/`
-    * `sample.csv`: 
+    * `sample.csv`: A csv file containing the classification of the bins.
 
 </details>
 
@@ -391,7 +391,7 @@ Whole genome annotation is the process of identifying features of interest in a 
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/bin_summary.tsv`: Summary of bin sequencing depths together with BUSCO, QUAST and GTDB-Tk results, if at least one of the later was generated.
+* `Binning-[Assembler]-[trimmer]-[sample/group]/bin_summary.tsv`: Summary of bin sequencing depths together with BUSCO, QUAST and GTDB-Tk results, if at least one of the later was generated.
 
 </details>
 
