@@ -5,7 +5,7 @@ params.options = [:]
 options    = initOptions(params.options)
 
 process METABAT2 {
-    tag "${meta.assembler}-${meta.id}"
+    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -22,32 +22,33 @@ process METABAT2 {
     tuple val(meta), path(assembly), path(bam), path(bai)
 
     output:
-    tuple val(meta), path("MetaBAT2/*.fa")            , emit: bins
-    path "${meta.assembler}-${meta.id}-*-depth.txt.gz"  , emit: depths
-    path "MetaBAT2/discarded/*"                       , emit: discarded
-    path '*.version.txt'                              , emit: version
+    tuple val(meta), path("MetaBAT2/*.fa")                              , emit: bins
+    path "${meta.assembler}-${meta.trimmer}-${meta.id}-depth.txt.gz"  , emit: depths
+    path "MetaBAT2/discarded/*"                                         , emit: discarded
+    path '*.version.txt'                                                , emit: version
 
     script:
     def software = getSoftwareName(task.process)
+    def prefix   = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     """
     OMP_NUM_THREADS=${task.cpus} jgi_summarize_bam_contig_depths --outputDepth depth.txt ${bam}
-    metabat2 -t "${task.cpus}" -i "${assembly}" -a depth.txt -o "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}" -m ${params.min_contig_size} --unbinned --seed ${params.metabat_rng_seed}
+    metabat2 -t "${task.cpus}" -i "${assembly}" -a depth.txt -o "MetaBAT2/${prefix}" -m ${params.min_contig_size} --unbinned --seed ${params.metabat_rng_seed}
 
     gzip depth.txt
-    mv depth.txt.gz "${meta.assembler}-${meta.id}-${options.suffix}-depth.txt.gz"
+    mv depth.txt.gz "${prefix}-depth.txt.gz"
 
     # save unbinned contigs above thresholds into individual files, dump others in one file
-    split_fasta.py "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}.unbinned.fa" ${params.min_length_unbinned_contigs} ${params.max_unbinned_contigs} ${params.min_contig_size}
+    split_fasta.py "MetaBAT2/${prefix}.unbinned.fa" ${params.min_length_unbinned_contigs} ${params.max_unbinned_contigs} ${params.min_contig_size}
 
     # delete splitted file so that it doesnt end up in following processes
-    rm "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}.unbinned.fa"
+    rm "MetaBAT2/${prefix}.unbinned.fa"
 
     mkdir MetaBAT2/discarded
-    gzip "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}.lowDepth.fa" \
-        "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}.tooShort.fa" \
-        "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}.unbinned.pooled.fa" \
-        "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}.unbinned.remaining.fa"
-    mv "MetaBAT2/${meta.assembler}-${meta.id}-${options.suffix}".*.fa.gz MetaBAT2/discarded/
+    gzip "MetaBAT2/${prefix}.lowDepth.fa" \
+        "MetaBAT2/${prefix}.tooShort.fa" \
+        "MetaBAT2/${prefix}.unbinned.pooled.fa" \
+        "MetaBAT2/${prefix}.unbinned.remaining.fa"
+    mv "MetaBAT2/${prefix}".*.fa.gz MetaBAT2/discarded/
 
     echo \$(metabat2 --help 2>&1) | sed "s/^.*version 2\\://; s/ (Bioconda.*//" > ${software}.version.txt
     """

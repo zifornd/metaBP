@@ -5,7 +5,7 @@ params.options = [:]
 options    = initOptions(params.options)
 
 process QUAST_BINS {
-    tag "${meta.assembler}-${meta.id}"
+    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -28,15 +28,16 @@ process QUAST_BINS {
 
     script:
     def software = getSoftwareName(task.process)
+    def prefix   = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     """
     BINS=\$(echo \"$bins\" | sed 's/[][]//g')
     IFS=', ' read -r -a bins <<< \"\$BINS\"
     for bin in \"\${bins[@]}\"; do
         metaquast.py --threads "${task.cpus}" --max-ref-number 0 --rna-finding --gene-finding -l "\${bin}" "\${bin}" -o "QUAST/\${bin}"
-        if ! [ -f "QUAST/${meta.assembler}-${meta.id}-${options.suffix}-quast_summary.tsv" ]; then
-            cp "QUAST/\${bin}/transposed_report.tsv" "QUAST/${meta.assembler}-${meta.id}-${options.suffix}-quast_summary.tsv"
+        if ! [ -f "QUAST/${prefix}-quast_summary.tsv" ]; then
+            cp "QUAST/\${bin}/transposed_report.tsv" "QUAST/${prefix}-quast_summary.tsv"
         else
-            tail -n +2 "QUAST/\${bin}/transposed_report.tsv" >> "QUAST/${meta.assembler}-${meta.id}-${options.suffix}-quast_summary.tsv"
+            tail -n +2 "QUAST/\${bin}/transposed_report.tsv" >> "QUAST/${prefix}-quast_summary.tsv"
         fi
     done
 

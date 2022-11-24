@@ -11,7 +11,8 @@ options        = initOptions(params.options)
 
 
 process SOURMASH_CLASSIFY {
-    tag "$meta.id"
+    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
+
     label 'process_medium'
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -30,13 +31,13 @@ process SOURMASH_CLASSIFY {
     tuple val(meta), path(signatures)
 
     output:
-    tuple val(meta), path('*.csv')	    , emit: report
+    tuple val(meta), path('*.csv')	        , emit: report
     path "*.version.txt"                    , emit: version
     
     script:
     // Added soft-links to original fastqs for consistent naming in MultiQC
     def software = getSoftwareName(task.process)
-    def prefix = options.suffix ? "${meta.assembler}-${meta.id}-${options.suffix}":"${meta.id}"
+    def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     
 	"""
     sourmash lca classify \\

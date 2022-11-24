@@ -5,7 +5,7 @@ params.options = [:]
 options    = initOptions(params.options)
 
 process BUSCO_PLOT {
-    tag "${meta.assembler}-${meta.id}"
+    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -22,29 +22,30 @@ process BUSCO_PLOT {
     tuple val(meta), path(summaries)
 
     output:
-    path("${meta.assembler}-${meta.id}-*.*.busco_figure.png") , optional:true, emit: png
-    path("${meta.assembler}-${meta.id}-*.*.busco_figure.R")   , optional:true, emit: rscript
+    path("${meta.assembler}-${meta.trimmer}-${meta.id}.*.busco_figure.png") , optional:true, emit: png
+    path("${meta.assembler}-${meta.trimmer}-${meta.id}.*.busco_figure.R")   , optional:true, emit: rscript
     path '*.version.txt'                                                   , emit: version
 
     script:
     def software = getSoftwareName(task.process)
+    def prefix   = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     """
     if [ -n "${summaries}" ]
     then
         # replace dots in bin names within summary file names by underscores
         # currently (BUSCO v5.1.0) generate_plot.py does not allow further dots
         for sum in ${summaries}; do
-            [[ \${sum} =~ short_summary.([_[:alnum:]]+).([_[:alnum:]]+).${meta.assembler}-${meta.id}.(.+).txt ]];
+            [[ \${sum} =~ short_summary.([_[:alnum:]]+).([_[:alnum:]]+).${prefix}.(.+).txt ]];
             mode=\${BASH_REMATCH[1]}
             db_name=\${BASH_REMATCH[2]}
-            bin="${meta.assembler}-${meta.id}.\${BASH_REMATCH[3]}"
+            bin="${prefix}.\${BASH_REMATCH[3]}"
             bin_new="\${bin//./_}"
             mv \${sum} short_summary.\${mode}.\${db_name}.\${bin_new}.txt
         done
         generate_plot.py --working_directory .
 
-        mv busco_figure.png "${meta.assembler}-${meta.id}-${options.suffix}.\${mode}.\${db_name}.busco_figure.png"
-        mv busco_figure.R "${meta.assembler}-${meta.id}-${options.suffix}.\${mode}.\${db_name}.busco_figure.R"
+        mv busco_figure.png "${prefix}.\${mode}.\${db_name}.busco_figure.png"
+        mv busco_figure.R "${prefix}.\${mode}.\${db_name}.busco_figure.R"
     fi
 
     busco --version | sed "s/BUSCO //" > ${software}.version.txt

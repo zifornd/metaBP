@@ -22,17 +22,17 @@ process SPADES {
     tuple val(meta), path(reads)
 
     output:
-    tuple val(meta), path("${meta.id}.*_scaffolds.fasta"), emit: assembly
-    tuple val(meta), path("${meta.id}.*_contigs.fasta")  , emit: contig
-    path "${meta.id}.*.log"                              , emit: log
-    path "${meta.id}.*_contigs.fasta.gz"                 , emit: contigs_gz
-    path "${meta.id}.*_scaffolds.fasta.gz"               , emit: assembly_gz
-    path "${meta.id}.*_graph.gfa.gz"                     , emit: graph
+    tuple val(meta), path("${meta.trimmer}-${meta.id}_scaffolds.fasta"), emit: assembly
+    tuple val(meta), path("${meta.trimmer}-${meta.id}_contigs.fasta")  , emit: contig
+    path "${meta.trimmer}-${meta.id}.log"                              , emit: log
+    path "${meta.trimmer}-${meta.id}_contigs.fasta.gz"                 , emit: contigs_gz
+    path "${meta.trimmer}-${meta.id}_scaffolds.fasta.gz"               , emit: assembly_gz
+    path "${meta.trimmer}-${meta.id}_graph.gfa.gz"                     , emit: graph
     path '*.version.txt'                                 , emit: version
 
     script:
     def software = getSoftwareName(task.process)
-    def prefix    = options.suffix ? "${meta.id}.${options.suffix}" : "${meta.id}"
+    def prefix    = "${meta.trimmer}-${meta.id}"
     maxmem = task.memory.toGiga()
     if ( params.spades_fix_cpus == -1 || task.cpus == params.spades_fix_cpus )
         """
@@ -52,7 +52,7 @@ process SPADES {
         gzip "${prefix}_graph.gfa"
         gzip -c "${prefix}_scaffolds.fasta" > "${prefix}_scaffolds.fasta.gz"
 
-        metaspades.py --version | sed "s/SPAdes v//; s/ \\[.*//" > ${software}.version.txt
+        metaspades.py --version | sed "s/SPAdes genome assembler v//; s/ \\[.*//" > ${software}.version.txt
         """
     else
         error "ERROR: '--spades_fix_cpus' was specified, but not succesfully applied. Likely this is caused by changed process properties in a custom config file."
