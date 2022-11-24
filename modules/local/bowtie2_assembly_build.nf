@@ -5,7 +5,7 @@ params.options = [:]
 options    = initOptions(params.options)
 
 process BOWTIE2_ASSEMBLY_BUILD {
-    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
+    tag "${meta.assembler}-${meta.id}"
 
     conda (params.enable_conda ? 'bioconda::bowtie2=2.4.2' : null)
     if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {

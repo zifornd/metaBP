@@ -22,13 +22,13 @@ process BOWTIE2_ASSEMBLY_ALIGN {
     tuple val(assembly_meta), path(assembly), path(index), val(reads_meta), path(reads)
 
     output:
-    tuple val(assembly_meta), path(assembly), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}.bam"), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}.bam.bai"), emit: mappings
+    tuple val(assembly_meta), path(assembly), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${options.suffix}.bam"), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${options.suffix}.bam.bai"), emit: mappings
     tuple val(assembly_meta), val(reads_meta), path("*.bowtie2.log")                                                                                                                                      , emit: log
     path '*.version.txt'                                                                                                                                                                                  , emit: version
 
     script:
     def software = getSoftwareName(task.process)
-    def name = "${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}"
+    def name = "${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${options.suffix}"
     def input = params.single_end ? "-U \"${reads}\"" :  "-1 \"${reads[0]}\" -2 \"${reads[1]}\""
     """
     INDEX=`find -L ./ -name "*.rev.1.bt2l" -o -name "*.rev.1.bt2" | sed 's/.rev.1.bt2l//' | sed 's/.rev.1.bt2//'`
@@ -37,8 +37,8 @@ process BOWTIE2_ASSEMBLY_ALIGN {
         samtools sort -@ "${task.cpus}" -o "${name}.bam"
     samtools index "${name}.bam"
 
-    if [ ${name} = "${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}" ] ; then
-        mv "${name}.bowtie2.log" "${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.trimmer}.bowtie2.log"
+    if [ ${name} = "${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${options.suffix}" ] ; then
+        mv "${name}.bowtie2.log" "${assembly_meta.assembler}-${assembly_meta.id}-${options.suffix}.bowtie2.log"
     fi
 
     echo \$(bowtie2 --version 2>&1) | sed 's/^.*bowtie2-align-s version //; s/ .*\$//' > ${software}_assembly.version.txt

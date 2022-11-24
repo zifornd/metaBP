@@ -5,7 +5,7 @@ params.options = [:]
 options    = initOptions(params.options)
 
 process MAG_DEPTHS {
-    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
+    tag "${meta.assembler}-${meta.id}"
 
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -24,15 +24,14 @@ process MAG_DEPTHS {
     path(contig_depths)
 
     output:
-    tuple val(meta), path("${meta.assembler}-${meta.trimmer}-${meta.id}-binDepths.tsv"), emit: depths
+    tuple val(meta), path("${meta.assembler}-${meta.id}-*-binDepths.tsv"), emit: depths
 
     script:
     def software = getSoftwareName(task.process)
-    def prefix   = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     """
     get_mag_depths.py --bins ${bins} \
                     --depths ${contig_depths} \
-                    --assembly_name "${prefix}" \
-                    --out "${prefix}-binDepths.tsv"
+                    --assembly_name "${meta.assembler}-${meta.id}-${options.suffix}" \
+                    --out "${meta.assembler}-${meta.id}-${options.suffix}-binDepths.tsv"
     """
 }

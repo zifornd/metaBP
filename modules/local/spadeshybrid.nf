@@ -50,7 +50,7 @@ process SPADESHYBRID {
         gzip "${meta.id}_graph.gfa"
         gzip -c "${meta.id}_scaffolds.fasta" > "${meta.id}_scaffolds.fasta.gz"
 
-        metaspades.py --version | sed "s/SPAdes genome assembler v//; s/ \\[.*//" > ${software}.version.txt
+        metaspades.py --version | sed "s/SPAdes v//; s/ \\[.*//" > ${software}.version.txt
         """
     else
         error "ERROR: '--spadeshybrid_fix_cpus' was specified, but not succesfully applied. Likely this is caused by changed process properties in a custom config file."

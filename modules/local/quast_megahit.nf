@@ -5,7 +5,7 @@ params.options = [:]
 options    = initOptions(params.options)
 
 process QUAST_MEGAHIT {
-    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
+    tag "${meta.assembler}-${meta.id}"
 
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -20,16 +20,16 @@ process QUAST_MEGAHIT {
 
     input:
     tuple val(meta), path(assembly)
+    //tuple val(meta), path(contigs_gz)
 
     output:
-    path "QUAST/*" 	   , emit: qc
+    path "QUAST/*" , emit: qc
     path '*.version.txt'   , emit: version
 
     script:
     def software = getSoftwareName(task.process)
-    def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
        """
-       metaquast.py --threads "${task.cpus}" --max-ref-number 0 -l "${prefix}_contigs" "${assembly}" -o "QUAST"
+       metaquast.py --threads "${task.cpus}" --max-ref-number 0 -l "${meta.assembler}-${meta.id}-${options.suffix}_contigs" "${assembly}" -o "QUAST"
        metaquast.py --version | sed "s/QUAST v//; s/ (MetaQUAST mode)//" > ${software}.version.txt
        """
 }

@@ -31,7 +31,7 @@ process KRAKEN2 {
     script:
     def software = getSoftwareName(task.process)
     def input = meta.single_end ? "\"${reads}\"" :  "--paired \"${reads[0]}\" \"${reads[1]}\""
-    def prefix = "${meta.trimmer}-${meta.id}"
+    def prefix = options.suffix ? "${meta.id}.${options.suffix}":"${meta.id}"
     """
     kraken2 \
         --threads ${task.cpus} \

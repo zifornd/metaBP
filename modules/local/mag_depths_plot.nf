@@ -5,7 +5,7 @@ params.options = [:]
 options    = initOptions(params.options)
 
 process MAG_DEPTHS_PLOT {
-    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
+    tag "${meta.assembler}-${meta.id}-${options.suffix}"
 
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -23,14 +23,13 @@ process MAG_DEPTHS_PLOT {
     path(sample_groups)
 
     output:
-    tuple val(meta), path("${meta.assembler}-${meta.trimmer}-${meta.id}-binDepths.heatmap.png"), emit: heatmap
+    tuple val(meta), path("${meta.assembler}-${meta.id}-*-binDepths.heatmap.png"), emit: heatmap
 
     script:
     def software = getSoftwareName(task.process)
-    def prefix   = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     """
     plot_mag_depths.py --bin_depths ${depths} \
                     --groups ${sample_groups} \
-                    --out "${prefix}-binDepths.heatmap.png"
+                    --out "${meta.assembler}-${meta.id}-${options.suffix}-binDepths.heatmap.png"
     """
 }

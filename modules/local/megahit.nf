@@ -29,7 +29,7 @@ process MEGAHIT {
 
     script:
     def software = getSoftwareName(task.process)
-    def prefix = "${meta.trimmer}-${meta.id}"
+    def prefix = options.suffix ? "${meta.id}-${options.suffix}":"${meta.id}"
     def input = params.single_end ? "-r \"" + reads1.join(",") + "\"" : "-1 \"" + reads1.join(",") + "\" -2 \"" + reads2.join(",") + "\""
     mem = task.memory.toBytes()
     if ( !params.megahit_fix_cpu_1 || task.cpus == 1 )

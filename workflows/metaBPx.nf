@@ -124,25 +124,25 @@ include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_CUTADAPT_SPADES} from '../modul
 include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_CUTADAPT_MEGAHIT} from '../modules/local/sourmash_classify'        addParams( options: modules['sourmash_classify_cutadapt_megahit']                )
 include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_TRIMMOMATIC_SPADES} from '../modules/local/sourmash_classify'      addParams( options: modules['sourmash_classify_trimmomatic_spades']                )
 include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_TRIMMOMATIC_MEGAHIT} from '../modules/local/sourmash_classify'     addParams( options: modules['sourmash_classify_trimmomatic_megahit']                )
-//include { GTDBTK_SUMMARY_SPLIT                                } from '../modules/local/gtdbtk_summary_split'        addParams( options: modules['gtdbtk_summary_split']       )
+include { GTDBTK_SUMMARY_SPLIT                                } from '../modules/local/gtdbtk_summary_split'        addParams( options: modules['gtdbtk_summary_split']       )
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { INPUT_CHECK                                                } from '../subworkflows/local/input_check'
-include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT      } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit'])
-include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_SPADES       } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_spades'])
-include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_MEGAHIT   } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_megahit'])
-include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_SPADES    } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_spades'])
-include { BUSCO_QC as BUSCO_QC_CUTADAPT_SPADES          } from '../subworkflows/local/busco_qc'       addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_spades'])
-include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_SPADES       } from '../subworkflows/local/busco_qc'       addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_spades'])
-include { BUSCO_QC as BUSCO_QC_CUTADAPT_MEGAHIT         } from '../subworkflows/local/busco_qc'       addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_megahit'])
-include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_MEGAHIT      } from '../subworkflows/local/busco_qc'       addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_megahit'])
-//include { GTDBTK                                        } from '../subworkflows/local/gtdbtk'       addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
-include { GTDBTK  as GTDBTK_CUTADAPT_MEGAHIT            } from '../subworkflows/local/gtdbtk'       addParams( gtdbtk_classify_options: modules['gtdbtk_classify_cutadapt_megahit'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_megahit'])
-include { GTDBTK  as GTDBTK_CUTADAPT_SPADES             } from '../subworkflows/local/gtdbtk'       addParams( gtdbtk_classify_options: modules['gtdbtk_classify_cutadapt_spades'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_spades'])
-include { GTDBTK  as GTDBTK_TRIMMOMATIC_MEGAHIT         } from '../subworkflows/local/gtdbtk'       addParams( gtdbtk_classify_options: modules['gtdbtk_classify_trimmomatic_megahit'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_megahit'])
-include { GTDBTK  as GTDBTK_TRIMMOMATIC_SPADES          } from '../subworkflows/local/gtdbtk'       addParams( gtdbtk_classify_options: modules['gtdbtk_classify_trimmomatic_spades'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_spades'])
+include { INPUT_CHECK         } from '../subworkflows/local/input_check'
+include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT   } from '../subworkflows/local/metabat2_binning'         addParams( bowtie2_align_options: modules['bowtie2_assembly_align_cutadapt'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit'])
+include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_SPADES   } from '../subworkflows/local/metabat2_binning'          addParams( bowtie2_align_options: modules['bowtie2_assembly_align_cutadapt'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_spades'])
+include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_MEGAHIT   } from '../subworkflows/local/metabat2_binning'      addParams( bowtie2_align_options: modules['bowtie2_assembly_align_trimmomatic'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_megahit'])
+include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_SPADES   } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align_trimmomatic'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_spades'])
+include { BUSCO_QC as BUSCO_QC_CUTADAPT_SPADES          } from '../subworkflows/local/busco_qc'                          addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_spades'])
+include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_SPADES       } from '../subworkflows/local/busco_qc'                       addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_spades'])
+include { BUSCO_QC as BUSCO_QC_CUTADAPT_MEGAHIT         } from '../subworkflows/local/busco_qc'                         addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_megahit'])
+include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_MEGAHIT      } from '../subworkflows/local/busco_qc'                      addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_megahit'])
+include { GTDBTK                                        } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
+include { GTDBTK  as GTDBTK_CUTADAPT_MEGAHIT            } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
+include { GTDBTK  as GTDBTK_CUTADAPT_SPADES             } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
+//include { GTDBTK  as GTDBTK_TRIMMOMATIC_MEGAHIT         } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify_trimmomatic_megahit'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_megahit'])
+//include { GTDBTK  as GTDBTK_TRIMMOMATIC_SPADES          } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify_trimmomatic_spades'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_spades'])
 
 /*
 ========================================================================================
@@ -164,14 +164,10 @@ include { PRODIGAL as PRODIGAL_MEGAHIT          } from '../modules/nf-core/modul
 //
 //---------------- MODULE: Installed directly from nf-core/modules edited (or) added by Zifo ----------------
 //
-include { PROKKA as PROKKA_BINS_CUTADAPT_SPADES           } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_BINS_CUTADAPT_MEGAHIT          } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_BINS_TRIMMOMATIC_SPADES        } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_BINS_TRIMMOMATIC_MEGAHIT       } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_SPADES     } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_MEGAHIT    } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_TRIMMOMATIC_SPADES  } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_TRIMMOMATIC_MEGAHIT } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_BINS_CUTADAPT_SPADES        } from '../modules/nf-core/modules/prokka/main'              addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_BINS_CUTADAPT_MEGAHIT       } from '../modules/nf-core/modules/prokka/main'              addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_SPADES  } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_MEGAHIT } from '../modules/nf-core/modules/prokka/main'            addParams( options: modules['prokka']                )
 
 ////////////////////////////////////////////////////
 /* --  Create channel for reference databases  -- */
@@ -290,20 +286,14 @@ workflow METABP {
     ch_software_versions = ch_software_versions.mix(FASTP.out.version.first().ifEmpty(null))
 
     /*
-    ---------------------Cutadapt added for Quality Control by Zifo-------------------
+    ---------------------Tools added for Quality Control by Zifo-------------------
     */
     if (params.cutadapt) {
     
     CUTADAPT (
         ch_raw_short_reads
     )
-    CUTADAPT.out.reads
-            .map { meta, reads ->
-                def meta_new = meta.clone()
-                meta_new.trimmer  = "Cutadapt"
-                [ meta_new, reads ]
-            }
-            .set { ch_short_reads_cutadapt }
+    ch_short_reads_cutadapt = CUTADAPT.out.reads
     ch_software_versions = ch_software_versions.mix(CUTADAPT.out.version.first().ifEmpty(null))
     
     ch_bowtie2_removal_host_multiqc = Channel.empty()
@@ -436,6 +426,8 @@ workflow METABP {
         ch_short_reads_spades_cutadapt = ch_short_reads_cutadapt
       }
 	
+	    //ch_short_reads_spades_cutadapt = ch_short_reads_cutadapt
+
     if (!params.single_end && !params.skip_spades){
         SPADES_CUTADAPT ( ch_short_reads_spades_cutadapt )
         SPADES_CUTADAPT.out.assembly
@@ -585,7 +577,7 @@ workflow METABP {
                 ch_quast_bins_summary_cutadapt_megahit = QUAST_BINS_SUMMARY_CUTADAPT_MEGAHIT.out.summary
             }
         }
-
+ch_quast_bins_summary_cutadapt_megahit.view()
         /*
         -------------------------------------------------------------------------------------------------
                                 Sourmash added for Taxonomic Classification
@@ -718,482 +710,10 @@ workflow METABP {
         
     }
 
-    //
-    // MODULE: Pipeline reporting
-    //
-    ch_software_versions
-        .map { it -> if (it) [ it.baseName, it ] }
-        .groupTuple()
-        .map { it[1][0] }
-        .flatten()
-        .collect()
-        .set { ch_software_versions }
 
-    GET_SOFTWARE_VERSIONS (
-        ch_software_versions.map { it }.collect()
-    )
     
-    //
-    // MODULE: MultiQC
-    //
-    workflow_summary    = WorkflowMag.paramsSummaryMultiqc(workflow, summary_params)
-    ch_workflow_summary = Channel.value(workflow_summary)
-
-    ch_multiqc_files = Channel.empty()
-    ch_multiqc_files = ch_multiqc_files.mix(Channel.from(ch_multiqc_config))
-    ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-    ch_multiqc_files = ch_multiqc_files.mix(GET_SOFTWARE_VERSIONS.out.yaml.collect())
-
-    MULTIQC (
-        ch_multiqc_files.collect(),
-        ch_multiqc_custom_config.collect().ifEmpty([]),
-        FASTQC_RAW.out.zip.collect{it[1]}.ifEmpty([]),
-        FASTP.out.json.collect{it[1]}.ifEmpty([]),
-        FASTQC_TRIMMED_CUTADAPT.out.zip.collect{it[1]}.ifEmpty([]),
-        ch_bowtie2_removal_host_multiqc.collect{it[1]}.ifEmpty([]),
-        ch_quast_multiqc.collect().ifEmpty([]),
-        ch_bowtie2_assembly_multiqc.collect().ifEmpty([]),
-        ch_busco_multiqc.collect().ifEmpty([])
-    )
-    multiqc_report       = MULTIQC.out.report.toList()
-    ch_software_versions = ch_software_versions.mix(MULTIQC.out.version.ifEmpty(null))
-
-    }
-
-
-
-
-
-
-
-
-    /*
-    ---------------------Trimmomatic added for Quality Control by Zifo-------------------
-    */
-    if (params.trimmomatic) {
     
-    TRIMMOMATIC (
-        ch_raw_short_reads
-    )
-    TRIMMOMATIC.out.reads
-            .map { meta, reads ->
-                def meta_new = meta.clone()
-                meta_new.trimmer  = "Trimmomatic"
-                [ meta_new, reads ]
-            }
-            .set { ch_short_reads_trimmomatic }
-    ch_software_versions = ch_software_versions.mix(TRIMMOMATIC.out.version.first().ifEmpty(null))
     
-    ch_bowtie2_removal_host_multiqc = Channel.empty()
-    if (params.host_fasta || params.host_genome) {
-        BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC (
-            ch_short_reads_trimmomatic,
-            ch_host_bowtie2index
-        )
-
-        ch_short_reads_trimmomatic = BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC.out.reads
-        ch_bowtie2_removal_host_multiqc = BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC.out.log 
-        ch_software_versions = ch_software_versions.mix(BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC.out.version.first().ifEmpty(null))
-    }
-    
-    if(!params.keep_phix) {
-        BOWTIE2_PHIX_REMOVAL_BUILD (
-            ch_phix_db_file
-        )
-        BOWTIE2_PHIX_REMOVAL_ALIGN_TRIMMOMATIC (
-            ch_short_reads_trimmomatic,
-            BOWTIE2_PHIX_REMOVAL_BUILD.out.index
-        )
-	
-        ch_short_reads_trimmomatic = BOWTIE2_PHIX_REMOVAL_ALIGN_TRIMMOMATIC.out.reads 
-        ch_short_reads = ch_short_reads_trimmomatic//.mix(ch_short_reads_trimmomatic)
-    }
-
-    FASTQC_TRIMMED_TRIMMOMATIC (
-        ch_short_reads_trimmomatic
-    )
-
-    ch_fastqc_trimmed = FASTQC_TRIMMED_TRIMMOMATIC.out.zip
-
-    if (params.kraken2) {
-        KRAKEN2_DB_PREPARATION (
-        ch_kraken2_db_file
-        )
-        KRAKEN2_TRIMMOMATIC (
-            ch_short_reads_trimmomatic,
-            KRAKEN2_DB_PREPARATION.out.db
-        )
-
-        ch_software_versions = ch_software_versions.mix(KRAKEN2_TRIMMOMATIC.out.version.first().ifEmpty(null))
-
-        if ( params.kraken2_db && !params.skip_krona){
-            KRONA_DB ()
-            KRAKEN2_TRIMMOMATIC.out.results_for_krona
-                . map { classifier, meta, report ->
-                    def meta_new = meta.clone()
-                    meta_new.classifier  = classifier
-                    [ meta_new, report ]
-                }
-                .set { ch_tax_classifications_trimmomatic }
-        
-            KRONA_TRIMMOMATIC (
-                ch_tax_classifications_trimmomatic,
-                KRONA_DB.out.db.collect()
-            )
-            ch_software_versions = ch_software_versions.mix(KRONA_TRIMMOMATIC.out.version.first().ifEmpty(null))
-        }
-    }
-
-    /*
-    ================================================================================
-                                      Assembly
-    ================================================================================
-    */
-
-    // Co-assembly: prepare grouping for MEGAHIT and for pooling for SPAdes
-    if (params.coassemble_group) {
-        // short reads
-        // group and set group as new id
-        ch_short_reads_trimmomatic
-            .map { meta, reads -> [ meta.group, meta, reads ] }
-            .groupTuple(by: 0)
-            .map { group, metas, reads ->
-                    def meta = [:]
-                    meta.id          = "group-$group"
-                    meta.group       = group
-                    meta.single_end  = params.single_end
-                    if (!params.single_end) [ meta, reads.collect { it[0] }, reads.collect { it[1] } ]
-                    else [ meta, reads.collect { it }, [] ]
-            }
-            .set { ch_short_reads_grouped_trimmomatic }
-
-    } else {
-        ch_short_reads_trimmomatic
-            .map { meta, reads ->
-                    if (!params.single_end){ [ meta, [reads[0]], [reads[1]] ] }
-                    else [ meta, [reads], [] ] }
-            .set { ch_short_reads_grouped_trimmomatic }
-    }
-
-
-    /*
-    -------------------------------------------------------------------------------------------------
-                                            Assembly of reads
-    -------------------------------------------------------------------------------------------------
-    */
-
-    ch_assemblies_trimmomatic = Channel.empty()
-    if (!params.skip_megahit) {
-        MEGAHIT_TRIMMOMATIC ( ch_short_reads_grouped_trimmomatic )
-        MEGAHIT_TRIMMOMATIC.out.assembly
-            .map { meta, assembly ->
-                def meta_new = meta.clone()
-                meta_new.assembler  = "MEGAHIT"
-                [ meta_new, assembly ]
-            }
-            .set { ch_megahit_assemblies_trimmomatic }
-        ch_assemblies_trimmomatic = ch_assemblies_trimmomatic.mix(ch_megahit_assemblies_trimmomatic)
-        ch_software_versions = ch_software_versions.mix(MEGAHIT_TRIMMOMATIC.out.version.first().ifEmpty(null))
-    }
-
-    // Co-assembly: pool reads for SPAdes
-    if (params.coassemble_group) {
-        // short reads
-        if (!params.single_end && (!params.skip_spades || !params.skip_spadeshybrid)){
-            if (params.single_end){
-		/*POOL_SINGLE_READS ( ch_short_reads_grouped )
-                ch_short_reads_spades = POOL_SINGLE_READS.out.reads*/
-                POOL_SINGLE_READS_TRIMMOMATIC ( ch_short_reads_grouped_trimmomatic )
-                ch_short_reads_spades_trimmomatic = POOL_SINGLE_READS_TRIMMOMATIC.out.reads
-            } else {
-                POOL_PAIRED_READS_TRIMMOMATIC ( ch_short_reads_grouped_trimmomatic )
-                ch_short_reads_spades_trimmomatic = POOL_PAIRED_READS_TRIMMOMATIC.out.reads
-            }
-        }
-      } else {
-        ch_short_reads_spades_trimmomatic = ch_short_reads_trimmomatic
-      }
-	
-    if (!params.single_end && !params.skip_spades){
-        SPADES_TRIMMOMATIC ( ch_short_reads_spades_trimmomatic )
-        SPADES_TRIMMOMATIC.out.assembly
-            .map { meta, assembly ->
-                def meta_new = meta.clone()
-                meta_new.assembler  = "SPAdes"
-                [ meta_new, assembly ]
-            }
-            .set { ch_spades_assemblies_trimmomatic }
-	    SPADES_TRIMMOMATIC.out.contig
-            .map { meta, contig ->
-                def meta_new = meta.clone()
-                meta_new.assembler  = "SPAdes"
-                [ meta_new, contig ]
-            }
-            .set { ch_spades_contigs_trimmomatic }
-        ch_assemblies_trimmomatic = Channel.empty()
-	    ch_assemblies_trimmomatic = ch_assemblies_trimmomatic.mix(ch_spades_assemblies_trimmomatic)
-        ch_software_versions = ch_software_versions.mix(SPADES_TRIMMOMATIC.out.version.first().ifEmpty(null))
-    }
-
-    /*
-    -------------------------------------------------------------------------------------------------
-                                                Assembly QC
-    -------------------------------------------------------------------------------------------------
-    */
-	
-    ch_quast_multiqc = Channel.empty()
-    if (!params.skip_quast){
-        if (!params.single_end && !params.skip_spades) {
-            QUAST_TRIMMOMATIC_SPADES ( ch_spades_assemblies_trimmomatic, ch_spades_contigs_trimmomatic )
-        	ch_quast_multiqc = ch_quast_multiqc.mix(QUAST_TRIMMOMATIC_SPADES.out.qc)
-            ch_software_versions = ch_software_versions.mix(QUAST_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
-        }
-        if (!params.skip_megahit){
-	        QUAST_TRIMMOMATIC_MEGAHIT ( ch_megahit_assemblies_trimmomatic )
-            ch_quast_multiqc = ch_quast_multiqc.mix(QUAST_TRIMMOMATIC_MEGAHIT.out.qc)
-            ch_software_versions = ch_software_versions.mix(QUAST_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
-        }
-    }
-    
-    /*
-    ================================================================================================
-                                            Predict proteins
-    ================================================================================================
-    */
-
-    if (!params.skip_prodigal){
-        if (!params.single_end && !params.skip_spades) {
-            PRODIGAL_SPADES (
-            ch_spades_assemblies_trimmomatic,
-            modules['prodigal']['output_format']
-        )
-        ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES.out.versions.first().ifEmpty(null))
-            }
-        if (!params.skip_megahit){
-	        PRODIGAL_MEGAHIT (
-            ch_megahit_assemblies_trimmomatic,
-            modules['prodigal']['output_format']
-        )
-        ch_software_versions = ch_software_versions.mix(PRODIGAL_MEGAHIT.out.versions.first().ifEmpty(null))
-        }
-    }
-    
-    /*
-    ================================================================================================
-                                                Binning
-    ================================================================================================
-    */
-
-    ch_bowtie2_assembly_multiqc = Channel.empty()
-    ch_busco_summary            = Channel.empty()
-    ch_busco_multiqc            = Channel.empty()
-    if (!params.skip_binning) {
-        if (!params.single_end && !params.skip_spades) {
-            METABAT2_BINNING_TRIMMOMATIC_SPADES (
-            ch_spades_assemblies_trimmomatic,
-            ch_short_reads_trimmomatic
-        )
-        ch_bowtie2_assembly_multiqc = ch_bowtie2_assembly_multiqc.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bowtie2_assembly_multiqc)
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bowtie2_version.first().ifEmpty(null))
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.metabat2_version.first().ifEmpty(null))
-        }
-        if (!params.skip_megahit) {
-            METABAT2_BINNING_TRIMMOMATIC_MEGAHIT (
-            ch_megahit_assemblies_trimmomatic,
-            ch_short_reads_trimmomatic
-        )
-        ch_bowtie2_assembly_multiqc = ch_bowtie2_assembly_multiqc.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bowtie2_assembly_multiqc)
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bowtie2_version.first().ifEmpty(null))
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.metabat2_version.first().ifEmpty(null))
-        }
-
-        /*
-         * BUSCO subworkflow: Quantitative measures for the assessment of genome assembly
-         */
-        if (!params.skip_busco) {
-            if (!params.single_end && !params.skip_spades) {
-                BUSCO_QC_TRIMMOMATIC_SPADES (
-                    ch_busco_db_file,
-                    ch_busco_download_folder,
-                    METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins.transpose()
-                )
-                ch_busco_summary_trimmomatic_spades = BUSCO_QC_TRIMMOMATIC_SPADES.out.summary
-                ch_busco_summary = ch_busco_summary.mix(ch_busco_summary_trimmomatic_spades)
-                ch_busco_multiqc = ch_busco_multiqc.mix(BUSCO_QC_TRIMMOMATIC_SPADES.out.multiqc)
-                ch_software_versions = ch_software_versions.mix(BUSCO_QC_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
-            
-                // process information if BUSCO analysis failed for individual bins due to no matching genes
-                BUSCO_QC_TRIMMOMATIC_SPADES.out
-                    .failed_bin
-                    .splitCsv(sep: '\t')
-                    .map { bin, error -> if (!bin.contains(".unbinned.")) busco_failed_bins[bin] = error }
-            }
-            if (!params.skip_megahit) {
-                BUSCO_QC_TRIMMOMATIC_MEGAHIT (
-                    ch_busco_db_file,
-                    ch_busco_download_folder,
-                    METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins.transpose()
-                )
-                ch_busco_summary_trimmomatic_megahit = BUSCO_QC_TRIMMOMATIC_MEGAHIT.out.summary
-                ch_busco_summary = ch_busco_summary.mix(ch_busco_summary_trimmomatic_megahit)
-                ch_busco_multiqc = ch_busco_multiqc.mix(BUSCO_QC_TRIMMOMATIC_MEGAHIT.out.multiqc)
-                ch_software_versions = ch_software_versions.mix(BUSCO_QC_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
-            
-                // process information if BUSCO analysis failed for individual bins due to no matching genes
-                BUSCO_QC_TRIMMOMATIC_MEGAHIT.out
-                    .failed_bin
-                    .splitCsv(sep: '\t')
-                    .map { bin, error -> if (!bin.contains(".unbinned.")) busco_failed_bins[bin] = error }
-            }
-        }
-
-        if (!params.skip_quast){
-            if (!params.single_end && !params.skip_spades) {
-                QUAST_BINS_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )
-                ch_software_versions = ch_software_versions.mix(QUAST_BINS_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
-
-                QUAST_BINS_SUMMARY_TRIMMOMATIC_SPADES ( QUAST_BINS_TRIMMOMATIC_SPADES.out.quast_bin_summaries.collect() )
-                ch_quast_bins_summary_trimmomatic_spades = QUAST_BINS_SUMMARY_TRIMMOMATIC_SPADES.out.summary
-            }
-            if (!params.skip_megahit) {
-                QUAST_BINS_TRIMMOMATIC_MEGAHIT ( METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
-                ch_software_versions = ch_software_versions.mix(QUAST_BINS_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
-
-                QUAST_BINS_SUMMARY_TRIMMOMATIC_MEGAHIT ( QUAST_BINS_TRIMMOMATIC_MEGAHIT.out.quast_bin_summaries.collect() )
-                ch_quast_bins_summary_trimmomatic_megahit = QUAST_BINS_SUMMARY_TRIMMOMATIC_MEGAHIT.out.summary
-            }
-        }
-
-        /*
-        -------------------------------------------------------------------------------------------------
-                                Sourmash added for Taxonomic Classification
-        -------------------------------------------------------------------------------------------------
-        */
-
-        /*
-         * Sourmash: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
-         */
-        if (params.sourmash) {
-            if (!params.single_end && !params.skip_spades) {
-                SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )
-                
-                SOURMASH_CLASSIFY_TRIMMOMATIC_SPADES ( 
-                    ch_sourmash_db,
-                    SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.signatures
-                )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
-            }
-            if (!params.skip_megahit) {
-                SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT ( METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
-                
-                SOURMASH_CLASSIFY_TRIMMOMATIC_MEGAHIT ( 
-                    ch_sourmash_db,
-                    SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.signatures
-                )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
-            }
-        }
-
-        /*
-         * GTDB-tk: taxonomic classifications using GTDB reference
-         */
-        if (params.gtdbtk || gtdb) {
-            ch_gtdbtk_summary_trimmomatic_spades = Channel.empty()
-            ch_gtdbtk_summary_trimmomatic_megahit = Channel.empty()
-            if (!params.single_end && !params.skip_spades) {
-                GTDBTK_TRIMMOMATIC_SPADES ( 
-                    METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins,
-                    ch_busco_summary_trimmomatic_spades,
-                    ch_gtdb
-                )
-                ch_software_versions = ch_software_versions.mix(GTDBTK_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
-                ch_gtdbtk_summary_trimmomatic_spades = GTDBTK_TRIMMOMATIC_SPADES.out.summary
-                if (!params.skip_busco || !params.skip_quast || gtdb) {
-                    BIN_SUMMARY_TRIMMOMATIC_SPADES (
-                        METABAT2_BINNING_TRIMMOMATIC_SPADES.out.depths_summary,
-                        ch_busco_summary_trimmomatic_spades.ifEmpty([]),
-                        ch_quast_bins_summary_trimmomatic_spades.ifEmpty([]),
-                        ch_gtdbtk_summary_trimmomatic_spades.ifEmpty([])
-                    )
-                    ch_bin_depths_summary = METABAT2_BINNING_TRIMMOMATIC_SPADES.out.depths_summary
-                    ch_busco_summary = ch_busco_summary_trimmomatic_spades
-                    ch_quast_bins_summary = ch_quast_bins_summary_trimmomatic_spades
-                }
-            }
-            if (!params.skip_megahit) {
-                GTDBTK_TRIMMOMATIC_MEGAHIT ( 
-                    METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins,
-                    ch_busco_summary_trimmomatic_megahit,
-                    ch_gtdb
-                )
-                ch_software_versions = ch_software_versions.mix(GTDBTK_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
-                ch_gtdbtk_summary_trimmomatic_megahit = GTDBTK_TRIMMOMATIC_MEGAHIT.out.summary
-                if (!params.skip_busco || !params.skip_quast || gtdb) {
-                    BIN_SUMMARY_TRIMMOMATIC_MEGAHIT (
-                        METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.depths_summary,
-                        ch_busco_summary_trimmomatic_megahit.ifEmpty([]),
-                        ch_quast_bins_summary_trimmomatic_megahit.ifEmpty([]),
-                        ch_gtdbtk_summary_trimmomatic_megahit.ifEmpty([])
-                    )
-                    ch_bin_depths_summary = METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.depths_summary
-                    ch_busco_summary = ch_busco_summary_trimmomatic_megahit
-                    ch_quast_bins_summary = ch_quast_bins_summary_trimmomatic_megahit
-                }
-            }
-        }
-
-        /*
-         * Prokka: Genome annotation
-         */
-        if (!params.single_end && !params.skip_spades) {
-            METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins
-                .transpose()
-                    .map { meta, bin ->
-                        def meta_new = meta.clone()
-                        meta_new.id  = bin.getBaseName()
-                        [ meta_new, bin ]
-                    }
-                    .set { ch_bins_for_prokka_trimmomatic_spades }
-
-            if (!params.skip_prokka){
-                PROKKA_BINS_TRIMMOMATIC_SPADES (
-                    ch_bins_for_prokka_trimmomatic_spades,
-                    [],
-                    []
-                )
-                PROKKA_ASSEMBLIES_TRIMMOMATIC_SPADES (
-                    ch_spades_assemblies_trimmomatic,
-                    [],
-                    []
-                )
-                ch_software_versions = ch_software_versions.mix(PROKKA_BINS_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
-            }
-        }
-        if (!params.skip_megahit) {
-            METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins
-                .transpose()
-                    .map { meta, bin ->
-                        def meta_new = meta.clone()
-                        meta_new.id  = bin.getBaseName()
-                        [ meta_new, bin ]
-                    }
-                    .set { ch_bins_for_prokka_trimmomatic_megahit }
-
-            if (!params.skip_prokka){
-                PROKKA_BINS_TRIMMOMATIC_MEGAHIT (
-                    ch_bins_for_prokka_trimmomatic_megahit,
-                    [],
-                    []
-                )
-                PROKKA_ASSEMBLIES_TRIMMOMATIC_MEGAHIT (
-                    ch_megahit_assemblies_trimmomatic,
-                    [],
-                    []
-                )
-                ch_software_versions = ch_software_versions.mix(PROKKA_BINS_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
-            }
-        }
-        
     }
 
     //
@@ -1210,7 +730,7 @@ workflow METABP {
     GET_SOFTWARE_VERSIONS (
         ch_software_versions.map { it }.collect()
     )
-    
+
     //
     // MODULE: MultiQC
     //
@@ -1222,28 +742,19 @@ workflow METABP {
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(GET_SOFTWARE_VERSIONS.out.yaml.collect())
 
-    MULTIQC (
+    /*MULTIQC (
         ch_multiqc_files.collect(),
         ch_multiqc_custom_config.collect().ifEmpty([]),
         FASTQC_RAW.out.zip.collect{it[1]}.ifEmpty([]),
         FASTP.out.json.collect{it[1]}.ifEmpty([]),
-        FASTQC_TRIMMED_TRIMMOMATIC.out.zip.collect{it[1]}.ifEmpty([]),
+        FASTQC_TRIMMED_CUTADAPT.out.zip.collect{it[1]}.ifEmpty([]),//.mix(FASTQC_TRIMMED_TRIMMOMATIC.out.zip)
         ch_bowtie2_removal_host_multiqc.collect{it[1]}.ifEmpty([]),
         ch_quast_multiqc.collect().ifEmpty([]),
         ch_bowtie2_assembly_multiqc.collect().ifEmpty([]),
         ch_busco_multiqc.collect().ifEmpty([])
     )
     multiqc_report       = MULTIQC.out.report.toList()
-    ch_software_versions = ch_software_versions.mix(MULTIQC.out.version.ifEmpty(null))
-    
-    
-    
-    }
-
-
-    
-
-    
+    ch_software_versions = ch_software_versions.mix(MULTIQC.out.version.ifEmpty(null))*/
 }
 
 /*
