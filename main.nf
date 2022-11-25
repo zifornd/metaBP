@@ -25,7 +25,7 @@ WorkflowMain.initialise(workflow, params, log)
 ========================================================================================
 */
 
-include { METABP } from './workflows/metaBPx'
+include { METABP } from './workflows/metaBP'
 
 //
 // WORKFLOW: Run main nf-core/mag analysis pipeline

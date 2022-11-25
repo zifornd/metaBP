@@ -11,7 +11,8 @@ options        = initOptions(params.options)
 
 
 process SOURMASH_SIGNATURE {
-    tag "$meta.id"
+    tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
+
     label 'process_medium'
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -35,11 +36,11 @@ process SOURMASH_SIGNATURE {
     
     script:
     def software = getSoftwareName(task.process)
-    def prefix = options.suffix ? "${meta.assembler}-${meta.id}-${options.suffix}":"${meta.id}"
+    def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     
 	"""
         sourmash sketch dna ${options.args} ${bins} --output "${prefix}.sig"      
-    	sourmash --version | sed "s/SOURMASH //" > ${software}.version.txt
+    	sourmash --version | sed "s/sourmash //" > ${software}.version.txt
    	"""
 }
 
