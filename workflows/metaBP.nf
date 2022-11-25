@@ -312,7 +312,7 @@ workflow METABP {
                 [ meta_new, reads ]
             }
             .set { ch_short_reads_cutadapt }
-    ch_short_reads_cutadapt = CUTADAPT.out.reads
+    
     ch_software_versions = ch_software_versions.mix(CUTADAPT.out.version.first().ifEmpty(null))
     
     ch_bowtie2_removal_host_multiqc = Channel.empty()
