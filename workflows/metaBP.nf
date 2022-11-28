@@ -239,7 +239,7 @@ if (!params.keep_lambda) {
 }
 
 gtdb = params.skip_busco ? false : params.gtdb
-if (gtdb) {
+if (params.gtdbtk && gtdb) {
     Channel
         .value(file( "${gtdb}" ))
         .set { ch_gtdb }
@@ -630,7 +630,7 @@ workflow METABP {
         /*
          * GTDB-tk: taxonomic classifications using GTDB reference
          */
-        if (params.gtdbtk || gtdb) {
+        if (params.gtdbtk && gtdb) {
             ch_gtdbtk_summary_cutadapt_spades = Channel.empty()
             ch_gtdbtk_summary_cutadapt_megahit = Channel.empty()
             if (!params.single_end && !params.skip_spades) {
@@ -1105,7 +1105,7 @@ workflow METABP {
         /*
          * GTDB-tk: taxonomic classifications using GTDB reference
          */
-        if (params.gtdbtk || gtdb) {
+        if (params.gtdbtk && gtdb) {
             ch_gtdbtk_summary_trimmomatic_spades = Channel.empty()
             ch_gtdbtk_summary_trimmomatic_megahit = Channel.empty()
             if (!params.single_end && !params.skip_spades) {
