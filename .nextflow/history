@@ -1,3 +1,0 @@
-2022-11-11 08:58:07	-	fabulous_feynman	-	d8ab3b479c5710afc59c1c28658b47a5	21ec41be-a30a-4360-8281-45bf72d16dbc	nextflow run main.nf
-2022-11-11 08:59:17	-	soggy_ekeblad	-	d8ab3b479c5710afc59c1c28658b47a5	9a115a7f-8c56-4fe6-a69e-24dbba7b1ff2	nextflow run main.nf --input samplesheet.csv --genome GRCh37 -profile docker
-2022-11-11 09:20:24	-	astonishing_stallman	-	d8ab3b479c5710afc59c1c28658b47a5	0454547a-e7eb-4250-b4f9-699c1bc721dd	nextflow run main.nf -profile docker
