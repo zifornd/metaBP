@@ -4,7 +4,7 @@
 
 This document describes the output produced by the pipeline. Most of the plots are taken from the MultiQC report, which summarises results at the end of the pipeline.
 
-The directories listed below will be created in the Intermediate_Outputs and Results directory after the pipeline has finished. The tools giving the final output of the pipeline are stored in Results directory whereas reat all tools giving intermediate outputs are stored in Intermediate_Outputs directory. All paths are relative to the top-level Intermediate_Outputs and Results directory.
+The directories listed below will be created in the Intermediate_Outputs and Results directory after the pipeline has finished. The tools giving the final output of the pipeline are stored in Results directory whereas rest other tools giving intermediate outputs are stored in Intermediate_Outputs directory. All paths are relative to the top-level Intermediate_Outputs and Results directory.
 
 ## Pipeline overview
 
@@ -38,7 +38,7 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 
 * `Intermediate_Outputs/FastQC`
     * `[sample]_[1/2]_fastqc.html`: FastQC report, containing quality metrics for your untrimmed raw fastq files
-    * `[sample]_[1/2]_fastqc.html`: FastQC report, containing quality metrics for trimmed and, if specified, filtered read.
+    * `[sample]_[trimmer]_[1/2]_fastqc.html`: FastQC report, containing quality metrics for trimmed and, if specified, filtered read.
 
 </details>
 
@@ -51,9 +51,9 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/fastp/`
-    * `fastp.html`: Interactive report
-    * `fastp.json`: Report in json format
+* `Intermediate_Outputs/fastp/[sample/group]/`
+    * `[sample/group].fastp.html`: Interactive report
+    * `[sample/group].fastp.json`: Report in json format
 
 </details>
 
@@ -64,8 +64,8 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/Cutadapt/`
-    * `[sample].cutadapt.log`: Report in log file
+* `Intermediate_Outputs/Cutadapt//[sample/group]/`
+    * `[sample/group].cutadapt.log`: 
 
 
 </details>
@@ -77,8 +77,8 @@ FastQC is run for visualising the general quality metrics of the sequencing runs
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/Trimmomatic/`
-    * `[sample].trimmomatic.log`: Report in log file
+* `Intermediate_Outputs/Trimmomatic/[sample/group]/`
+    * `[sample/group].trimmomatic.log`: Contains a brief log file indicating the number of input reads, surviving reads and dropped reads.
 
 </details>
 
@@ -90,7 +90,7 @@ The pipeline uses bowtie2 to map the reads against PhiX and removes mapped reads
 <summary>Output files</summary>
 
 * `Intermediate_Outputs/phiX Removal/`
-    * `[sample].phix_removed.bowtie2.log`: Contains a brief log file indicating how many reads have been retained.
+    * `[trimmer]-[sample/group].phix_removed.bowtie2.log`: Contains a brief log file indicating how many reads have been retained.
 
 </details>
 
@@ -117,8 +117,8 @@ The pipeline uses bowtie2 to map short reads against the host reference genome s
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Results/Kraken2/`
-    * `sample_kraken2.report.txt`: Classification in the Kraken report format. See the [kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#output-formats) for more details
+* `Results/Kraken2/[sample/group]/`
+    * `[trimmer]-[sample/group]_kraken2.report.txt`: Classification in the Kraken report format. See the [kraken2 manual](https://github.com/DerrickWood/kraken2/wiki/Manual#output-formats) for more details
      
     
 </details>
@@ -130,7 +130,7 @@ The pipeline uses bowtie2 to map short reads against the host reference genome s
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Results/Krona/`
+* `Results/Krona/[sample/group]/`
     * `taxonomy.krona.html`: Interactive pie chart of the cutadapt output produced by [KronaTools](https://github.com/marbl/Krona/wiki)
      
 </details>
@@ -150,13 +150,13 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <summary>Output files</summary>
 
 
-* `Intermediate_Outputs/MEGAHIT/`
-    * `[sample/group].contigs.fa.gz`: Compressed metagenome assembly in fasta format
-    * `[sample/group].log`: Log file
+* `Intermediate_Outputs/MEGAHIT/[trimmer]`
+    * `[trimmer]-[sample/group].contigs.fa.gz`: Compressed metagenome assembly in fasta format
+    * `[trimmer]-[sample/group].log`: Log file
     
     * `QC/[sample/group]/`: Directory containing QUAST files and Bowtie2 mapping logs
-        * `MEGAHIT-[sample].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
-        * `MEGAHIT-[sample/group]-[sampleToMap].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the respective sample ("sampleToMap").
+        * `MEGAHIT-[sample/group]-[trimmer].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
+        * `MEGAHIT-[sample/group]-[sampleToMap]-[trimmer].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the respective sample ("sampleToMap").
 
 </details>
 
@@ -167,14 +167,14 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/SPAdes/`
-    * `[sample/group]_scaffolds.fasta.gz`: Compressed assembled scaffolds in fasta format
-    * `[sample/group]_graph.gfa.gz`: Compressed assembly graph in gfa format
-    * `[sample/group]_contigs.fasta.gz`: Compressed assembled contigs in fasta format
-    * `[sample/group]pt.log`: Log file
+* `Intermediate_Outputs/SPAdes/[trimmer]`
+    * `[trimmer]-[sample/group]_scaffolds.fasta.gz`: Compressed assembled scaffolds in fasta format
+    * `[trimmer]-[sample/group]_graph.gfa.gz`: Compressed assembly graph in gfa format
+    * `[trimmer]-[sample/group]_contigs.fasta.gz`: Compressed assembled contigs in fasta format
+    * `[trimmer]-[sample/group]pt.log`: Log file
     * `QC/[sample/group]/`: Directory containing QUAST files and Bowtie2 mapping logs
-        * `SPAdes-[sample].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the trimmomatic output sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
-        * `SPAdes-[sample/group]-[sampleToMap].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the respective sample ("sampleToMap").
+        * `SPAdes-[sample/group]-[trimmer].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the trimmomatic output sample that the metagenome was assembled from, only present if `--coassemble_group` is not set.
+        * `SPAdes-[sample/group]-[sampleToMap]-[trimmer].bowtie2.log`: Bowtie2 log file indicating how many reads have been mapped from the respective sample ("sampleToMap").
 
 </details>
 
@@ -186,10 +186,10 @@ Trimmed (short) reads are assembled with both megahit and SPAdes. Hybrid assembl
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/QUAST`
+* `Intermediate_Outputs/QUAST/[assembler]-[trimmer]-[sample/group].extension`
     * `report.*`: QUAST report in various formats, such as html, txt, tsv or tex
     * `quast.log`: QUAST log file
-    * `predicted_genes/[assembler]-[sample/group].rna.gff`: Contig positions for rRNA genes in gff version 3 format
+    * `predicted_genes/[assembler]-[trimmer]-[sample/group].rna.gff`: Contig positions for rRNA genes in gff version 3 format
 
 </details>
 
@@ -204,7 +204,7 @@ Protein-coding genes are predicted for each assembly.
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Results/Prodigal`
+* `Results/Prodigal//[sample/group]/`
     * `[sample/group].gff`: Gene Coordinates in GFF format
     * `[sample/group].faa`: The protein translation file consists of all the proteins from all the sequences in multiple FASTA format.
     * `[sample/group].fna`: Nucleotide sequences of the predicted proteins using the DNA alphabet, not mRNA (so you will see 'T' in the output and not 'U').
@@ -236,9 +236,9 @@ Sequencing depth per contig and sample is generated by `jgi_summarize_bam_contig
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/MetaBAT2/`
-    * `[assembler]-[sample/group].*.fa`: Genome bins retrieved from input assembly
-    * `[assembler]-[sample/group].unbinned.*.fa`: Contigs that were not binned with other contigs but considered interesting. By default, these are at least 1 Mbp (`--min_length_unbinned_contigs`) in length and at most the 100 longest contigs (`--max_unbinned_contigs`) are reported
+* `Intermediate_Outputs/MetaBAT2/[assembler]-[trimmer]-[sample/group]`
+    * `[assembler]-[trimmer]-[sample/group].*.fa`: Genome bins retrieved from input assembly
+    * `[assembler]-[trimmer]-[sample/group].unbinned.*.fa`: Contigs that were not binned with other contigs but considered interesting. By default, these are at least 1 Mbp (`--min_length_unbinned_contigs`) in length and at most the 100 longest contigs (`--max_unbinned_contigs`) are reported
 
 </details>
 
@@ -266,7 +266,7 @@ For each genome bin the median sequencing depth is computed based on the corresp
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/`
+* `Binning/`
     * `bin_depths_summary.tsv`: Summary of bin sequencing depths for all samples. Depths are available for samples mapped against the corresponding assembly, i.e. according to the mapping strategy specified with `--binning_map_mode`. Only for short reads.
     * `[assembler]-[sample/group]-binDepths.heatmap.png`: Clustered heatmap showing bin abundances of the assembly across samples. Bin depths are transformed to centered log-ratios and bins as well as samples are clustered by Euclidean distance. Again, sample depths are available according to the mapping strategy specified with `--binning_map_mode`.
 
@@ -279,12 +279,11 @@ For each genome bin the median sequencing depth is computed based on the corresp
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/QUAST/[assembler]-[bin]/`
+* `Intermediate_Outputs/QUAST/[assembler]-[trimmer]-[sample/group]/`
     * `report.*`: QUAST report in various formats, such as html, txt, tsv or tex
     * `quast.log`: QUAST log file
     * `predicted_genes/[assembler]-[sample/group].rna.gff`: Contig positions for rRNA genes in gff version 3 format
-* `GenomeBinning/QC/`
-    * `quast_summary.tsv`: QUAST output for all bins summarized
+* `Intermediate_Outputs/QUAST/[assembler]-[trimmer]-[sample/group]-quast_summary.tsv`: QUAST output for all bins summarized
 
 </details>
 
@@ -295,14 +294,14 @@ For each genome bin the median sequencing depth is computed based on the corresp
 <details markdown="1">
 <summary>Output files</summary>
 
-* `GenomeBinning/QC/BUSCO/`
-    * `[assembler]-[bin]_busco.log`: Log file containing the standard output of BUSCO.
-    * `[assembler]-[bin]_busco.err`: File containing potential error messages returned from BUSCO.
+* `Intermediate_Outputs/BUSCO/`
+    * `[assembler]-[trimmer]-[bin]_busco.log`: Log file containing the standard output of BUSCO.
+    * `[assembler]-[trimmer]-[bin]_busco.err`: File containing potential error messages returned from BUSCO.
     * `short_summary.domain.[lineage].[assembler]-[bin].txt`: BUSCO summary of the results for the selected domain when run in automated lineage selection mode. Not available for bins for which a viral lineage was selected.
     * `short_summary.specific_lineage.[lineage].[assembler]-[bin].txt`: BUSCO summary of the results in case a more specific lineage than the domain could be selected or for the lineage provided via `--busco_reference`.
-    * `[assembler]-[bin]_buscos.[lineage].fna.gz`: Nucleotide sequence of all identified BUSCOs for used lineages (domain or specific).
-    * `[assembler]-[bin]_buscos.[lineage].faa.gz`: Aminoacid sequence of all identified BUSCOs for used lineages (domain or specific).
-    * `[assembler]-[bin]_prodigal.gff`: Genes predicted with Prodigal.
+    * `[assembler]-[trimmer]-[bin]_buscos.[lineage].fna.gz`: Nucleotide sequence of all identified BUSCOs for used lineages (domain or specific).
+    * `[assembler]-[trimmer]-[bin]_buscos.[lineage].faa.gz`: Aminoacid sequence of all identified BUSCOs for used lineages (domain or specific).
+    * `[assembler]-[trimmer]-[bin]_prodigal.gff`: Genes predicted with Prodigal.
 
 </details>
 
@@ -322,7 +321,7 @@ Besides the reference files or output files created by BUSCO, the following summ
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Intermediate_Outputs/Binning/`
+* `Intermediate_Outputs/BUSCO/`
     * `[assembler]-[trimmer]-busco_summary.tsv`: A summary table of the BUSCO results, with % of marker genes found. If run in automated lineage selection mode, both the results for the selected domain and for the selected more specific lineage will be given, if available.
 
 </details>
@@ -338,7 +337,7 @@ Besides the reference files or output files created by BUSCO, the following summ
 <summary>Output files</summary>
 
 * `Results/Sourmash/`
-    * `sample.csv`: A csv file containing the classification of the bins.
+    * `[assembler]/[trimmer]/[sample/group].csv`: A csv file containing the classification of the bins.
 
 </details>
 
@@ -349,15 +348,15 @@ Besides the reference files or output files created by BUSCO, the following summ
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Taxonomy/GTDB-Tk/[assembler]/[sample/group]/`
-    * `gtdbtk.[assembler]-[sample/group].{bac120/ar122}.summary.tsv`: Classifications for bacterial and archaeal genomes (see the [GTDB-Tk documentation for details](https://ecogenomics.github.io/GTDBTk/files/summary.tsv.html).
-    * `gtdbtk.[assembler]-[sample/group].{bac120/ar122}.classify.tree.gz`: Reference tree in Newick format containing query genomes placed with pplacer.
-    * `gtdbtk.[assembler]-[sample/group].{bac120/ar122}.markers_summary.tsv`: A summary of unique, duplicated, and missing markers within the 120 bacterial marker set, or the 122 archaeal marker set for each submitted genome.
-    * `gtdbtk.[assembler]-[sample/group].{bac120/ar122}.msa.fasta.gz`: FASTA file containing MSA of submitted and reference genomes.
-    * `gtdbtk.[assembler]-[sample/group].{bac120/ar122}.filtered.tsv`: A list of genomes with an insufficient number of amino acids in MSA.
-    * `gtdbtk.[assembler]-[sample/group].*.log`: Log files.
-    * `gtdbtk.[assembler]-[sample/group].failed_genomes.tsv`: A list of genomes for which the GTDB-Tk analysis failed, e.g. because Prodigal could not detect any genes.
-* `Taxonomy/GTDB-Tk/gtdbtk_summary.tsv`: A summary table of the GTDB-Tk classification results for all bins, also containing bins which were discarded based on the BUSCO QC, which were filtered out by GTDB-Tk ((listed in `*.filtered.tsv`) or for which the analysis failed (listed in `*.failed_genomes.tsv`).
+* `Results/GTDB-Tk/`
+    * `gtdbtk.[assembler]-[trimmer]-[sample/group].{bac120/ar122}.summary.tsv`: Classifications for bacterial and archaeal genomes (see the [GTDB-Tk documentation for details](https://ecogenomics.github.io/GTDBTk/files/summary.tsv.html).
+    * `gtdbtk.[assembler]-[trimmer]-[sample/group].{bac120/ar122}.classify.tree.gz`: Reference tree in Newick format containing query genomes placed with pplacer.
+    * `gtdbtk.[assembler]-[trimmer]-[sample/group].{bac120/ar122}.markers_summary.tsv`: A summary of unique, duplicated, and missing markers within the 120 bacterial marker set, or the 122 archaeal marker set for each submitted genome.
+    * `gtdbtk.[assembler]-[trimmer]-[sample/group].{bac120/ar122}.msa.fasta.gz`: FASTA file containing MSA of submitted and reference genomes.
+    * `gtdbtk.[assembler]-[trimmer]-[sample/group].{bac120/ar122}.filtered.tsv`: A list of genomes with an insufficient number of amino acids in MSA.
+    * `gtdbtk.[assembler]-[trimmer]-[sample/group].*.log`: Log files.
+    * `gtdbtk.[assembler]-[trimmer]-[sample/group].failed_genomes.tsv`: A list of genomes for which the GTDB-Tk analysis failed, e.g. because Prodigal could not detect any genes.
+* `Results/GTDB-Tk/gtdbtk_summary.tsv`: A summary table of the GTDB-Tk classification results for all bins, also containing bins which were discarded based on the BUSCO QC, which were filtered out by GTDB-Tk ((listed in `*.filtered.tsv`) or for which the analysis failed (listed in `*.failed_genomes.tsv`).
 
 </details>
 
@@ -370,19 +369,19 @@ Whole genome annotation is the process of identifying features of interest in a 
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Results/Prokka/[assembler]/[bin]/`
-    * `[bin].gff`: annotation in GFF3 format, containing both sequences and annotations
-    * `[bin].gbk`: annotation in GenBank format, containing both sequences and annotations
-    * `[bin].fna`: nucleotide FASTA file of the input contig sequences
-    * `[bin].faa`: protein FASTA file of the translated CDS sequences
-    * `[bin].ffn`: nucleotide FASTA file of all the prediction transcripts (CDS, rRNA, tRNA, tmRNA, misc_RNA)
-    * `[bin].sqn`: an ASN1 format "Sequin" file for submission to Genbank
-    * `[bin].fsa`: nucleotide FASTA file of the input contig sequences, used by "tbl2asn" to create the .sqn file
-    * `[bin].tbl`: feature Table file, used by "tbl2asn" to create the .sqn file
-    * `[bin].err`: unacceptable annotations - the NCBI discrepancy report.
-    * `[bin].log`: contains all the output that Prokka produced during its run
-    * `[bin].txt`: statistics relating to the annotated features found
-    * `[bin].tsv`: tab-separated file of all features (locus_tag, ftype, len_bp, gene, EC_number, COG, product)
+* `Results/Prokka/[assembler]-[trimmer]/[bin]/`
+    * `[assembler]-[trimmer]-[bin].gff`: annotation in GFF3 format, containing both sequences and annotations
+    * `[assembler]-[trimmer]-[bin].gbk`: annotation in GenBank format, containing both sequences and annotations
+    * `[assembler]-[trimmer]-[bin].fna`: nucleotide FASTA file of the input contig sequences
+    * `[assembler]-[trimmer]-[bin].faa`: protein FASTA file of the translated CDS sequences
+    * `[assembler]-[trimmer]-[bin].ffn`: nucleotide FASTA file of all the prediction transcripts (CDS, rRNA, tRNA, tmRNA, misc_RNA)
+    * `[assembler]-[trimmer]-[bin].sqn`: an ASN1 format "Sequin" file for submission to Genbank
+    * `[assembler]-[trimmer]-[bin].fsa`: nucleotide FASTA file of the input contig sequences, used by "tbl2asn" to create the .sqn file
+    * `[assembler]-[trimmer]-[bin].tbl`: feature Table file, used by "tbl2asn" to create the .sqn file
+    * `[assembler]-[trimmer]-[bin].err`: unacceptable annotations - the NCBI discrepancy report.
+    * `[assembler]-[trimmer]-[bin].log`: contains all the output that Prokka produced during its run
+    * `[assembler]-[trimmer]-[bin].txt`: statistics relating to the annotated features found
+    * `[assembler]-[trimmer]-[bin].tsv`: tab-separated file of all features (locus_tag, ftype, len_bp, gene, EC_number, COG, product)
 
 </details>
 
@@ -391,7 +390,7 @@ Whole genome annotation is the process of identifying features of interest in a 
 <details markdown="1">
 <summary>Output files</summary>
 
-* `Binning-[Assembler]-[trimmer]-[sample/group]/bin_summary.tsv`: Summary of bin sequencing depths together with BUSCO, QUAST and GTDB-Tk results, if at least one of the later was generated.
+* `Intermediate_Outputs/Binning/[assembler]-[trimmer]-[sample/group]/bin_summary.tsv`: Summary of bin sequencing depths together with BUSCO, QUAST and GTDB-Tk results, if at least one of the later was generated.
 
 </details>
 
