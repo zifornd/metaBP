@@ -77,8 +77,8 @@ Note that the pipeline will create the following files in your working directory
 
 ```console
 work                   # Directory containing the nextflow working files
-Intermediate_Outputs   # Intermediate outputs of different tools.
-Results                # Finished results (configurable, see below)
+Intermediate_Outputs   # Intermediate outputs of different tools
+Results                # Finished results. (configurable, see below)
 .nextflow.log          # Log file from Nextflow
 # Other nextflow hidden files, eg. history of pipeline runs and old logs.
 ```
