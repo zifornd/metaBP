@@ -68,7 +68,7 @@ Again, by default, the group information is only used to compute co-abundances f
 The typical command for running the pipeline is as follows:
 
 ```console
-nextflow run metaBP --input samplesheet.csv  -profile docker
+nextflow run metaBP --input samplesheet.csv -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -79,7 +79,7 @@ Note that the pipeline will create the following files in your working directory
 work                   # Directory containing the nextflow working files
 Intermediate_Outputs   # Intermediate outputs of different tools.
 Results                # Finished results (configurable, see below)
-.nextflow_log          # Log file from Nextflow
+.nextflow.log          # Log file from Nextflow
 # Other nextflow hidden files, eg. history of pipeline runs and old logs.
 ```
 
