@@ -32,7 +32,7 @@ process BOWTIE2_REMOVAL_ALIGN {
 
     script:
     def software = getSoftwareName(task.process)
-    def prefix = options.suffix ? "${meta.trimmer}-${meta.id}_${options.suffix}" : "${meta.trimmer}-${meta.id}"
+    def prefix = options.suffix ? "${meta.trimmer}-${meta.id}-${options.suffix}" : "${meta.trimmer}-${meta.id}"
     def sensitivity = params.host_removal_verysensitive ? "--very-sensitive" : "--sensitive"
     def save_ids = params.host_removal_save_ids ? "Y" : "N"
     if (!meta.single_end){
