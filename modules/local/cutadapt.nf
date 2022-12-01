@@ -48,7 +48,7 @@ process CUTADAPT {
         -o ${prefix}.fastq.gz \\
         ${prefix}.trim.fastq.gz \\
         $fail_fastq \\
-        2> ${prefix}.log
+        > ${prefix}.log
         echo \$(cutadapt --version 2>&1) | sed -e "s/cutadapt //g" > ${software}.version.txt
         """
 
@@ -65,7 +65,7 @@ process CUTADAPT {
         ${prefix}_1.fastq.gz \\
         ${prefix}_2.fastq.gz \\
         $fail_fastq \\
-        2> ${prefix}.log
+        > ${prefix}.log
 
         echo \$(cutadapt --version 2>&1) | sed -e "s/cutadapt //g" > ${software}.version.txt
         """
