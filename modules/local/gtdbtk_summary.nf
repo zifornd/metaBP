@@ -24,7 +24,7 @@ process GTDBTK_SUMMARY {
     path(failed_bins)
 
     output:
-    path "gtdbtk_summary-*.tsv", emit: summary
+    path "*-gtdbtk_summary.tsv", emit: summary
 
     script:
     def discarded = qc_discarded_bins.sort().size() > 0 ? "--qc_discarded_bins ${qc_discarded_bins}" : ""
