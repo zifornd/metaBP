@@ -39,7 +39,7 @@ workflow GTDBTK {
         .set { ch_busco_metrics }
 
     // Filter bins based on collected metrics: completeness, contamination
-    bins
+    ch_filtered_bins = bins
         .transpose()
         .map { meta, bin -> [bin.getName(), bin, meta]}
         .join(ch_busco_metrics, failOnDuplicate: true, failOnMismatch: true)
@@ -50,7 +50,7 @@ workflow GTDBTK {
             discarded: (it[2] == -1 || it[2] < params.gtdbtk_min_completeness || it[3] == -1 || it[3] > params.gtdbtk_max_contamination)
                 return [it[0], it[1]]
         }
-        .set { ch_filtered_bins }
+        //.set { ch_filtered_bins }
 
     GTDBTK_DB_PREPARATION ( gtdb )
     GTDBTK_CLASSIFY (
