@@ -31,8 +31,7 @@ process SOURMASH_SIGNATURE {
 
     output:
     tuple val(meta), path('*.sig')	    , emit: signatures
-    //tuple val(meta), path('*.log')          , emit: log
-    path "*.version.txt"                    , emit: version
+    path "*.version.txt"                , emit: version
     
     script:
     def software = getSoftwareName(task.process)

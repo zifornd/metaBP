@@ -10,7 +10,7 @@ params.options = [:]
 options        = initOptions(params.options)
 
 
-process SOURMASH_CLASSIFY {
+process SOURMASH_SUMMARIZE {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 
     label 'process_medium'
@@ -20,7 +20,7 @@ process SOURMASH_CLASSIFY {
 
     conda (params.enable_conda ? 'bioconda::sourmash=4.4.0' : null)
     if ( workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container){
-        container 'https://depot.galaxyproject.org/singularity/sourmash:4.2.4--hdfd78af_0'
+        container 'https://depot.galaxyproject.org/singularity/sourmash:4.4.0--hdfd78af_0'
     } else {
        container 'quay.io/biocontainers/sourmash:4.4.0--hdfd78af_0'
     }
@@ -35,12 +35,11 @@ process SOURMASH_CLASSIFY {
     path "*.version.txt"                    , emit: version
     
     script:
-    // Added soft-links to original fastqs for consistent naming in MultiQC
     def software = getSoftwareName(task.process)
     def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     
 	"""
-    sourmash lca classify \\
+    sourmash lca summarize \\
         $options.args \\
         --db ${db} \\
 	--query \\

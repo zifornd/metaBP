@@ -122,14 +122,14 @@ include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_MEGAHIT                         } 
 include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_MEGAHIT                      } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_trimmomatic_megahit']                )
 include { CUTADAPT                                                            } from '../modules/local/cutadapt'                    addParams( options: modules['cutadapt']                   )
 include { TRIMMOMATIC                                                         } from '../modules/local/trimmomatic'                 addParams( options: modules['trimmomatic']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_SPADES            } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_spades']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT           } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_megahit']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES         } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_trimmomatic_spades']                )
+include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_SPADES            } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_spades']                    )
+include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT           } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_megahit']                   )
+include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES         } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_trimmomatic_spades']                 )
 include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT        } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_trimmomatic_megahit']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_CUTADAPT_SPADES              } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_cutadapt_spades']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_CUTADAPT_MEGAHIT             } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_cutadapt_megahit']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_TRIMMOMATIC_SPADES           } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_trimmomatic_spades']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_TRIMMOMATIC_MEGAHIT          } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_trimmomatic_megahit']                )
+include { SOURMASH_SUMMARIZE as SOURMASH_SUMMARIZE_CUTADAPT_SPADES            } from '../modules/local/sourmash_summarize'          addParams( options: modules['sourmash_summarize_cutadapt_spades']                    )
+include { SOURMASH_SUMMARIZE as SOURMASH_SUMMARIZE_CUTADAPT_MEGAHIT           } from '../modules/local/sourmash_summarize'          addParams( options: modules['sourmash_summarize_cutadapt_megahit']                   )
+include { SOURMASH_SUMMARIZE as SOURMASH_SUMMARIZE_TRIMMOMATIC_SPADES         } from '../modules/local/sourmash_summarize'          addParams( options: modules['sourmash_summarize_trimmomatic_spades']                 )
+include { SOURMASH_SUMMARIZE as SOURMASH_SUMMARIZE_TRIMMOMATIC_MEGAHIT        } from '../modules/local/sourmash_summarize'          addParams( options: modules['sourmash_summarize_trimmomatic_megahit']                )
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
@@ -609,7 +609,7 @@ workflow METABP {
             if (!params.single_end && !params.skip_spades) {
                 SOURMASH_SIGNATURE_CUTADAPT_SPADES ( METABAT2_BINNING_CUTADAPT_SPADES.out.bins )
                 
-                SOURMASH_CLASSIFY_CUTADAPT_SPADES ( 
+                SOURMASH_SUMMARIZE_CUTADAPT_SPADES ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_CUTADAPT_SPADES.out.signatures
                 )
@@ -618,7 +618,7 @@ workflow METABP {
             if (!params.skip_megahit) {
                 SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT ( METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
                 
-                SOURMASH_CLASSIFY_CUTADAPT_MEGAHIT ( 
+                SOURMASH_SUMMARIZE_CUTADAPT_MEGAHIT ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.signatures
                 )
@@ -1084,7 +1084,7 @@ workflow METABP {
             if (!params.single_end && !params.skip_spades) {
                 SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )
 
-                SOURMASH_CLASSIFY_TRIMMOMATIC_SPADES ( 
+                SOURMASH_SUMMARIZE_TRIMMOMATIC_SPADES ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.signatures
                 )
@@ -1093,7 +1093,7 @@ workflow METABP {
             if (!params.skip_megahit) {
                 SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT ( METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
 
-                SOURMASH_CLASSIFY_TRIMMOMATIC_MEGAHIT ( 
+                SOURMASH_SUMMARIZE_TRIMMOMATIC_MEGAHIT ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.signatures
                 )
