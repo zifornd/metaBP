@@ -122,10 +122,6 @@ include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_MEGAHIT                         } 
 include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_MEGAHIT                      } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_trimmomatic_megahit']                )
 include { CUTADAPT                                                            } from '../modules/local/cutadapt'                    addParams( options: modules['cutadapt']                   )
 include { TRIMMOMATIC                                                         } from '../modules/local/trimmomatic'                 addParams( options: modules['trimmomatic']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_SPADES            } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_spades']                    )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT           } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_megahit']                   )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES         } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_trimmomatic_spades']                 )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT        } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_trimmomatic_megahit']                )
 include { SOURMASH_SUMMARIZE as SOURMASH_SUMMARIZE_CUTADAPT_SPADES            } from '../modules/local/sourmash_summarize'          addParams( options: modules['sourmash_summarize_cutadapt_spades']                    )
 include { SOURMASH_SUMMARIZE as SOURMASH_SUMMARIZE_CUTADAPT_MEGAHIT           } from '../modules/local/sourmash_summarize'          addParams( options: modules['sourmash_summarize_cutadapt_megahit']                   )
 include { SOURMASH_SUMMARIZE as SOURMASH_SUMMARIZE_TRIMMOMATIC_SPADES         } from '../modules/local/sourmash_summarize'          addParams( options: modules['sourmash_summarize_trimmomatic_spades']                 )
@@ -144,6 +140,10 @@ include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_SPADES                             } 
 include { BUSCO_QC as BUSCO_QC_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_megahit']                )
 include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_megahit']       )
 //include { GTDBTK                                        } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
+include { SOURMASH as SOURMASH_CUTADAPT_SPADES                                } from '../subworkflows/local/sourmash'          addParams( options: modules['sourmash_signature_cutadapt_spades']                    )
+include { SOURMASH as SOURMASH_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/sourmash'          addParams( options: modules['sourmash_signature_cutadapt_megahit']                   )
+include { SOURMASH as SOURMASH_TRIMMOMATIC_SPADES                             } from '../subworkflows/local/sourmash'          addParams( options: modules['sourmash_signature_trimmomatic_spades']                 )
+include { SOURMASH as SOURMASH_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/sourmash'          addParams( options: modules['sourmash_signature_trimmomatic_megahit']                )
 include { GTDBTK  as GTDBTK_CUTADAPT_MEGAHIT                                  } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_megahit']      )
 include { GTDBTK  as GTDBTK_CUTADAPT_SPADES                                   } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_spades']       )
 include { GTDBTK  as GTDBTK_TRIMMOMATIC_MEGAHIT                               } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_megahit']   )
@@ -603,10 +603,10 @@ workflow METABP {
         */
 
         /*
-         * Sourmash: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
+         * Sourmash subworkflow: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
          */
         if (params.sourmash) {
-            if (!params.single_end && !params.skip_spades) {
+            /* if (!params.single_end && !params.skip_spades) {
                 SOURMASH_SIGNATURE_CUTADAPT_SPADES ( METABAT2_BINNING_CUTADAPT_SPADES.out.bins )
                 
                 SOURMASH_SUMMARIZE_CUTADAPT_SPADES ( 
@@ -623,6 +623,15 @@ workflow METABP {
                     SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.signatures
                 )
                 ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+            } */
+
+            if (!params.single_end && !params.skip_spades) {
+                SOURMASH_CUTADAPT_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
+                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+            }
+            if (!params.skip_megahit) {
+                SOURMASH_CUTADAPT_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
+                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
             }
         }
 
@@ -1081,7 +1090,7 @@ workflow METABP {
          * Sourmash: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
          */
         if (params.sourmash) {
-            if (!params.single_end && !params.skip_spades) {
+            /* if (!params.single_end && !params.skip_spades) {
                 SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )
 
                 SOURMASH_SUMMARIZE_TRIMMOMATIC_SPADES ( 
@@ -1098,6 +1107,15 @@ workflow METABP {
                     SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.signatures
                 )
                 ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+            } */
+
+            if (!params.single_end && !params.skip_spades) {
+                SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
+                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+            }
+            if (!params.skip_megahit) {
+                SOURMASH_TRIMMOMATIC_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
+                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
             }
         }
 

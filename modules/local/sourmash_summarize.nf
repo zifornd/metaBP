@@ -40,10 +40,9 @@ process SOURMASH_SUMMARIZE {
     
 	"""
     sourmash lca summarize \\
-        $options.args \\
         --db ${db} \\
-	--query \\
-	${signatures} \\
+	    --query \\
+	    ${signatures} \\
         -o '${prefix}.csv' 
     	echo \$(sourmash --version 2>&1) | sed 's/^sourmash //' > ${software}.version.txt
         """
