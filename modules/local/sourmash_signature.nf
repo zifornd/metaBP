@@ -22,7 +22,7 @@ process SOURMASH_SIGNATURE {
     if ( workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container){
         container 'https://depot.galaxyproject.org/singularity/sourmash:4.4.0--hdfd78af_0'
     } else {
-       container 'quay.io/biocontainers/sourmash:4.4.0--hdfd78af_0'
+       container 'quay.io/biocontainers/sourmash:4.5.0--hdfd78af_0'
     }
 	
 
