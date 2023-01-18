@@ -20,8 +20,7 @@ process MULTIQC {
     input:
     path multiqc_files
     path mqc_custom_config
-    path 'fastqc_raw/*'
-    path 'fastp/*'   
+    path 'fastqc_raw/*'  
     path 'fastqc_trimmed/*'
     path host_removal
     path 'quast*/*'
