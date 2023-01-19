@@ -27,7 +27,7 @@ process SOURMASH_SUMMARIZE {
 	
 
     input:
-    path(db)
+    path(db), stageAs: 'database.gz'
     tuple val(meta), path(signatures)
 
     output:

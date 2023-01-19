@@ -2,9 +2,6 @@
 ============================ MetaBP - Shotgun Metagenomics Sequencing Tools Benchmarking Pipeline ==============================
   Written by Zifo RnD Solutions
   nf-core/mag pipeline 2.1.1 was modified 
-
-
-
 /*
 ========================================================================================
                                    VALIDATE INPUTS
@@ -68,11 +65,6 @@ include { GET_SOFTWARE_VERSIONS as GET_SOFTWARE_VERSIONS_TRIMMOMATIC          } 
 include { BOWTIE2_REMOVAL_BUILD as BOWTIE2_HOST_REMOVAL_BUILD                 } from '../modules/local/bowtie2_removal_build'
 include { BOWTIE2_REMOVAL_BUILD as BOWTIE2_PHIX_REMOVAL_BUILD_CUTADAPT        } from '../modules/local/bowtie2_removal_build'
 include { BOWTIE2_REMOVAL_BUILD as BOWTIE2_PHIX_REMOVAL_BUILD_TRIMMOMATIC     } from '../modules/local/bowtie2_removal_build'
-//include { PORECHOP                                            } from '../modules/local/porechop'
-//include { NANOLYSE                                            } from '../modules/local/nanolyse'                  addParams( options: modules['nanolyse']                   )
-//include { FILTLONG                                            } from '../modules/local/filtlong'
-//include { NANOPLOT as NANOPLOT_RAW                            } from '../modules/local/nanoplot'                  addParams( options: modules['nanoplot_raw']               )
-//include { NANOPLOT as NANOPLOT_FILTERED                       } from '../modules/local/nanoplot'                  addParams( options: modules['nanoplot_filtered']          )
 include { KRAKEN2_DB_PREPARATION as KRAKEN2_DB_PREPARATION_CUTADAPT           } from '../modules/local/kraken2_db_preparation'
 include { KRONA_DB as KRONA_DB_CUTADAPT                                       } from '../modules/local/krona_db'
 include { KRAKEN2_DB_PREPARATION as KRAKEN2_DB_PREPARATION_TRIMMOMATIC        } from '../modules/local/kraken2_db_preparation'
@@ -85,7 +77,6 @@ include { POOL_SINGLE_READS as POOL_SINGLE_READS_TRIMMOMATIC                  } 
 include { POOL_PAIRED_READS as POOL_PAIRED_READS_CUTADAPT                     } from '../modules/local/pool_paired_reads'
 include { POOL_PAIRED_READS as POOL_PAIRED_READS_TRIMMOMATIC                  } from '../modules/local/pool_paired_reads'
 include { POOL_SINGLE_READS as POOL_LONG_READS                                } from '../modules/local/pool_single_reads'
-//include { SPADESHYBRID                                                        } from '../modules/local/spadeshybrid'                addParams( options: modules['spadeshybrid']      )
 include { MULTIQC as MULTIQC_CUTADAPT                                         } from '../modules/local/multiqc'                     addParams( options: multiqc_options                       )
 include { MULTIQC as MULTIQC_TRIMMOMATIC                                      } from '../modules/local/multiqc'                     addParams( options: multiqc_options                       )
 
@@ -157,7 +148,6 @@ include { GTDBTK  as GTDBTK_TRIMMOMATIC_SPADES                                } 
 include { FASTQC as FASTQC_RAW                                                } from '../modules/nf-core/modules/fastqc/main'       addParams( options: modules['fastqc_raw']            )
 include { FASTQC as FASTQC_TRIMMED_CUTADAPT                                   } from '../modules/nf-core/modules/fastqc/main'       addParams( options: modules['fastqc_trimmed_cutadapt'])
 include { FASTQC as FASTQC_TRIMMED_TRIMMOMATIC                                } from '../modules/nf-core/modules/fastqc/main'       addParams( options: modules['fastqc_trimmed_trimmomatic'])
-include { FASTP                                                               } from '../modules/nf-core/modules/fastp/main'        addParams( options: modules['fastp']                 )
 include { PRODIGAL as PRODIGAL_SPADES_CUTADAPT                                } from '../modules/nf-core/modules/prodigal/main'     addParams( options: modules['prodigal']              )
 include { PRODIGAL as PRODIGAL_MEGAHIT_CUTADAPT                               } from '../modules/nf-core/modules/prodigal/main'     addParams( options: modules['prodigal']              )
 include { PRODIGAL as PRODIGAL_SPADES_TRIMMOMATIC                             } from '../modules/nf-core/modules/prodigal/main'     addParams( options: modules['prodigal']              )
@@ -227,11 +217,6 @@ if(!params.keep_phix) {
         .set { ch_phix_db_file }
 }
 
-if (!params.keep_lambda) {
-    Channel
-        .value(file( "${params.lambda_reference}" ))
-        .set { ch_nanolyse_db }
-}
 
 gtdb = params.skip_busco ? false : params.gtdb
 if (params.gtdbtk && gtdb) {
@@ -286,12 +271,7 @@ workflow METABP {
     )
     ch_software_versions = ch_software_versions.mix(FASTQC_RAW.out.version.first().ifEmpty(null))
 
-    FASTP (
-        ch_raw_short_reads
-    )
-    ch_short_reads_fastp = FASTP.out.reads
-    ch_software_versions = ch_software_versions.mix(FASTP.out.version.first().ifEmpty(null))
-
+    
     /*
     ---------------------Cutadapt added for Quality Control by Zifo-------------------
     */
@@ -764,7 +744,6 @@ workflow METABP {
         ch_multiqc_files.collect(),
         ch_multiqc_custom_config.collect().ifEmpty([]),
         FASTQC_RAW.out.zip.collect{it[1]}.ifEmpty([]),
-        FASTP.out.json.collect{it[1]}.ifEmpty([]),
         FASTQC_TRIMMED_CUTADAPT.out.zip.collect{it[1]}.ifEmpty([]),
         ch_bowtie2_removal_host_multiqc.collect{it[1]}.ifEmpty([]),
         ch_quast_multiqc.collect().ifEmpty([]),
@@ -1246,7 +1225,6 @@ workflow METABP {
         ch_multiqc_files.collect(),
         ch_multiqc_custom_config.collect().ifEmpty([]),
         FASTQC_RAW.out.zip.collect{it[1]}.ifEmpty([]),
-        FASTP.out.json.collect{it[1]}.ifEmpty([]),
         FASTQC_TRIMMED_TRIMMOMATIC.out.zip.collect{it[1]}.ifEmpty([]),
         ch_bowtie2_removal_host_multiqc.collect{it[1]}.ifEmpty([]),
         ch_quast_multiqc.collect().ifEmpty([]),
