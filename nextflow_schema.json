@@ -293,24 +293,7 @@
             "description": "",
             "default": "",
             "properties": {
-                "save_trimmed_fail": {
-                    "type": "boolean",
-                    "fa_icon": "fas fa-save",
-                    "description": "Save the by fastp trimmed FastQ files in the results directory.",
-                    "help_text": "By default, trimmed FastQ files will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
-                },
-                "fastp_qualified_quality": {
-                    "type": "integer",
-                    "default": 15,
-                    "description": "Minimum phred quality value of a base to be qualified.",
-                    "help": "Reads with more than 40% of unqualified bases will be discarded."
-                },
-                "fastp_cut_mean_quality": {
-                    "type": "integer",
-                    "default": 15,
-                    "description": "The mean quality requirement used for per read sliding window cutting by fastp.",
-                    "help": "Used in combination with the fastp options '--cut_front' and '--cut_tail'. If the mean quality within a window (of size 4) is below `--fastp_cut_mean_quality`, the bases are dropped and the sliding window is moved further, otherwise it stops."
-                },
+			
                 "host_genome": {
                     "type": "string",
                     "help_text": "This parameter is mutually exclusive with `--host_genome`. Host read removal is done with Bowtie2. \nBoth the iGenomes FASTA file as well as corresponding, already pre-built Bowtie 2 index files will be used.",

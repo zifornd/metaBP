@@ -2,9 +2,6 @@
 ============================ MetaBP - Shotgun Metagenomics Sequencing Tools Benchmarking Pipeline ==============================
   Written by Zifo RnD Solutions
   nf-core/mag pipeline 2.1.1 was modified 
-
-
-
 /*
 ========================================================================================
                                    VALIDATE INPUTS
@@ -274,7 +271,7 @@ workflow METABP {
     )
     ch_software_versions = ch_software_versions.mix(FASTQC_RAW.out.version.first().ifEmpty(null))
 
-
+    
     /*
     ---------------------Cutadapt added for Quality Control by Zifo-------------------
     */
@@ -408,7 +405,7 @@ workflow METABP {
     // Co-assembly: pool reads for SPAdes
     if (params.coassemble_group) {
         // short reads
-        if (!params.single_end && (!params.skip_spades)){
+        if (!params.single_end && (!params.skip_spades || !params.skip_spadeshybrid)){
             if (params.single_end){
 		        /*POOL_SINGLE_READS ( ch_short_reads_grouped )
                 ch_short_reads_spades = POOL_SINGLE_READS.out.reads*/
@@ -893,7 +890,7 @@ workflow METABP {
     // Co-assembly: pool reads for SPAdes
     if (params.coassemble_group) {
         // short reads
-        if (!params.single_end && (!params.skip_spades)){
+        if (!params.single_end && (!params.skip_spades || !params.skip_spadeshybrid)){
             if (params.single_end){
 		/*POOL_SINGLE_READS ( ch_short_reads_grouped )
                 ch_short_reads_spades = POOL_SINGLE_READS.out.reads*/
