@@ -34,8 +34,7 @@ process CUTADAPT {
         --cores $task.cpus \\
         $args \\
         $trimmed \\
-        ${prefix}_1.fastq.gz \\
-        ${prefix}_2.fastq.gz \\
+        ${reads} \\
         > ${prefix}.cutadapt.log
 
     cat <<-END_VERSIONS > versions.yml
