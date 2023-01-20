@@ -753,7 +753,7 @@ workflow METABP {
     ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(Channel.from(ch_multiqc_config))
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yml'))
-    ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS_CUTADAPT.out.yml.collect())
+    ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS_CUTADAPT.out.mqc_yml.collect())
 
     MULTIQC_CUTADAPT (
         ch_multiqc_files.collect(),
@@ -788,7 +788,7 @@ workflow METABP {
                 [ meta_new, reads ]
             }
             .set { ch_short_reads_trimmomatic }
-    ch_software_versions = ch_software_versions.mix(TRIMMOMATIC.out.version.first().ifEmpty(null))
+    ch_software_versions = ch_software_versions.mix(TRIMMOMATIC.out.versions.first().ifEmpty(null))
 
     ch_bowtie2_removal_host_multiqc = Channel.empty()
     if (params.host_fasta || params.host_genome) {
@@ -799,7 +799,7 @@ workflow METABP {
 
         ch_short_reads_trimmomatic = BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC.out.reads
         ch_bowtie2_removal_host_multiqc = BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC.out.log 
-        ch_software_versions = ch_software_versions.mix(BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC.out.version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC.out.versions.first().ifEmpty(null))
     }
 
     if(!params.keep_phix) {
@@ -1219,15 +1219,15 @@ workflow METABP {
         .map { it[1][0] }
         .flatten()
         .collect()
-        .set { ch_software_versions } */
+        .set { ch_software_versions }
+
+    GET_SOFTWARE_VERSIONS_TRIMMOMATIC (
+        ch_software_versions.map { it }.collect()
+    ) */
 
     CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC (
         ch_software_versions.unique().collectFile(name: 'collated_versions.yml')
     )
-
-    /* GET_SOFTWARE_VERSIONS_TRIMMOMATIC (
-        ch_software_versions.map { it }.collect()
-    ) */
 
     //
     // MODULE: MultiQC
@@ -1238,7 +1238,7 @@ workflow METABP {
     ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(Channel.from(ch_multiqc_config))
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yml'))
-    ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC.out.yml.collect())
+    ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC.out.mqc_yml.collect())
 
     MULTIQC_TRIMMOMATIC (
         ch_multiqc_files.collect(),
@@ -1251,8 +1251,8 @@ workflow METABP {
         ch_busco_multiqc.collect().ifEmpty([])
     )
     multiqc_report       = MULTIQC_TRIMMOMATIC.out.report.toList()
-    ch_software_versions = ch_software_versions.mix(MULTIQC_TRIMMOMATIC.out.version.ifEmpty(null))
-
+    ch_software_versions = ch_software_versions.mix(MULTIQC_TRIMMOMATIC.out.versions)
+    
     }
 }
 
