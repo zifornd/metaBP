@@ -17,10 +17,9 @@ process POOL_SINGLE_READS {
     """
     cat ${reads} > "pooled_${meta.id}.fastq.gz"
 	
-	cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        cat: \$(cat --version 2>&1 | sed -n 1p | sed 's/cat (GNU coreutils) //')
-    END_VERSIONS
-	
-    """
+cat <<-END_VERSIONS > versions.yml
+"${task.process}":
+    cat: \$(cat --version 2>&1 | sed -n 1p | sed 's/cat (GNU coreutils) //')
+END_VERSIONS	
+"""
 }

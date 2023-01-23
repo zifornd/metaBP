@@ -98,18 +98,19 @@ include { KRAKEN2 as KRAKEN2_CUTADAPT                                         } 
 include { KRAKEN2 as KRAKEN2_TRIMMOMATIC                                      } from '../modules/local/kraken2'                    // addParams( options: modules['kraken2_trimmomatic']        )
 include { KRONA as KRONA_CUTADAPT                                             } from '../modules/local/krona'                       //addParams( options: modules['krona_cutadapt']             )
 include { KRONA as KRONA_TRIMMOMATIC     	                                  } from '../modules/local/krona'                       //addParams( options: modules['krona_trimmomatic']          )
-/*include { MEGAHIT as MEGAHIT_CUTADAPT                                       } from '../modules/local/megahit'                     addParams( options: modules['megahit_cutadapt']           )
-include { MEGAHIT as MEGAHIT_TRIMMOMATIC                                      } from '../modules/local/megahit'                     addParams( options: modules['megahit_trimmomatic']        )
-include { SPADES as SPADES_CUTADAPT                                           } from '../modules/local/spades'                      addParams( options: modules['spades_cutadapt']            )
-include { SPADES as SPADES_TRIMMOMATIC                                        } from '../modules/local/spades'                      addParams( options: modules['spades_trimmomatic']         )
-include { QUAST_SPADES as QUAST_CUTADAPT_SPADES                               } from '../modules/local/quast_spades'                addParams( options: modules['quast_cutadapt']             )
-include { QUAST_BINS as QUAST_BINS_CUTADAPT_SPADES                            } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_cutadapt_spades'] )
+include { MEGAHIT as MEGAHIT_CUTADAPT                                       } from '../modules/local/megahit'                     //addParams( options: modules['megahit_cutadapt']           )
+include { MEGAHIT as MEGAHIT_TRIMMOMATIC                                      } from '../modules/local/megahit'                     //addParams( options: modules['megahit_trimmomatic']        )
+include { SPADES as SPADES_CUTADAPT                                           } from '../modules/local/spades'                      //addParams( options: modules['spades_cutadapt']            )
+include { SPADES as SPADES_TRIMMOMATIC                                        } from '../modules/local/spades'                      //addParams( options: modules['spades_trimmomatic']         )
+include { QUAST_SPADES as QUAST_CUTADAPT_SPADES                               } from '../modules/local/quast_spades'                //addParams( options: modules['quast_cutadapt']             )
+/*include { QUAST_BINS as QUAST_BINS_CUTADAPT_SPADES                            } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_cutadapt_spades'] )
 include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_CUTADAPT_SPADES            } from '../modules/local/quast_bins_summary'          addParams( options: modules['quast_bins_summary_cutadapt_spades'])
 include { QUAST_SPADES as QUAST_TRIMMOMATIC_SPADES                            } from '../modules/local/quast_spades'                addParams( options: modules['quast_trimmomatic']          )
 include { QUAST_BINS as QUAST_BINS_TRIMMOMATIC_SPADES                         } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_trimmomatic_spades']     )
 include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_TRIMMOMATIC_SPADES         } from '../modules/local/quast_bins_summary'          addParams( options: modules['quast_bins_summary_trimmomatic_spades']         )
-include { QUAST_MEGAHIT as QUAST_CUTADAPT_MEGAHIT                             } from '../modules/local/quast_megahit'               addParams( options: modules['quast_cutadapt']             )
-include { QUAST_BINS as QUAST_BINS_CUTADAPT_MEGAHIT                           } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_cutadapt_megahit'])
+*/
+include { QUAST_MEGAHIT as QUAST_CUTADAPT_MEGAHIT                             } from '../modules/local/quast_megahit'               //addParams( options: modules['quast_cutadapt']             )
+/*include { QUAST_BINS as QUAST_BINS_CUTADAPT_MEGAHIT                           } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_cutadapt_megahit'])
 include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_CUTADAPT_MEGAHIT           } from '../modules/local/quast_bins_summary'          addParams( options: modules['quast_bins_summary_cutadapt_megahit'])
 include { QUAST_MEGAHIT as QUAST_TRIMMOMATIC_MEGAHIT                          } from '../modules/local/quast_megahit'               addParams( options: modules['quast_trimmomatic']          )
 include { QUAST_BINS as QUAST_BINS_TRIMMOMATIC_MEGAHIT                        } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_trimmomatic_megahit']     )
@@ -125,7 +126,7 @@ include { TRIMMOMATIC                                                         } 
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK                                                         } from '../subworkflows/local/input_check'
-/*include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT               } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit']         )
+/*include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT               } from '../subworkflows/local/metabat2_binning'     //addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit']         )
 include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_SPADES                } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_spades']          )
 include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_MEGAHIT            } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_megahit'])
 include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_SPADES             } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_spades'] )
@@ -410,7 +411,7 @@ workflow METABP {
             }
             .set { ch_megahit_assemblies_cutadapt }
         ch_assemblies_cutadapt = ch_assemblies_cutadapt.mix(ch_megahit_assemblies_cutadapt)
-        ch_software_versions = ch_software_versions.mix(MEGAHIT_CUTADAPT.out.version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(MEGAHIT_CUTADAPT.out.versions.first().ifEmpty(null))
     }
 
     // Co-assembly: pool reads for SPAdes
@@ -451,7 +452,7 @@ workflow METABP {
             .set { ch_spades_contigs_cutadapt }
         ch_assemblies_cutadapt = Channel.empty()
 	    ch_assemblies_cutadapt = ch_assemblies_cutadapt.mix(ch_spades_assemblies_cutadapt)
-        ch_software_versions = ch_software_versions.mix(SPADES_CUTADAPT.out.version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(SPADES_CUTADAPT.out.versions.first().ifEmpty(null))
     }
 
     /*
@@ -465,12 +466,12 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             QUAST_CUTADAPT_SPADES ( ch_spades_assemblies_cutadapt, ch_spades_contigs_cutadapt )
         	ch_quast_multiqc = ch_quast_multiqc.mix(QUAST_CUTADAPT_SPADES.out.qc)
-            ch_software_versions = ch_software_versions.mix(QUAST_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+            ch_software_versions = ch_software_versions.mix(QUAST_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
         }
         if (!params.skip_megahit){
 	        QUAST_CUTADAPT_MEGAHIT ( ch_megahit_assemblies_cutadapt )
             ch_quast_multiqc = ch_quast_multiqc.mix(QUAST_CUTADAPT_MEGAHIT.out.qc)
-            ch_software_versions = ch_software_versions.mix(QUAST_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+            ch_software_versions = ch_software_versions.mix(QUAST_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
         }
     }
     
@@ -513,8 +514,8 @@ workflow METABP {
             ch_short_reads_cutadapt
         )
         ch_bowtie2_assembly_multiqc = ch_bowtie2_assembly_multiqc.mix(METABAT2_BINNING_CUTADAPT_SPADES.out.bowtie2_assembly_multiqc)
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_SPADES.out.bowtie2_version.first().ifEmpty(null))
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_SPADES.out.metabat2_version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_SPADES.out.bowtie2_versions.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_SPADES.out.metabat2_versions.first().ifEmpty(null))
         }
         if (!params.skip_megahit) {
             METABAT2_BINNING_CUTADAPT_MEGAHIT (
@@ -522,8 +523,8 @@ workflow METABP {
             ch_short_reads_cutadapt
         )
         ch_bowtie2_assembly_multiqc = ch_bowtie2_assembly_multiqc.mix(METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bowtie2_assembly_multiqc)
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bowtie2_version.first().ifEmpty(null))
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_MEGAHIT.out.metabat2_version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bowtie2_versions.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_CUTADAPT_MEGAHIT.out.metabat2_versions.first().ifEmpty(null))
         }
 
         /*
@@ -539,7 +540,7 @@ workflow METABP {
                 ch_busco_summary_cutadapt_spades = BUSCO_QC_CUTADAPT_SPADES.out.summary
                 ch_busco_summary = ch_busco_summary.mix(ch_busco_summary_cutadapt_spades)
                 ch_busco_multiqc = ch_busco_multiqc.mix(BUSCO_QC_CUTADAPT_SPADES.out.multiqc)
-                ch_software_versions = ch_software_versions.mix(BUSCO_QC_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(BUSCO_QC_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
             
                 // process information if BUSCO analysis failed for individual bins due to no matching genes
                 BUSCO_QC_CUTADAPT_SPADES.out
@@ -556,7 +557,7 @@ workflow METABP {
                 ch_busco_summary_cutadapt_megahit = BUSCO_QC_CUTADAPT_MEGAHIT.out.summary
                 ch_busco_summary = ch_busco_summary.mix(ch_busco_summary_cutadapt_megahit)
                 ch_busco_multiqc = ch_busco_multiqc.mix(BUSCO_QC_CUTADAPT_MEGAHIT.out.multiqc)
-                ch_software_versions = ch_software_versions.mix(BUSCO_QC_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(BUSCO_QC_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
             
                 // process information if BUSCO analysis failed for individual bins due to no matching genes
                 BUSCO_QC_CUTADAPT_MEGAHIT.out
@@ -569,14 +570,14 @@ workflow METABP {
         if (!params.skip_quast){
             if (!params.single_end && !params.skip_spades) {
                 QUAST_BINS_CUTADAPT_SPADES ( METABAT2_BINNING_CUTADAPT_SPADES.out.bins )
-                ch_software_versions = ch_software_versions.mix(QUAST_BINS_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(QUAST_BINS_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
 
                 QUAST_BINS_SUMMARY_CUTADAPT_SPADES ( QUAST_BINS_CUTADAPT_SPADES.out.quast_bin_summaries.collect() )
                 ch_quast_bins_summary_cutadapt_spades = QUAST_BINS_SUMMARY_CUTADAPT_SPADES.out.summary
             }
             if (!params.skip_megahit) {
                 QUAST_BINS_CUTADAPT_MEGAHIT ( METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
-                ch_software_versions = ch_software_versions.mix(QUAST_BINS_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(QUAST_BINS_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
 
                 QUAST_BINS_SUMMARY_CUTADAPT_MEGAHIT ( QUAST_BINS_CUTADAPT_MEGAHIT.out.quast_bin_summaries.collect() )
                 ch_quast_bins_summary_cutadapt_megahit = QUAST_BINS_SUMMARY_CUTADAPT_MEGAHIT.out.summary
@@ -600,7 +601,7 @@ workflow METABP {
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_CUTADAPT_SPADES.out.signatures
                 )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
             }
             if (!params.skip_megahit) {
                 SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT ( METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
@@ -609,16 +610,16 @@ workflow METABP {
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.signatures
                 )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
             } */
 
             if (!params.single_end && !params.skip_spades) {
                 SOURMASH_CUTADAPT_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
-                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
             }
             if (!params.skip_megahit) {
                 SOURMASH_CUTADAPT_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
             }
         }
 
@@ -634,7 +635,7 @@ workflow METABP {
                     ch_busco_summary_cutadapt_spades,
                     ch_gtdb
                 )
-                ch_software_versions = ch_software_versions.mix(GTDBTK_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(GTDBTK_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
                 ch_gtdbtk_summary_cutadapt_spades = GTDBTK_CUTADAPT_SPADES.out.summary
                 if (!params.skip_busco || !params.skip_quast || gtdb) {
                     BIN_SUMMARY_CUTADAPT_SPADES (
@@ -654,7 +655,7 @@ workflow METABP {
                     ch_busco_summary_cutadapt_megahit,
                     ch_gtdb
                 )
-                ch_software_versions = ch_software_versions.mix(GTDBTK_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(GTDBTK_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
                 ch_gtdbtk_summary_cutadapt_megahit = GTDBTK_CUTADAPT_MEGAHIT.out.summary
                 if (!params.skip_busco || !params.skip_quast || gtdb) {
                     BIN_SUMMARY_CUTADAPT_MEGAHIT (
@@ -899,7 +900,7 @@ workflow METABP {
             }
             .set { ch_megahit_assemblies_trimmomatic }
         ch_assemblies_trimmomatic = ch_assemblies_trimmomatic.mix(ch_megahit_assemblies_trimmomatic)
-        ch_software_versions = ch_software_versions.mix(MEGAHIT_TRIMMOMATIC.out.version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(MEGAHIT_TRIMMOMATIC.out.versions.first().ifEmpty(null))
     }
 
     // Co-assembly: pool reads for SPAdes
@@ -938,7 +939,7 @@ workflow METABP {
             .set { ch_spades_contigs_trimmomatic }
         ch_assemblies_trimmomatic = Channel.empty()
 	    ch_assemblies_trimmomatic = ch_assemblies_trimmomatic.mix(ch_spades_assemblies_trimmomatic)
-        ch_software_versions = ch_software_versions.mix(SPADES_TRIMMOMATIC.out.version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(SPADES_TRIMMOMATIC.out.versions.first().ifEmpty(null))
     }
 
     /*
@@ -952,12 +953,12 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             QUAST_TRIMMOMATIC_SPADES ( ch_spades_assemblies_trimmomatic, ch_spades_contigs_trimmomatic )
         	ch_quast_multiqc = ch_quast_multiqc.mix(QUAST_TRIMMOMATIC_SPADES.out.qc)
-            ch_software_versions = ch_software_versions.mix(QUAST_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+            ch_software_versions = ch_software_versions.mix(QUAST_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
         }
         if (!params.skip_megahit){
 	        QUAST_TRIMMOMATIC_MEGAHIT ( ch_megahit_assemblies_trimmomatic )
             ch_quast_multiqc = ch_quast_multiqc.mix(QUAST_TRIMMOMATIC_MEGAHIT.out.qc)
-            ch_software_versions = ch_software_versions.mix(QUAST_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+            ch_software_versions = ch_software_versions.mix(QUAST_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
         }
     }
 
@@ -1000,8 +1001,8 @@ workflow METABP {
             ch_short_reads_trimmomatic
         )
         ch_bowtie2_assembly_multiqc = ch_bowtie2_assembly_multiqc.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bowtie2_assembly_multiqc)
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bowtie2_version.first().ifEmpty(null))
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.metabat2_version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bowtie2_versions.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_SPADES.out.metabat2_versions.first().ifEmpty(null))
         }
         if (!params.skip_megahit) {
             METABAT2_BINNING_TRIMMOMATIC_MEGAHIT (
@@ -1009,8 +1010,8 @@ workflow METABP {
             ch_short_reads_trimmomatic
         )
         ch_bowtie2_assembly_multiqc = ch_bowtie2_assembly_multiqc.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bowtie2_assembly_multiqc)
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bowtie2_version.first().ifEmpty(null))
-        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.metabat2_version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bowtie2_versions.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.metabat2_versions.first().ifEmpty(null))
         }
 
         /*
@@ -1026,7 +1027,7 @@ workflow METABP {
                 ch_busco_summary_trimmomatic_spades = BUSCO_QC_TRIMMOMATIC_SPADES.out.summary
                 ch_busco_summary = ch_busco_summary.mix(ch_busco_summary_trimmomatic_spades)
                 ch_busco_multiqc = ch_busco_multiqc.mix(BUSCO_QC_TRIMMOMATIC_SPADES.out.multiqc)
-                ch_software_versions = ch_software_versions.mix(BUSCO_QC_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(BUSCO_QC_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
 
                 // process information if BUSCO analysis failed for individual bins due to no matching genes
                 BUSCO_QC_TRIMMOMATIC_SPADES.out
@@ -1043,7 +1044,7 @@ workflow METABP {
                 ch_busco_summary_trimmomatic_megahit = BUSCO_QC_TRIMMOMATIC_MEGAHIT.out.summary
                 ch_busco_summary = ch_busco_summary.mix(ch_busco_summary_trimmomatic_megahit)
                 ch_busco_multiqc = ch_busco_multiqc.mix(BUSCO_QC_TRIMMOMATIC_MEGAHIT.out.multiqc)
-                ch_software_versions = ch_software_versions.mix(BUSCO_QC_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(BUSCO_QC_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
 
                 // process information if BUSCO analysis failed for individual bins due to no matching genes
                 BUSCO_QC_TRIMMOMATIC_MEGAHIT.out
@@ -1056,14 +1057,14 @@ workflow METABP {
         if (!params.skip_quast){
             if (!params.single_end && !params.skip_spades) {
                 QUAST_BINS_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )
-                ch_software_versions = ch_software_versions.mix(QUAST_BINS_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(QUAST_BINS_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
 
                 QUAST_BINS_SUMMARY_TRIMMOMATIC_SPADES ( QUAST_BINS_TRIMMOMATIC_SPADES.out.quast_bin_summaries.collect() )
                 ch_quast_bins_summary_trimmomatic_spades = QUAST_BINS_SUMMARY_TRIMMOMATIC_SPADES.out.summary
             }
             if (!params.skip_megahit) {
                 QUAST_BINS_TRIMMOMATIC_MEGAHIT ( METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
-                ch_software_versions = ch_software_versions.mix(QUAST_BINS_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(QUAST_BINS_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
 
                 QUAST_BINS_SUMMARY_TRIMMOMATIC_MEGAHIT ( QUAST_BINS_TRIMMOMATIC_MEGAHIT.out.quast_bin_summaries.collect() )
                 ch_quast_bins_summary_trimmomatic_megahit = QUAST_BINS_SUMMARY_TRIMMOMATIC_MEGAHIT.out.summary
@@ -1087,7 +1088,7 @@ workflow METABP {
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.signatures
                 )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
             }
             if (!params.skip_megahit) {
                 SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT ( METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
@@ -1096,16 +1097,16 @@ workflow METABP {
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.signatures
                 )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
             } */
 
             if (!params.single_end && !params.skip_spades) {
                 SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
-                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
             }
             if (!params.skip_megahit) {
                 SOURMASH_TRIMMOMATIC_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
             }
         }
 
@@ -1121,7 +1122,7 @@ workflow METABP {
                     ch_busco_summary_trimmomatic_spades,
                     ch_gtdb
                 )
-                ch_software_versions = ch_software_versions.mix(GTDBTK_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(GTDBTK_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
                 ch_gtdbtk_summary_trimmomatic_spades = GTDBTK_TRIMMOMATIC_SPADES.out.summary
                 if (!params.skip_busco || !params.skip_quast || gtdb) {
                     BIN_SUMMARY_TRIMMOMATIC_SPADES (
@@ -1141,7 +1142,7 @@ workflow METABP {
                     ch_busco_summary_trimmomatic_megahit,
                     ch_gtdb
                 )
-                ch_software_versions = ch_software_versions.mix(GTDBTK_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+                ch_software_versions = ch_software_versions.mix(GTDBTK_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
                 ch_gtdbtk_summary_trimmomatic_megahit = GTDBTK_TRIMMOMATIC_MEGAHIT.out.summary
                 if (!params.skip_busco || !params.skip_quast || gtdb) {
                     BIN_SUMMARY_TRIMMOMATIC_MEGAHIT (
