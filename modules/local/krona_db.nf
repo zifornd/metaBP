@@ -14,9 +14,9 @@ process KRONA_DB {
     script:
     """
     ktUpdateTaxonomy.sh taxonomy
-	cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        ktImportTaxonomy: \$(ktImportTaxonomy 2>&1 | sed -n '/KronaTools /p' | sed 's/^.*KronaTools //; s/ - ktImportTaxonomy.*//')
-    END_VERSIONS
-    """
+cat <<-END_VERSIONS > versions.yml
+"${task.process}":
+    ktImportTaxonomy: \$(ktImportTaxonomy 2>&1 | sed -n '/KronaTools /p' | sed 's/^.*KronaTools //; s/ - ktImportTaxonomy.*//')
+END_VERSIONS
+"""
 }

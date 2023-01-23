@@ -35,10 +35,10 @@ process KRAKEN2 {
         $input \
         > kraken2.kraken
 	cat kraken2.kraken | cut -f 2,3 > results.krona
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        kraken2: \$(kraken2 -version)
-    END_VERSIONS
-    """
+    
+cat <<-END_VERSIONS > versions.yml
+"${task.process}":
+    kraken2: \$(echo \$(kraken2 --version 2>&1) | sed 's/^.*Kraken version //' | sed 's/ Copyright.*//')
+END_VERSIONS
+"""
 }
