@@ -1221,15 +1221,15 @@ workflow METABP {
         .flatten()
         .collect()
         .set { ch_software_versions }
-		GET_SOFTWARE_VERSIONS_TRIMMOMATIC (
+
+    GET_SOFTWARE_VERSIONS_TRIMMOMATIC (
         ch_software_versions.map { it }.collect()
-    )*/
+    ) */
 
     CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC (
         ch_software_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
- 
     //
     // MODULE: MultiQC
     //
@@ -1252,7 +1252,7 @@ workflow METABP {
         ch_busco_multiqc.collect().ifEmpty([])
     )
     multiqc_report       = MULTIQC_TRIMMOMATIC.out.report.toList()
-    ch_software_versions = ch_software_versions.mix(MULTIQC_TRIMMOMATIC.out.versions.ifEmpty(null))
+    ch_software_versions = ch_software_versions.mix(MULTIQC_TRIMMOMATIC.out.versions)
 
     }
 }
