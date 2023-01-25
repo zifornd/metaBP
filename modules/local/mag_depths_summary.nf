@@ -1,4 +1,3 @@
-
 process MAG_DEPTHS_SUMMARY {
 
     conda (params.enable_conda ? "conda-forge::pandas=1.1.5" : null)

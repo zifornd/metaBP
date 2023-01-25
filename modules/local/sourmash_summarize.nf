@@ -38,4 +38,3 @@ cat <<-END_VERSIONS > versions.yml
 END_VERSIONS
 """
 }
-

@@ -1,5 +1,3 @@
-
-
 process KRONA_DB {
 
     conda (params.enable_conda ? "bioconda::krona=2.7.1" : null)

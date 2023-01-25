@@ -485,15 +485,17 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             PRODIGAL_SPADES_CUTADAPT (
             ch_spades_assemblies_cutadapt,
-            modules['prodigal']['output_format']
-        )
+			'gff')
+           // modules['prodigal']['output_format']
+       
         ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES_CUTADAPT.out.versions.first().ifEmpty(null))
             }
         if (!params.skip_megahit){
 	        PRODIGAL_MEGAHIT_CUTADAPT (
             ch_megahit_assemblies_cutadapt,
-            modules['prodigal']['output_format']
-        )
+			'gff')
+            //modules['prodigal']['output_format']
+       
         ch_software_versions = ch_software_versions.mix(PRODIGAL_MEGAHIT_CUTADAPT.out.versions.first().ifEmpty(null))
         }
     }

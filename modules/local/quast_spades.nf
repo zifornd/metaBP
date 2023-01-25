@@ -1,4 +1,3 @@
-
 process QUAST_SPADES {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 

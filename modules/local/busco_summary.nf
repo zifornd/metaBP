@@ -26,4 +26,3 @@ process BUSCO_SUMMARY {
     summary_busco.py $auto $ss $sd $f -o "${task.ext.prefix}-busco_summary.tsv"
     """
 }
-

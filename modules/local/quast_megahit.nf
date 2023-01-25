@@ -1,4 +1,3 @@
-
 process QUAST_MEGAHIT {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 

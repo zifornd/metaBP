@@ -28,6 +28,7 @@ process PROKKA {
     path "versions.yml" , emit: versions
 
     script:
+    def args = task.ext.args   ?: ''
     prefix   = task.ext.prefix ?: "${meta.id}"
     //prefix   = task.ext.prefix ? "${meta.id}" : "${meta.id}"//${options.suffix}" : "${meta.id}"
     def proteins_opt = proteins ? "--proteins ${proteins[0]}" : ""
@@ -42,8 +43,8 @@ process PROKKA {
         $fasta
 
 cat <<-END_VERSIONS > versions.yml
-${getProcessName(task.process)}:
-    ${getSoftwareName(task.process)}: \$(echo \$(prokka --version 2>&1) | sed 's/^.*prokka //')
+"${task.process}":
+    prokka: \$(echo \$(prokka --version 2>&1) | sed 's/^.*prokka //')
 END_VERSIONS
 """
 }

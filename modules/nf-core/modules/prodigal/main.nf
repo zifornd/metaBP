@@ -19,6 +19,7 @@ process PRODIGAL {
     path "versions.yml"           , emit: versions
 
     script:
+    def args = task.ext.args   ?: ''
     prefix   = task.ext.prefix ?: "${meta.id}"
     //prefix = task.ext.prefix ? "${meta.id}${options.suffix}" : "${meta.id}"
     """
@@ -31,8 +32,8 @@ process PRODIGAL {
         -s "${prefix}_all.txt"
 
 cat <<-END_VERSIONS > versions.yml
-${getProcessName(task.process)}:
-    ${getSoftwareName(task.process)}: \$(prodigal -v 2>&1 | sed -n 's/Prodigal V\\(.*\\):.*/\\1/p')
+"${task.process}":
+    prodigal: \$(prodigal -v 2>&1 | sed -n 's/Prodigal V\\(.*\\):.*/\\1/p')
 END_VERSIONS
 """
 }

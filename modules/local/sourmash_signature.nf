@@ -23,7 +23,7 @@ process SOURMASH_SIGNATURE {
     def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     
 	"""
-    sourmash sketch dna ${prefix} ${bins} --output "${prefix}.sig"   
+    sourmash sketch dna ${args} ${bins} --output "${prefix}.sig"   
 
 cat <<-END_VERSIONS > versions.yml
 "${task.process}":
@@ -32,4 +32,3 @@ END_VERSIONS
 
 """
 }
-

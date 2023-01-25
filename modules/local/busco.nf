@@ -1,4 +1,3 @@
-
 process BUSCO {
     tag "${bin}"
 

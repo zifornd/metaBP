@@ -1,4 +1,3 @@
-
 process BUSCO_DB_PREPARATION {
     tag "${database.baseName}"
 

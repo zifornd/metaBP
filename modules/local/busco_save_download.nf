@@ -1,4 +1,3 @@
-
 process BUSCO_SAVE_DOWNLOAD {
     // execute sequentially to avoid artefacts when saving files for multiple busco instances
     maxForks 1

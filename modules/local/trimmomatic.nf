@@ -52,4 +52,3 @@ process TRIMMOMATIC {
     END_VERSIONS
     """
 }
-

@@ -1,4 +1,3 @@
-
 process MAG_DEPTHS_PLOT {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 
