@@ -1,12 +1,12 @@
 /*
  * BUSCO: Quantitative measures for the assessment of genome assembly
  */
-
+def process = params.process.clone()
 params.busco_db_options            = [:]
 params.busco_options               = [:]
 params.busco_save_download_options = [:]
 params.busco_plot_options          = [:]
-params.busco_summary_options       = [:]
+params.busco_summary_options       = addParams( options: process[BUSCO_SUMMARY_CUTADAPT_SPADES])//[:]
 
 include { BUSCO_DB_PREPARATION            } from '../../modules/local/busco_db_preparation'        addParams( options: params.busco_db_options            )
 include { BUSCO                           } from '../../modules/local/busco'                       addParams( options: params.busco_options               )
