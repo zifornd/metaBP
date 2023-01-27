@@ -974,15 +974,15 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             PRODIGAL_SPADES_TRIMMOMATIC (
             ch_spades_assemblies_trimmomatic,
-            modules['prodigal']['output_format']
-        )
+            'gff')
+        
         ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES_TRIMMOMATIC.out.versions.first().ifEmpty(null))
             }
         if (!params.skip_megahit){
 	        PRODIGAL_MEGAHIT_TRIMMOMATIC (
             ch_megahit_assemblies_trimmomatic,
-            modules['prodigal']['output_format']
-        )
+            'gff')
+        
         ch_software_versions = ch_software_versions.mix(PRODIGAL_MEGAHIT_TRIMMOMATIC.out.versions.first().ifEmpty(null))
         }
     }
@@ -1103,11 +1103,11 @@ workflow METABP {
             } */
 
             if (!params.single_end && !params.skip_spades) {
-                SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
+                SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins)
                 ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
             }
             if (!params.skip_megahit) {
-                SOURMASH_TRIMMOMATIC_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
+                SOURMASH_TRIMMOMATIC_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
                 ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
             }
         }

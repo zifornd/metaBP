@@ -46,9 +46,9 @@ process TRIMMOMATIC {
         $args \\
         2> ${prefix}.trimmomatic.log
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        trimmomatic: \$(trimmomatic -version)
-    END_VERSIONS
-    """
+cat <<-END_VERSIONS > versions.yml
+"${task.process}":
+    trimmomatic: \$(trimmomatic -version)
+END_VERSIONS
+"""
 }
