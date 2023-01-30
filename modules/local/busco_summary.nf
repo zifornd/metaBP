@@ -23,6 +23,6 @@ process BUSCO_SUMMARY {
     if (!params.busco_reference && failed_bins.sort().size() > 0)
         f = "-f ${failed_bins}"
     """
-    summary_busco.py $auto $ss $sd $f -o "${task.ext.prefix}-busco_summary.tsv"
+    summary_busco.py $auto $ss $sd $f -o "${prefix}-busco_summary.tsv"
     """
 }
