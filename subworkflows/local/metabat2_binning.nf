@@ -1,13 +1,9 @@
 /*
  * Binning with MetaBAT2
  */
-
-params.bowtie2_build_options      = [:]
-params.bowtie2_align_options      = [:]
-params.metabat2_options           = [:]
-params.mag_depths_options         = [:]
-params.mag_depths_plot_options    = [:]
-params.mag_depths_summary_options = [:]
+params.mag_depths_options                           = [:]
+params.mag_depths_plot_options                      = [:]
+params.mag_depths_summary_options                   = [:]
 
 include { BOWTIE2_ASSEMBLY_BUILD    } from '../../modules/local/bowtie2_assembly_build'   addParams( options: params.bowtie2_build_options      )
 include { BOWTIE2_ASSEMBLY_ALIGN    } from '../../modules/local/bowtie2_assembly_align'   addParams( options: params.bowtie2_align_options      )
@@ -83,8 +79,8 @@ workflow METABAT2_BINNING {
 
     emit:
     bowtie2_assembly_multiqc = BOWTIE2_ASSEMBLY_ALIGN.out.log.map { assembly_meta, reads_meta, log -> if (assembly_meta.id == reads_meta.id) {return [ log ]} }
-    bowtie2_version          = BOWTIE2_ASSEMBLY_ALIGN.out.version
+    bowtie2_versions          = BOWTIE2_ASSEMBLY_ALIGN.out.versions
     bins                     = METABAT2.out.bins
     depths_summary           = MAG_DEPTHS_SUMMARY.out.summary
-    metabat2_version         = METABAT2.out.version
+    metabat2_versions         = METABAT2.out.versions
 }

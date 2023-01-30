@@ -1,4 +1,3 @@
-
 process BOWTIE2_ASSEMBLY_ALIGN {
     tag "${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}"
 
@@ -13,8 +12,7 @@ process BOWTIE2_ASSEMBLY_ALIGN {
     output:
     tuple val(assembly_meta), path(assembly), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}.bam"), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}.bam.bai"), emit: mappings
     tuple val(assembly_meta), val(reads_meta), path("*.bowtie2.log")                                                                                                                                      , emit: log
-    path "versions.yml"                    , emit: versions
-                                                                                                                                                                             , emit: version
+    path 'versions.yml'                                                , emit: versions                                                                                  
 
     script:
 	def args = task.ext.args ?: ''
@@ -37,6 +35,5 @@ cat <<-END_VERSIONS > versions.yml
     samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
     pigz: \$( pigz --version 2>&1 | sed 's/pigz //g' )
 END_VERSIONS
-"""
 """
 }

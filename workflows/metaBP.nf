@@ -95,55 +95,55 @@ include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC     } 
 include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_PHIX_REMOVAL_ALIGN_CUTADAPT        } from '../modules/local/bowtie2_removal_align'       //addParams( options: modules['bowtie2_phix_removal_align_cutadapt'] )
 include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_PHIX_REMOVAL_ALIGN_TRIMMOMATIC     } from '../modules/local/bowtie2_removal_align'       //addParams( options: modules['bowtie2_phix_removal_align_trimmomatic'] )
 include { KRAKEN2 as KRAKEN2_CUTADAPT                                         } from '../modules/local/kraken2'                     //addParams( options: modules['kraken2_cutadapt']           )
-include { KRAKEN2 as KRAKEN2_TRIMMOMATIC                                      } from '../modules/local/kraken2'                    // addParams( options: modules['kraken2_trimmomatic']        )
+include { KRAKEN2 as KRAKEN2_TRIMMOMATIC                                      } from '../modules/local/kraken2'                     //addParams( options: modules['kraken2_trimmomatic']        )
 include { KRONA as KRONA_CUTADAPT                                             } from '../modules/local/krona'                       //addParams( options: modules['krona_cutadapt']             )
 include { KRONA as KRONA_TRIMMOMATIC     	                                  } from '../modules/local/krona'                       //addParams( options: modules['krona_trimmomatic']          )
-include { MEGAHIT as MEGAHIT_CUTADAPT                                       } from '../modules/local/megahit'                     //addParams( options: modules['megahit_cutadapt']           )
+include { MEGAHIT as MEGAHIT_CUTADAPT                                         } from '../modules/local/megahit'                     //addParams( options: modules['megahit_cutadapt']           )
 include { MEGAHIT as MEGAHIT_TRIMMOMATIC                                      } from '../modules/local/megahit'                     //addParams( options: modules['megahit_trimmomatic']        )
 include { SPADES as SPADES_CUTADAPT                                           } from '../modules/local/spades'                      //addParams( options: modules['spades_cutadapt']            )
 include { SPADES as SPADES_TRIMMOMATIC                                        } from '../modules/local/spades'                      //addParams( options: modules['spades_trimmomatic']         )
 include { QUAST_SPADES as QUAST_CUTADAPT_SPADES                               } from '../modules/local/quast_spades'                //addParams( options: modules['quast_cutadapt']             )
-/*include { QUAST_BINS as QUAST_BINS_CUTADAPT_SPADES                            } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_cutadapt_spades'] )
-include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_CUTADAPT_SPADES            } from '../modules/local/quast_bins_summary'          addParams( options: modules['quast_bins_summary_cutadapt_spades'])
-include { QUAST_SPADES as QUAST_TRIMMOMATIC_SPADES                            } from '../modules/local/quast_spades'                addParams( options: modules['quast_trimmomatic']          )
-include { QUAST_BINS as QUAST_BINS_TRIMMOMATIC_SPADES                         } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_trimmomatic_spades']     )
-include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_TRIMMOMATIC_SPADES         } from '../modules/local/quast_bins_summary'          addParams( options: modules['quast_bins_summary_trimmomatic_spades']         )
-*/
+include { QUAST_BINS as QUAST_BINS_CUTADAPT_SPADES                            } from '../modules/local/quast_bins'                  //addParams( options: modules['quast_bins_cutadapt_spades'] )
+include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_CUTADAPT_SPADES            } from '../modules/local/quast_bins_summary'          //addParams( options: modules['quast_bins_summary_cutadapt_spades'])
+include { QUAST_SPADES as QUAST_TRIMMOMATIC_SPADES                            } from '../modules/local/quast_spades'                //addParams( options: modules['quast_trimmomatic']          )
+include { QUAST_BINS as QUAST_BINS_TRIMMOMATIC_SPADES                         } from '../modules/local/quast_bins'                  //addParams( options: modules['quast_bins_trimmomatic_spades']     )
+include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_TRIMMOMATIC_SPADES         } from '../modules/local/quast_bins_summary'          //addParams( options: modules['quast_bins_summary_trimmomatic_spades']         )
+
 include { QUAST_MEGAHIT as QUAST_CUTADAPT_MEGAHIT                             } from '../modules/local/quast_megahit'               //addParams( options: modules['quast_cutadapt']             )
-/*include { QUAST_BINS as QUAST_BINS_CUTADAPT_MEGAHIT                           } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_cutadapt_megahit'])
-include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_CUTADAPT_MEGAHIT           } from '../modules/local/quast_bins_summary'          addParams( options: modules['quast_bins_summary_cutadapt_megahit'])
-include { QUAST_MEGAHIT as QUAST_TRIMMOMATIC_MEGAHIT                          } from '../modules/local/quast_megahit'               addParams( options: modules['quast_trimmomatic']          )
-include { QUAST_BINS as QUAST_BINS_TRIMMOMATIC_MEGAHIT                        } from '../modules/local/quast_bins'                  addParams( options: modules['quast_bins_trimmomatic_megahit']     )
-include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_TRIMMOMATIC_MEGAHIT        } from '../modules/local/quast_bins_summary'          addParams( options: modules['quast_bins_summary_trimmomatic_megahit']         )
-include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_SPADES                          } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_cutadapt_spades']                )
-include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_SPADES                       } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_trimmomatic_spades']                )
-include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_MEGAHIT                         } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_cutadapt_megahit']                )
-include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_MEGAHIT                      } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_trimmomatic_megahit']                )
-*/include { CUTADAPT                                                            } from '../modules/local/cutadapt'                    //addParams( options: modules['cutadapt']                   )
+include { QUAST_BINS as QUAST_BINS_CUTADAPT_MEGAHIT                           } from '../modules/local/quast_bins'                //  addParams( options: modules['quast_bins_cutadapt_megahit'])
+include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_CUTADAPT_MEGAHIT           } from '../modules/local/quast_bins_summary'         // addParams( options: modules['quast_bins_summary_cutadapt_megahit'])
+include { QUAST_MEGAHIT as QUAST_TRIMMOMATIC_MEGAHIT                          } from '../modules/local/quast_megahit'             //  addParams( options: modules['quast_trimmomatic']          )
+include { QUAST_BINS as QUAST_BINS_TRIMMOMATIC_MEGAHIT                        } from '../modules/local/quast_bins'                 // addParams( options: modules['quast_bins_trimmomatic_megahit']     )
+include { QUAST_BINS_SUMMARY as QUAST_BINS_SUMMARY_TRIMMOMATIC_MEGAHIT        } from '../modules/local/quast_bins_summary'         // addParams( options: modules['quast_bins_summary_trimmomatic_megahit']         )
+include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_SPADES                          } from '../modules/local/bin_summary'                // addParams( options: modules['bin_summary_cutadapt_spades']                )
+include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_SPADES                       } from '../modules/local/bin_summary'               //  addParams( options: modules['bin_summary_trimmomatic_spades']                )
+include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_MEGAHIT                         } from '../modules/local/bin_summary'                 //addParams( options: modules['bin_summary_cutadapt_megahit']                )
+include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_MEGAHIT                      } from '../modules/local/bin_summary'                 //addParams( options: modules['bin_summary_trimmomatic_megahit']                )
+include { CUTADAPT                                                            } from '../modules/local/cutadapt'                    //addParams( options: modules['cutadapt']                   )
 include { TRIMMOMATIC                                                         } from '../modules/local/trimmomatic'                 //addParams( options: modules['trimmomatic']                )
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK                                                         } from '../subworkflows/local/input_check'
-/*include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT               } from '../subworkflows/local/metabat2_binning'     //addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit']         )
-include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_SPADES                } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_spades']          )
-include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_MEGAHIT            } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_megahit'])
-include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_SPADES             } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_spades'] )
-include { BUSCO_QC as BUSCO_QC_CUTADAPT_SPADES                                } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_spades']                  )
-include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_SPADES                             } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_spades']         )
-include { BUSCO_QC as BUSCO_QC_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_megahit']                )
-include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_megahit']       )
-//include { GTDBTK                                        } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
-include { SOURMASH as SOURMASH_CUTADAPT_SPADES                                } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_cutadapt_spades']                    )
-include { SOURMASH as SOURMASH_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_cutadapt_megahit']                   )
-include { SOURMASH as SOURMASH_TRIMMOMATIC_SPADES                             } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_trimmomatic_spades']                 )
-include { SOURMASH as SOURMASH_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_trimmomatic_megahit']                )
-include { GTDBTK  as GTDBTK_CUTADAPT_MEGAHIT                                  } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_megahit']      )
-include { GTDBTK  as GTDBTK_CUTADAPT_SPADES                                   } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_spades']       )
-include { GTDBTK  as GTDBTK_TRIMMOMATIC_MEGAHIT                               } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_megahit']   )
-include { GTDBTK  as GTDBTK_TRIMMOMATIC_SPADES                                } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_spades']    )
-*/
+include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT               } from '../subworkflows/local/metabat2_binning'     //addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit']         )
+include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_SPADES                } from '../subworkflows/local/metabat2_binning'      //addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_spades']          )
+include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_MEGAHIT            } from '../subworkflows/local/metabat2_binning'      //addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_megahit'])
+include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_SPADES             } from '../subworkflows/local/metabat2_binning'      //addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_spades'] )
+include { BUSCO_QC as BUSCO_QC_CUTADAPT_SPADES                                } from '../subworkflows/local/busco_qc'              //addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_spades']                  )
+include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_SPADES                             } from '../subworkflows/local/busco_qc'              // addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_spades'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_spades']         )
+include { BUSCO_QC as BUSCO_QC_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/busco_qc'              // addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_megahit']                )
+include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/busco_qc'              // addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_megahit']       )
+include { GTDBTK                                        } from '../subworkflows/local/gtdbtk'                //addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
+include { SOURMASH as SOURMASH_CUTADAPT_SPADES                                } from '../subworkflows/local/sourmash'              // addParams( options: modules['sourmash_cutadapt_spades']                    )
+include { SOURMASH as SOURMASH_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/sourmash'               //addParams( options: modules['sourmash_cutadapt_megahit']                   )
+include { SOURMASH as SOURMASH_TRIMMOMATIC_SPADES                             } from '../subworkflows/local/sourmash'               //addParams( options: modules['sourmash_trimmomatic_spades']                 )
+include { SOURMASH as SOURMASH_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/sourmash'             //  addParams( options: modules['sourmash_trimmomatic_megahit']                )
+include { GTDBTK  as GTDBTK_CUTADAPT_MEGAHIT                                  } from '../subworkflows/local/gtdbtk'               //  addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_megahit']      )
+include { GTDBTK  as GTDBTK_CUTADAPT_SPADES                                   } from '../subworkflows/local/gtdbtk'                // addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_spades']       )
+include { GTDBTK  as GTDBTK_TRIMMOMATIC_MEGAHIT                               } from '../subworkflows/local/gtdbtk'                // addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_megahit']   )
+include { GTDBTK  as GTDBTK_TRIMMOMATIC_SPADES                                } from '../subworkflows/local/gtdbtk'                // addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_spades']    )
+
 /*
 ========================================================================================
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -485,15 +485,17 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             PRODIGAL_SPADES_CUTADAPT (
             ch_spades_assemblies_cutadapt,
-            modules['prodigal']['output_format']
-        )
+			'gff')
+           // modules['prodigal']['output_format']
+       
         ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES_CUTADAPT.out.versions.first().ifEmpty(null))
             }
         if (!params.skip_megahit){
 	        PRODIGAL_MEGAHIT_CUTADAPT (
             ch_megahit_assemblies_cutadapt,
-            modules['prodigal']['output_format']
-        )
+			'gff')
+            //modules['prodigal']['output_format']
+       
         ch_software_versions = ch_software_versions.mix(PRODIGAL_MEGAHIT_CUTADAPT.out.versions.first().ifEmpty(null))
         }
     }
@@ -972,15 +974,15 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             PRODIGAL_SPADES_TRIMMOMATIC (
             ch_spades_assemblies_trimmomatic,
-            modules['prodigal']['output_format']
-        )
+            'gff')
+        
         ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES_TRIMMOMATIC.out.versions.first().ifEmpty(null))
             }
         if (!params.skip_megahit){
 	        PRODIGAL_MEGAHIT_TRIMMOMATIC (
             ch_megahit_assemblies_trimmomatic,
-            modules['prodigal']['output_format']
-        )
+            'gff')
+        
         ch_software_versions = ch_software_versions.mix(PRODIGAL_MEGAHIT_TRIMMOMATIC.out.versions.first().ifEmpty(null))
         }
     }
@@ -1101,11 +1103,11 @@ workflow METABP {
             } */
 
             if (!params.single_end && !params.skip_spades) {
-                SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
+                SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins)
                 ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
             }
             if (!params.skip_megahit) {
-                SOURMASH_TRIMMOMATIC_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
+                SOURMASH_TRIMMOMATIC_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
                 ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
             }
         }

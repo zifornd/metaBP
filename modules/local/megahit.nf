@@ -1,4 +1,3 @@
-
 process MEGAHIT {
     tag "${meta.trimmer}-${meta.id}"
 

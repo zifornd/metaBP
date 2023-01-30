@@ -1,4 +1,3 @@
-
 process POOL_PAIRED_READS {
     tag "$meta.id"
 

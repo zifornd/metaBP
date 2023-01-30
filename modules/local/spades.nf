@@ -1,4 +1,3 @@
-
 process SPADES {
     tag "${meta.trimmer}-${meta.id}"
 

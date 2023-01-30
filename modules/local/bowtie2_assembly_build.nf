@@ -1,4 +1,3 @@
-
 process BOWTIE2_ASSEMBLY_BUILD {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 

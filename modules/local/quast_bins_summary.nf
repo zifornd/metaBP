@@ -1,22 +1,10 @@
-// Import generic module functions
-include { initOptions; saveFiles; getSoftwareName } from './functions'
-
-params.options = [:]
-options    = initOptions(params.options)
-
 process QUAST_BINS_SUMMARY {
 
-    publishDir "${params.outdir}",
-        mode: params.publish_dir_mode,
-        saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), meta:[:], publish_by_meta:[]) }
-
     conda (params.enable_conda ? "conda-forge::sed=4.7" : null)
-    if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img"
-    } else {
-        container "biocontainers/biocontainers:v1.2.0_cv1"
-    }
-
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img' :
+        'biocontainers/biocontainers:v1.2.0_cv1' }"
+    
     input:
     path(summaries)
 
@@ -24,14 +12,16 @@ process QUAST_BINS_SUMMARY {
     path("*-quast_summary.tsv"), emit: summary
 
     script:
+    def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: ''
     """
     QUAST_BIN=\$(echo \"$summaries\" | sed 's/[][]//g')
     IFS=', ' read -r -a quast_bin <<< \"\$QUAST_BIN\"
     for quast_file in \"\${quast_bin[@]}\"; do
-        if ! [ -f "${options.suffix}-quast_summary.tsv" ]; then
-            cp "\${quast_file}" "${options.suffix}-quast_summary.tsv"
+        if ! [ -f "${prefix}-quast_summary.tsv" ]; then
+            cp "\${quast_file}" "${prefix}-quast_summary.tsv"
         else
-            tail -n +2 "\${quast_file}" >> "${options.suffix}-quast_summary.tsv"
+            tail -n +2 "\${quast_file}" >> "${prefix}-quast_summary.tsv"
         fi
     done
     """

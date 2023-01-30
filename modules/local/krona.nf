@@ -1,4 +1,3 @@
-
 process KRONA {
     tag "${meta.classifier}-${meta.id}-${meta.trimmer}"
 
