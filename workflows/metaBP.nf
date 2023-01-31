@@ -569,6 +569,8 @@ workflow METABP {
             }
         }
 
+        ch_quast_bins_summary_cutadapt_spades = Channel.empty()
+        ch_quast_bins_summary_cutadapt_megahit = Channel.empty()
         if (!params.skip_quast){
             if (!params.single_end && !params.skip_spades) {
                 QUAST_BINS_CUTADAPT_SPADES ( METABAT2_BINNING_CUTADAPT_SPADES.out.bins )
@@ -1056,6 +1058,8 @@ workflow METABP {
             }
         }
 
+        ch_quast_bins_summary_trimmomatic_spades = Channel.empty()
+        ch_quast_bins_summary_trimmomatic_megahit = Channel.empty()
         if (!params.skip_quast){
             if (!params.single_end && !params.skip_spades) {
                 QUAST_BINS_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )

@@ -3,8 +3,8 @@ process GTDBTK_CLASSIFY {
 
     conda (params.enable_conda ? "bioconda::gtdbtk=2.1.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/gtdbtk:1.5.0--pyhdfd78af_0' :
-        'quay.io/biocontainers/gtdbtk:1.5.0--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/gtdbtk:2.1.1--pyhdfd78af_1' :
+        'quay.io/biocontainers/gtdbtk:2.1.1--pyhdfd78af_1' }"
 
     input:
     tuple val(meta), path("bins/*")
