@@ -22,7 +22,7 @@ process SOURMASH_SIGNATURE {
     if ( workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container){
         container 'https://depot.galaxyproject.org/singularity/sourmash:4.4.0--hdfd78af_0'
     } else {
-       container 'quay.io/biocontainers/sourmash:4.4.0--hdfd78af_0'
+       container 'quay.io/biocontainers/sourmash:4.5.0--hdfd78af_0'
     }
 	
 
@@ -31,8 +31,7 @@ process SOURMASH_SIGNATURE {
 
     output:
     tuple val(meta), path('*.sig')	    , emit: signatures
-    //tuple val(meta), path('*.log')          , emit: log
-    path "*.version.txt"                    , emit: version
+    path "*.version.txt"                , emit: version
     
     script:
     def software = getSoftwareName(task.process)

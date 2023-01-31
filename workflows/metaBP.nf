@@ -14,7 +14,11 @@
 def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
 
 // Check already if long reads are provided
-include { hasExtension } from '../modules/local/functions'
+//include { hasExtension } from '../modules/local/functions'
+
+def hasExtension(it, extension) {
+    it.toString().toLowerCase().endsWith(extension.toLowerCase())
+}
 def hybrid = false
 if(hasExtension(params.input, "csv")){
     Channel
@@ -56,23 +60,18 @@ ch_multiqc_custom_config = params.multiqc_config ? Channel.fromPath(params.multi
 */
 
 // Don't overwrite global params.modules, create a copy instead and use that within the main script.
-def modules = params.modules.clone()
-def multiqc_options   = modules['multiqc']
-multiqc_options.args += params.multiqc_title ? Utils.joinModuleArgs(["--title \"$params.multiqc_title\""]) : ''
+//def modules = params.modules.clone()
+//def multiqc_options   = modules['multiqc']
+//multiqc_options.args += params.multiqc_title ? Utils.joinModuleArgs(["--title \"$params.multiqc_title\""]) : ''
 
 //
 //-------------------- MODULE: Local to the pipeline nf-core/mag version 2.1.1 -------------------- 
 //
-include { GET_SOFTWARE_VERSIONS as GET_SOFTWARE_VERSIONS_CUTADAPT             } from '../modules/local/get_software_versions'       addParams( options: [publish_files : ['csv':'']]          )
-include { GET_SOFTWARE_VERSIONS as GET_SOFTWARE_VERSIONS_TRIMMOMATIC          } from '../modules/local/get_software_versions'       addParams( options: [publish_files : ['csv':'']]          )
+include { CUSTOM_DUMPSOFTWAREVERSIONS as CUSTOM_DUMPSOFTWAREVERSIONS_CUTADAPT } from '../modules/nf-core/modules/custom/dumpsoftwareversions/main'
+include { CUSTOM_DUMPSOFTWAREVERSIONS as CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC } from '../modules/nf-core/modules/custom/dumpsoftwareversions/main'
 include { BOWTIE2_REMOVAL_BUILD as BOWTIE2_HOST_REMOVAL_BUILD                 } from '../modules/local/bowtie2_removal_build'
 include { BOWTIE2_REMOVAL_BUILD as BOWTIE2_PHIX_REMOVAL_BUILD_CUTADAPT        } from '../modules/local/bowtie2_removal_build'
 include { BOWTIE2_REMOVAL_BUILD as BOWTIE2_PHIX_REMOVAL_BUILD_TRIMMOMATIC     } from '../modules/local/bowtie2_removal_build'
-//include { PORECHOP                                            } from '../modules/local/porechop'
-//include { NANOLYSE                                            } from '../modules/local/nanolyse'                  addParams( options: modules['nanolyse']                   )
-//include { FILTLONG                                            } from '../modules/local/filtlong'
-//include { NANOPLOT as NANOPLOT_RAW                            } from '../modules/local/nanoplot'                  addParams( options: modules['nanoplot_raw']               )
-//include { NANOPLOT as NANOPLOT_FILTERED                       } from '../modules/local/nanoplot'                  addParams( options: modules['nanoplot_filtered']          )
 include { KRAKEN2_DB_PREPARATION as KRAKEN2_DB_PREPARATION_CUTADAPT           } from '../modules/local/kraken2_db_preparation'
 include { KRONA_DB as KRONA_DB_CUTADAPT                                       } from '../modules/local/krona_db'
 include { KRAKEN2_DB_PREPARATION as KRAKEN2_DB_PREPARATION_TRIMMOMATIC        } from '../modules/local/kraken2_db_preparation'
@@ -85,18 +84,17 @@ include { POOL_SINGLE_READS as POOL_SINGLE_READS_TRIMMOMATIC                  } 
 include { POOL_PAIRED_READS as POOL_PAIRED_READS_CUTADAPT                     } from '../modules/local/pool_paired_reads'
 include { POOL_PAIRED_READS as POOL_PAIRED_READS_TRIMMOMATIC                  } from '../modules/local/pool_paired_reads'
 include { POOL_SINGLE_READS as POOL_LONG_READS                                } from '../modules/local/pool_single_reads'
-//include { SPADESHYBRID                                                        } from '../modules/local/spadeshybrid'                addParams( options: modules['spadeshybrid']      )
-include { MULTIQC as MULTIQC_CUTADAPT                                         } from '../modules/local/multiqc'                     addParams( options: multiqc_options                       )
-include { MULTIQC as MULTIQC_TRIMMOMATIC                                      } from '../modules/local/multiqc'                     addParams( options: multiqc_options                       )
+include { MULTIQC as MULTIQC_CUTADAPT                                         } from '../modules/local/multiqc'                     //addParams( options: multiqc_options                       )
+include { MULTIQC as MULTIQC_TRIMMOMATIC                                      } from '../modules/local/multiqc'                     //addParams( options: multiqc_options                       )
 
 //
 //-------------------- MODULE: Local to the pipeline edited (or) added by Zifo --------------------
 //
-include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_HOST_REMOVAL_ALIGN_CUTADAPT        } from '../modules/local/bowtie2_removal_align'       addParams( options: modules['bowtie2_host_removal_align_cutadapt'] )
-include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC     } from '../modules/local/bowtie2_removal_align'       addParams( options: modules['bowtie2_host_removal_align_trimmomatic'] )
-include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_PHIX_REMOVAL_ALIGN_CUTADAPT        } from '../modules/local/bowtie2_removal_align'       addParams( options: modules['bowtie2_phix_removal_align_cutadapt'] )
-include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_PHIX_REMOVAL_ALIGN_TRIMMOMATIC     } from '../modules/local/bowtie2_removal_align'       addParams( options: modules['bowtie2_phix_removal_align_trimmomatic'] )
-include { KRAKEN2 as KRAKEN2_CUTADAPT                                         } from '../modules/local/kraken2'                     addParams( options: modules['kraken2_cutadapt']           )
+include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_HOST_REMOVAL_ALIGN_CUTADAPT        } from '../modules/local/bowtie2_removal_align'       //addParams( options: modules['bowtie2_host_removal_align_cutadapt'] )
+include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_HOST_REMOVAL_ALIGN_TRIMMOMATIC     } from '../modules/local/bowtie2_removal_align'       //addParams( options: modules['bowtie2_host_removal_align_trimmomatic'] )
+include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_PHIX_REMOVAL_ALIGN_CUTADAPT        } from '../modules/local/bowtie2_removal_align'       //addParams( options: modules['bowtie2_phix_removal_align_cutadapt'] )
+include { BOWTIE2_REMOVAL_ALIGN as BOWTIE2_PHIX_REMOVAL_ALIGN_TRIMMOMATIC     } from '../modules/local/bowtie2_removal_align'       //addParams( options: modules['bowtie2_phix_removal_align_trimmomatic'] )
+/*include { KRAKEN2 as KRAKEN2_CUTADAPT                                         } from '../modules/local/kraken2'                     addParams( options: modules['kraken2_cutadapt']           )
 include { KRAKEN2 as KRAKEN2_TRIMMOMATIC                                      } from '../modules/local/kraken2'                     addParams( options: modules['kraken2_trimmomatic']        )
 include { KRONA as KRONA_CUTADAPT                                             } from '../modules/local/krona'                       addParams( options: modules['krona_cutadapt']             )
 include { KRONA as KRONA_TRIMMOMATIC                                          } from '../modules/local/krona'                       addParams( options: modules['krona_trimmomatic']          )
@@ -120,22 +118,14 @@ include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_SPADES                          } 
 include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_SPADES                       } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_trimmomatic_spades']                )
 include { BIN_SUMMARY as BIN_SUMMARY_CUTADAPT_MEGAHIT                         } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_cutadapt_megahit']                )
 include { BIN_SUMMARY as BIN_SUMMARY_TRIMMOMATIC_MEGAHIT                      } from '../modules/local/bin_summary'                 addParams( options: modules['bin_summary_trimmomatic_megahit']                )
-include { CUTADAPT                                                            } from '../modules/local/cutadapt'                    addParams( options: modules['cutadapt']                   )
-include { TRIMMOMATIC                                                         } from '../modules/local/trimmomatic'                 addParams( options: modules['trimmomatic']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_SPADES            } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_spades']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT           } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_cutadapt_megahit']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES         } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_trimmomatic_spades']                )
-include { SOURMASH_SIGNATURE as SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT        } from '../modules/local/sourmash_signature'          addParams( options: modules['sourmash_signature_trimmomatic_megahit']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_CUTADAPT_SPADES              } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_cutadapt_spades']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_CUTADAPT_MEGAHIT             } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_cutadapt_megahit']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_TRIMMOMATIC_SPADES           } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_trimmomatic_spades']                )
-include { SOURMASH_CLASSIFY as SOURMASH_CLASSIFY_TRIMMOMATIC_MEGAHIT          } from '../modules/local/sourmash_classify'           addParams( options: modules['sourmash_classify_trimmomatic_megahit']                )
+*/include { CUTADAPT                                                            } from '../modules/local/cutadapt'                    //addParams( options: modules['cutadapt']                   )
+include { TRIMMOMATIC                                                         } from '../modules/local/trimmomatic'                 //addParams( options: modules['trimmomatic']                )
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK                                                         } from '../subworkflows/local/input_check'
-include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT               } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit']         )
+/*include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_MEGAHIT               } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_megahit']         )
 include { METABAT2_BINNING as METABAT2_BINNING_CUTADAPT_SPADES                } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_cutadapt'], mag_depths_options: modules['mag_depths_cutadapt'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_cutadapt_spades']          )
 include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_MEGAHIT            } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_megahit'])
 include { METABAT2_BINNING as METABAT2_BINNING_TRIMMOMATIC_SPADES             } from '../subworkflows/local/metabat2_binning'       addParams( bowtie2_align_options: modules['bowtie2_assembly_align'], metabat2_options: modules['metabat2_trimmomatic'], mag_depths_options: modules['mag_depths_trimmomatic'], mag_depths_plot_options: modules['mag_depths_plot'], mag_depths_summary_options: modules['mag_depths_summary_trimmomatic_spades'] )
@@ -144,11 +134,15 @@ include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_SPADES                             } 
 include { BUSCO_QC as BUSCO_QC_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_cutadapt_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_cutadapt'], busco_summary_options: modules['busco_summary_cutadapt_megahit']                )
 include { BUSCO_QC as BUSCO_QC_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/busco_qc'               addParams( busco_db_options: modules['busco_db_preparation'], busco_options: modules['busco_trimmomatic_megahit'], busco_save_download_options: modules['busco_save_download'], busco_plot_options: modules['busco_plot_trimmomatic'], busco_summary_options: modules['busco_summary_trimmomatic_megahit']       )
 //include { GTDBTK                                        } from '../subworkflows/local/gtdbtk'                addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary'])
+include { SOURMASH as SOURMASH_CUTADAPT_SPADES                                } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_cutadapt_spades']                    )
+include { SOURMASH as SOURMASH_CUTADAPT_MEGAHIT                               } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_cutadapt_megahit']                   )
+include { SOURMASH as SOURMASH_TRIMMOMATIC_SPADES                             } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_trimmomatic_spades']                 )
+include { SOURMASH as SOURMASH_TRIMMOMATIC_MEGAHIT                            } from '../subworkflows/local/sourmash'               addParams( options: modules['sourmash_trimmomatic_megahit']                )
 include { GTDBTK  as GTDBTK_CUTADAPT_MEGAHIT                                  } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_megahit']      )
 include { GTDBTK  as GTDBTK_CUTADAPT_SPADES                                   } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_cutadapt_spades']       )
 include { GTDBTK  as GTDBTK_TRIMMOMATIC_MEGAHIT                               } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_megahit']   )
 include { GTDBTK  as GTDBTK_TRIMMOMATIC_SPADES                                } from '../subworkflows/local/gtdbtk'                 addParams( gtdbtk_classify_options: modules['gtdbtk_classify'], gtdbtk_summary_options: modules['gtdbtk_summary_trimmomatic_spades']    )
-
+*/
 /*
 ========================================================================================
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -158,27 +152,26 @@ include { GTDBTK  as GTDBTK_TRIMMOMATIC_SPADES                                } 
 //
 //---------------- MODULE: Installed directly from nf-core/modules ---------------------
 //
-include { FASTQC as FASTQC_RAW                                                } from '../modules/nf-core/modules/fastqc/main'       addParams( options: modules['fastqc_raw']            )
-include { FASTQC as FASTQC_TRIMMED_CUTADAPT                                   } from '../modules/nf-core/modules/fastqc/main'       addParams( options: modules['fastqc_trimmed_cutadapt'])
-include { FASTQC as FASTQC_TRIMMED_TRIMMOMATIC                                } from '../modules/nf-core/modules/fastqc/main'       addParams( options: modules['fastqc_trimmed_trimmomatic'])
-include { FASTP                                                               } from '../modules/nf-core/modules/fastp/main'        addParams( options: modules['fastp']                 )
-include { PRODIGAL as PRODIGAL_SPADES_CUTADAPT                                } from '../modules/nf-core/modules/prodigal/main'     addParams( options: modules['prodigal']              )
-include { PRODIGAL as PRODIGAL_MEGAHIT_CUTADAPT                               } from '../modules/nf-core/modules/prodigal/main'     addParams( options: modules['prodigal']              )
-include { PRODIGAL as PRODIGAL_SPADES_TRIMMOMATIC                             } from '../modules/nf-core/modules/prodigal/main'     addParams( options: modules['prodigal']              )
-include { PRODIGAL as PRODIGAL_MEGAHIT_TRIMMOMATIC                            } from '../modules/nf-core/modules/prodigal/main'     addParams( options: modules['prodigal']              )
+include { FASTQC as FASTQC_RAW                                                } from '../modules/nf-core/modules/fastqc/main'       //addParams( options: modules['fastqc_raw']            )
+include { FASTQC as FASTQC_TRIMMED_CUTADAPT                                   } from '../modules/nf-core/modules/fastqc/main'       //addParams( options: modules['fastqc_trimmed_cutadapt'])
+include { FASTQC as FASTQC_TRIMMED_TRIMMOMATIC                                } from '../modules/nf-core/modules/fastqc/main'       //addParams( options: modules['fastqc_trimmed_trimmomatic'])
+include { PRODIGAL as PRODIGAL_SPADES_CUTADAPT                                } from '../modules/nf-core/modules/prodigal/main'     //addParams( options: modules['prodigal']              )
+include { PRODIGAL as PRODIGAL_MEGAHIT_CUTADAPT                               } from '../modules/nf-core/modules/prodigal/main'     //addParams( options: modules['prodigal']              )
+include { PRODIGAL as PRODIGAL_SPADES_TRIMMOMATIC                             } from '../modules/nf-core/modules/prodigal/main'     //addParams( options: modules['prodigal']              )
+include { PRODIGAL as PRODIGAL_MEGAHIT_TRIMMOMATIC                            } from '../modules/nf-core/modules/prodigal/main'     //addParams( options: modules['prodigal']              )
 
 
 //
 //---------------- MODULE: Installed directly from nf-core/modules edited (or) added by Zifo ----------------
 //
-include { PROKKA as PROKKA_BINS_CUTADAPT_SPADES                               } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_BINS_CUTADAPT_MEGAHIT                              } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_BINS_TRIMMOMATIC_SPADES                            } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_BINS_TRIMMOMATIC_MEGAHIT                           } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_SPADES                         } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_MEGAHIT                        } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_TRIMMOMATIC_SPADES                      } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
-include { PROKKA as PROKKA_ASSEMBLIES_TRIMMOMATIC_MEGAHIT                     } from '../modules/nf-core/modules/prokka/main'       addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_BINS_CUTADAPT_SPADES                               } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_BINS_CUTADAPT_MEGAHIT                              } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_BINS_TRIMMOMATIC_SPADES                            } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_BINS_TRIMMOMATIC_MEGAHIT                           } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_SPADES                         } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_ASSEMBLIES_CUTADAPT_MEGAHIT                        } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_ASSEMBLIES_TRIMMOMATIC_SPADES                      } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
+include { PROKKA as PROKKA_ASSEMBLIES_TRIMMOMATIC_MEGAHIT                     } from '../modules/nf-core/modules/prokka/main'       //addParams( options: modules['prokka']                )
 
 ////////////////////////////////////////////////////
 /* --  Create channel for reference databases  -- */
@@ -288,13 +281,7 @@ workflow METABP {
     FASTQC_RAW (
         ch_raw_short_reads
     )
-    ch_software_versions = ch_software_versions.mix(FASTQC_RAW.out.version.first().ifEmpty(null))
-
-    FASTP (
-        ch_raw_short_reads
-    )
-    ch_short_reads_fastp = FASTP.out.reads
-    ch_software_versions = ch_software_versions.mix(FASTP.out.version.first().ifEmpty(null))
+    ch_software_versions = ch_software_versions.mix(FASTQC_RAW.out.versions.first().ifEmpty(null))
 
     /*
     ---------------------Cutadapt added for Quality Control by Zifo-------------------
@@ -312,7 +299,7 @@ workflow METABP {
             }
             .set { ch_short_reads_cutadapt }
     
-    ch_software_versions = ch_software_versions.mix(CUTADAPT.out.version.first().ifEmpty(null))
+    ch_software_versions = ch_software_versions.mix(CUTADAPT.out.versions.first().ifEmpty(null))
     
     ch_bowtie2_removal_host_multiqc = Channel.empty()
     if (params.host_fasta || params.host_genome) {
@@ -323,7 +310,7 @@ workflow METABP {
 
         ch_short_reads_cutadapt = BOWTIE2_HOST_REMOVAL_ALIGN_CUTADAPT.out.reads
         ch_bowtie2_removal_host_multiqc = BOWTIE2_HOST_REMOVAL_ALIGN_CUTADAPT.out.log 
-        ch_software_versions = ch_software_versions.mix(BOWTIE2_HOST_REMOVAL_ALIGN_CUTADAPT.out.version.first().ifEmpty(null))
+        ch_software_versions = ch_software_versions.mix(BOWTIE2_HOST_REMOVAL_ALIGN_CUTADAPT.out.versions.first().ifEmpty(null))
     }
     
     if(!params.keep_phix) {
@@ -603,13 +590,13 @@ workflow METABP {
         */
 
         /*
-         * Sourmash: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
+         * Sourmash subworkflow: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
          */
         if (params.sourmash) {
-            if (!params.single_end && !params.skip_spades) {
+            /* if (!params.single_end && !params.skip_spades) {
                 SOURMASH_SIGNATURE_CUTADAPT_SPADES ( METABAT2_BINNING_CUTADAPT_SPADES.out.bins )
                 
-                SOURMASH_CLASSIFY_CUTADAPT_SPADES ( 
+                SOURMASH_SUMMARIZE_CUTADAPT_SPADES ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_CUTADAPT_SPADES.out.signatures
                 )
@@ -618,11 +605,20 @@ workflow METABP {
             if (!params.skip_megahit) {
                 SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT ( METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
                 
-                SOURMASH_CLASSIFY_CUTADAPT_MEGAHIT ( 
+                SOURMASH_SUMMARIZE_CUTADAPT_MEGAHIT ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.signatures
                 )
                 ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
+            } */
+
+            if (!params.single_end && !params.skip_spades) {
+                SOURMASH_CUTADAPT_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
+                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_SPADES.out.version.first().ifEmpty(null))
+            }
+            if (!params.skip_megahit) {
+                SOURMASH_CUTADAPT_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
+                ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_MEGAHIT.out.version.first().ifEmpty(null))
             }
         }
 
@@ -732,7 +728,7 @@ workflow METABP {
     //
     // MODULE: Pipeline reporting
     //
-    ch_software_versions
+    /* ch_software_versions
         .map { it -> if (it) [ it.baseName, it ] }
         .groupTuple()
         .map { it[1][0] }
@@ -742,6 +738,10 @@ workflow METABP {
 
     GET_SOFTWARE_VERSIONS_CUTADAPT (
         ch_software_versions.map { it }.collect()
+    ) */
+
+    CUSTOM_DUMPSOFTWAREVERSIONS_CUTADAPT (
+        ch_software_versions.unique().collectFile(name: 'collated_versions.yml')
     )
 
     //
@@ -752,14 +752,13 @@ workflow METABP {
 
     ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(Channel.from(ch_multiqc_config))
-    ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-    ch_multiqc_files = ch_multiqc_files.mix(GET_SOFTWARE_VERSIONS_CUTADAPT.out.yaml.collect())
+    ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yml'))
+    ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS_CUTADAPT.out.yml.collect())
 
     MULTIQC_CUTADAPT (
         ch_multiqc_files.collect(),
         ch_multiqc_custom_config.collect().ifEmpty([]),
         FASTQC_RAW.out.zip.collect{it[1]}.ifEmpty([]),
-        FASTP.out.json.collect{it[1]}.ifEmpty([]),
         FASTQC_TRIMMED_CUTADAPT.out.zip.collect{it[1]}.ifEmpty([]),
         ch_bowtie2_removal_host_multiqc.collect{it[1]}.ifEmpty([]),
         ch_quast_multiqc.collect().ifEmpty([]),
@@ -767,7 +766,7 @@ workflow METABP {
         ch_busco_multiqc.collect().ifEmpty([])
     )
     multiqc_report       = MULTIQC_CUTADAPT.out.report.toList()
-    ch_software_versions = ch_software_versions.mix(MULTIQC_CUTADAPT.out.version.ifEmpty(null))
+    ch_software_versions = ch_software_versions.mix(MULTIQC_CUTADAPT.out.versions.ifEmpty(null))
     
     
     }
@@ -1081,10 +1080,10 @@ workflow METABP {
          * Sourmash: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
          */
         if (params.sourmash) {
-            if (!params.single_end && !params.skip_spades) {
+            /* if (!params.single_end && !params.skip_spades) {
                 SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )
 
-                SOURMASH_CLASSIFY_TRIMMOMATIC_SPADES ( 
+                SOURMASH_SUMMARIZE_TRIMMOMATIC_SPADES ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.signatures
                 )
@@ -1093,11 +1092,20 @@ workflow METABP {
             if (!params.skip_megahit) {
                 SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT ( METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
 
-                SOURMASH_CLASSIFY_TRIMMOMATIC_MEGAHIT ( 
+                SOURMASH_SUMMARIZE_TRIMMOMATIC_MEGAHIT ( 
                     ch_sourmash_db,
                     SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.signatures
                 )
                 ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
+            } */
+
+            if (!params.single_end && !params.skip_spades) {
+                SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
+                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_SPADES.out.version.first().ifEmpty(null))
+            }
+            if (!params.skip_megahit) {
+                SOURMASH_TRIMMOMATIC_MEGAHIT ( ch_sourmash_db, METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
+                ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_MEGAHIT.out.version.first().ifEmpty(null))
             }
         }
 
@@ -1205,17 +1213,21 @@ workflow METABP {
     //
     // MODULE: Pipeline reporting
     //
-    ch_software_versions
+    /* ch_software_versions
         .map { it -> if (it) [ it.baseName, it ] }
         .groupTuple()
         .map { it[1][0] }
         .flatten()
         .collect()
-        .set { ch_software_versions }
+        .set { ch_software_versions } */
 
-    GET_SOFTWARE_VERSIONS_TRIMMOMATIC (
-        ch_software_versions.map { it }.collect()
+    CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC (
+        ch_software_versions.unique().collectFile(name: 'collated_versions.yml')
     )
+
+    /* GET_SOFTWARE_VERSIONS_TRIMMOMATIC (
+        ch_software_versions.map { it }.collect()
+    ) */
 
     //
     // MODULE: MultiQC
@@ -1225,14 +1237,13 @@ workflow METABP {
 
     ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(Channel.from(ch_multiqc_config))
-    ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-    ch_multiqc_files = ch_multiqc_files.mix(GET_SOFTWARE_VERSIONS_TRIMMOMATIC.out.yaml.collect())
+    ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yml'))
+    ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC.out.yml.collect())
 
     MULTIQC_TRIMMOMATIC (
         ch_multiqc_files.collect(),
         ch_multiqc_custom_config.collect().ifEmpty([]),
         FASTQC_RAW.out.zip.collect{it[1]}.ifEmpty([]),
-        FASTP.out.json.collect{it[1]}.ifEmpty([]),
         FASTQC_TRIMMED_TRIMMOMATIC.out.zip.collect{it[1]}.ifEmpty([]),
         ch_bowtie2_removal_host_multiqc.collect{it[1]}.ifEmpty([]),
         ch_quast_multiqc.collect().ifEmpty([]),
