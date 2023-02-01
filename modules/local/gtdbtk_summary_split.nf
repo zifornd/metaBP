@@ -37,5 +37,3 @@ process GTDBTK_SUMMARY_SPLIT {
     grep -i 'user_genome\\|megahit' trimmomatic_bin_summary.tsv > megahit_trimmomatic_bin_summary.tsv
     """
  }
-
-

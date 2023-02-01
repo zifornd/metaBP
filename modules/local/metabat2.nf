@@ -1,22 +1,11 @@
-// Import generic module functions
-include { initOptions; saveFiles; getSoftwareName } from './functions'
-
-params.options = [:]
-options    = initOptions(params.options)
-
 process METABAT2 {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 
-    publishDir "${params.outdir}",
-        mode: params.publish_dir_mode,
-        saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), meta:meta, publish_by_meta:['assembler']) }
-
     conda (params.enable_conda ? "bioconda::metabat2=2.15 conda-forge::python=3.6.7 conda-forge::biopython=1.74 conda-forge::pandas=1.1.5" : null)
-    if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/mulled-v2-e25d1fa2bb6cbacd47a4f8b2308bd01ba38c5dd7:75310f02364a762e6ba5206fcd11d7529534ed6e-0"
-    } else {
-        container "quay.io/biocontainers/mulled-v2-e25d1fa2bb6cbacd47a4f8b2308bd01ba38c5dd7:75310f02364a762e6ba5206fcd11d7529534ed6e-0"
-    }
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/mulled-v2-e25d1fa2bb6cbacd47a4f8b2308bd01ba38c5dd7:75310f02364a762e6ba5206fcd11d7529534ed6e-0' :
+        'quay.io/biocontainers/mulled-v2-e25d1fa2bb6cbacd47a4f8b2308bd01ba38c5dd7:75310f02364a762e6ba5206fcd11d7529534ed6e-0' }"
+   
 
     input:
     tuple val(meta), path(assembly), path(bam), path(bai)
@@ -25,10 +14,10 @@ process METABAT2 {
     tuple val(meta), path("MetaBAT2/*.fa")                              , emit: bins
     path "${meta.assembler}-${meta.trimmer}-${meta.id}-depth.txt.gz"    , emit: depths
     path "MetaBAT2/discarded/*"                                         , emit: discarded
-    path '*.version.txt'                                                , emit: version
+    path 'versions.yml'                                                , emit: versions
 
     script:
-    def software = getSoftwareName(task.process)
+    def args = task.ext.args ?: ''
     def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
     """
     OMP_NUM_THREADS=${task.cpus} jgi_summarize_bam_contig_depths --outputDepth depth.txt ${bam}
@@ -50,6 +39,9 @@ process METABAT2 {
         "MetaBAT2/${prefix}.unbinned.remaining.fa"
     mv "MetaBAT2/${prefix}".*.fa.gz MetaBAT2/discarded/
 
-    echo \$(metabat2 --help 2>&1) | sed "s/^.*version 2\\://; s/ (Bioconda.*//" > ${software}.version.txt
-    """
+cat <<-END_VERSIONS > versions.yml
+"${task.process}":
+    metabat2: \$( metabat2 --help 2>&1 | head -n 2 | tail -n 1| sed 's/.*\\:\\([0-9]*\\.[0-9]*\\).*/\\1/' )
+END_VERSIONS
+"""
 }
