@@ -9,7 +9,6 @@ process BUSCO_SAVE_DOWNLOAD {
         'https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img' :
         'biocontainers/biocontainers:v1.2.0_cv1' }"
 
-
     input:
     path(busco_downloads)
 
