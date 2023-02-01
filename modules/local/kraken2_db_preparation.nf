@@ -4,7 +4,6 @@ process KRAKEN2_DB_PREPARATION {
         'https://containers.biocontainers.pro/s3/SingImgsRepo/biocontainers/v1.2.0_cv1/biocontainers_v1.2.0_cv1.img' :
         "biocontainers/biocontainers:v1.2.0_cv1" }"
 
-
     input:
     path db
 
@@ -14,7 +13,6 @@ process KRAKEN2_DB_PREPARATION {
     script:
     """
     mkdir db_tmp
-    #wget "${params.kraken2_db}" -O kraken2_db.tar.gz 
     tar -xf "${db}" -C db_tmp
     mkdir database
     mv `find db_tmp/ -name "*.k2d"` database/
