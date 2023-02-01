@@ -12,7 +12,7 @@ process SOURMASH_SUMMARIZE {
         'quay.io/biocontainers/sourmash:4.5.0--hdfd78af_0' }"
     
     input:
-    path(db)
+    path(db), stageAs: 'database.gz'
     tuple val(meta), path(signatures)
 
     output:
