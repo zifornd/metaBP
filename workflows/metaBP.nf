@@ -419,8 +419,6 @@ workflow METABP {
         // short reads
         if (!params.single_end && (!params.skip_spades || !params.skip_spadeshybrid)){
             if (params.single_end){
-		        /*POOL_SINGLE_READS ( ch_short_reads_grouped )
-                ch_short_reads_spades = POOL_SINGLE_READS.out.reads*/
                 POOL_SINGLE_READS_CUTADAPT ( ch_short_reads_grouped_cutadapt )
                 ch_short_reads_spades_cutadapt = POOL_SINGLE_READS_CUTADAPT.out.reads
             } else {
@@ -431,8 +429,6 @@ workflow METABP {
     } else {
         ch_short_reads_spades_cutadapt = ch_short_reads_cutadapt
         }
-	
-	    //ch_short_reads_spades_cutadapt = ch_short_reads_cutadapt
 
     if (!params.single_end && !params.skip_spades){
         SPADES_CUTADAPT ( ch_short_reads_spades_cutadapt )
@@ -485,17 +481,15 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             PRODIGAL_SPADES_CUTADAPT (
             ch_spades_assemblies_cutadapt,
-			'gff')
-           // modules['prodigal']['output_format']
-       
-        ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES_CUTADAPT.out.versions.first().ifEmpty(null))
+			'gff'
+            )
+            ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES_CUTADAPT.out.versions.first().ifEmpty(null))
             }
         if (!params.skip_megahit){
 	        PRODIGAL_MEGAHIT_CUTADAPT (
             ch_megahit_assemblies_cutadapt,
-			'gff')
-            //modules['prodigal']['output_format']
-       
+			'gff'
+            )
         ch_software_versions = ch_software_versions.mix(PRODIGAL_MEGAHIT_CUTADAPT.out.versions.first().ifEmpty(null))
         }
     }
@@ -598,25 +592,6 @@ workflow METABP {
          * Sourmash subworkflow: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
          */
         if (params.sourmash) {
-            /* if (!params.single_end && !params.skip_spades) {
-                SOURMASH_SIGNATURE_CUTADAPT_SPADES ( METABAT2_BINNING_CUTADAPT_SPADES.out.bins )
-                
-                SOURMASH_SUMMARIZE_CUTADAPT_SPADES ( 
-                    ch_sourmash_db,
-                    SOURMASH_SIGNATURE_CUTADAPT_SPADES.out.signatures
-                )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
-            }
-            if (!params.skip_megahit) {
-                SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT ( METABAT2_BINNING_CUTADAPT_MEGAHIT.out.bins )
-                
-                SOURMASH_SUMMARIZE_CUTADAPT_MEGAHIT ( 
-                    ch_sourmash_db,
-                    SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.signatures
-                )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
-            } */
-
             if (!params.single_end && !params.skip_spades) {
                 SOURMASH_CUTADAPT_SPADES (ch_sourmash_db, METABAT2_BINNING_CUTADAPT_SPADES.out.bins)
                 ch_software_versions = ch_software_versions.mix(SOURMASH_CUTADAPT_SPADES.out.versions.first().ifEmpty(null))
@@ -726,25 +701,12 @@ workflow METABP {
                 ch_software_versions = ch_software_versions.mix(PROKKA_BINS_CUTADAPT_MEGAHIT.out.versions.first().ifEmpty(null))
             }
         }
-        
-    }
 
+    }
 
     //
     // MODULE: Pipeline reporting
     //
-    /* ch_software_versions
-        .map { it -> if (it) [ it.baseName, it ] }
-        .groupTuple()
-        .map { it[1][0] }
-        .flatten()
-        .collect()
-        .set { ch_software_versions }
-
-    GET_SOFTWARE_VERSIONS_CUTADAPT (
-        ch_software_versions.map { it }.collect()
-    ) */
-
     CUSTOM_DUMPSOFTWAREVERSIONS_CUTADAPT (
         ch_software_versions.unique().collectFile(name: 'collated_versions.yml')
     )
@@ -817,7 +779,7 @@ workflow METABP {
         )
 
         ch_short_reads_trimmomatic = BOWTIE2_PHIX_REMOVAL_ALIGN_TRIMMOMATIC.out.reads 
-        ch_short_reads = ch_short_reads_trimmomatic//.mix(ch_short_reads_trimmomatic)
+        ch_short_reads = ch_short_reads_trimmomatic
     }
 
     FASTQC_TRIMMED_TRIMMOMATIC (
@@ -912,8 +874,6 @@ workflow METABP {
         // short reads
         if (!params.single_end && (!params.skip_spades || !params.skip_spadeshybrid)){
             if (params.single_end){
-		/*POOL_SINGLE_READS ( ch_short_reads_grouped )
-                ch_short_reads_spades = POOL_SINGLE_READS.out.reads*/
                 POOL_SINGLE_READS_TRIMMOMATIC ( ch_short_reads_grouped_trimmomatic )
                 ch_short_reads_spades_trimmomatic = POOL_SINGLE_READS_TRIMMOMATIC.out.reads
             } else {
@@ -921,9 +881,9 @@ workflow METABP {
                 ch_short_reads_spades_trimmomatic = POOL_PAIRED_READS_TRIMMOMATIC.out.reads
             }
         }
-      } else {
+    } else {
         ch_short_reads_spades_trimmomatic = ch_short_reads_trimmomatic
-      }
+    }
 
     if (!params.single_end && !params.skip_spades){
         SPADES_TRIMMOMATIC ( ch_short_reads_spades_trimmomatic )
@@ -976,15 +936,15 @@ workflow METABP {
         if (!params.single_end && !params.skip_spades) {
             PRODIGAL_SPADES_TRIMMOMATIC (
             ch_spades_assemblies_trimmomatic,
-            'gff')
-        
+            'gff'
+            )
         ch_software_versions = ch_software_versions.mix(PRODIGAL_SPADES_TRIMMOMATIC.out.versions.first().ifEmpty(null))
             }
         if (!params.skip_megahit){
 	        PRODIGAL_MEGAHIT_TRIMMOMATIC (
             ch_megahit_assemblies_trimmomatic,
-            'gff')
-        
+            'gff'
+            )
         ch_software_versions = ch_software_versions.mix(PRODIGAL_MEGAHIT_TRIMMOMATIC.out.versions.first().ifEmpty(null))
         }
     }
@@ -1087,25 +1047,6 @@ workflow METABP {
          * Sourmash: k-mer based taxonomic exploration and classification routines for genome and metagenome analysis
          */
         if (params.sourmash) {
-            /* if (!params.single_end && !params.skip_spades) {
-                SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES ( METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins )
-
-                SOURMASH_SUMMARIZE_TRIMMOMATIC_SPADES ( 
-                    ch_sourmash_db,
-                    SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.signatures
-                )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
-            }
-            if (!params.skip_megahit) {
-                SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT ( METABAT2_BINNING_TRIMMOMATIC_MEGAHIT.out.bins )
-
-                SOURMASH_SUMMARIZE_TRIMMOMATIC_MEGAHIT ( 
-                    ch_sourmash_db,
-                    SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.signatures
-                )
-                ch_software_versions = ch_software_versions.mix(SOURMASH_SIGNATURE_TRIMMOMATIC_MEGAHIT.out.versions.first().ifEmpty(null))
-            } */
-
             if (!params.single_end && !params.skip_spades) {
                 SOURMASH_TRIMMOMATIC_SPADES (ch_sourmash_db, METABAT2_BINNING_TRIMMOMATIC_SPADES.out.bins)
                 ch_software_versions = ch_software_versions.mix(SOURMASH_TRIMMOMATIC_SPADES.out.versions.first().ifEmpty(null))
@@ -1220,18 +1161,6 @@ workflow METABP {
     //
     // MODULE: Pipeline reporting
     //
-    /* ch_software_versions
-        .map { it -> if (it) [ it.baseName, it ] }
-        .groupTuple()
-        .map { it[1][0] }
-        .flatten()
-        .collect()
-        .set { ch_software_versions }
-
-    GET_SOFTWARE_VERSIONS_TRIMMOMATIC (
-        ch_software_versions.map { it }.collect()
-    ) */
-
     CUSTOM_DUMPSOFTWAREVERSIONS_TRIMMOMATIC (
         ch_software_versions.unique().collectFile(name: 'collated_versions.yml')
     )
