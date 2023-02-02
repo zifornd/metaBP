@@ -17,9 +17,9 @@ process GTDBTK_DB_PREPARATION {
     mkdir database
     tar -xzf ${database} -C database --strip 1
 
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    tar: \$(tar --version 2>&1 | sed -n 1p | sed 's/tar (GNU tar) //')
-END_VERSIONS
-"""
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        tar: \$(tar --version 2>&1 | sed -n 1p | sed 's/tar (GNU tar) //')
+    END_VERSIONS
+    """
 }

@@ -16,7 +16,7 @@ process SPADES {
     path "${meta.trimmer}-${meta.id}_contigs.fasta.gz"                 , emit: contigs_gz
     path "${meta.trimmer}-${meta.id}_scaffolds.fasta.gz"               , emit: assembly_gz
     path "${meta.trimmer}-${meta.id}_graph.gfa.gz"                     , emit: graph
-    path 'versions.yml'                                               , emit: versions
+    path 'versions.yml'                                                , emit: versions
 
     script:
     def args = task.ext.args ?: ''
@@ -27,7 +27,7 @@ process SPADES {
         metaspades.py \
             ${params.spades_options} \
             --threads "${task.cpus}" \
-	    --only-assembler \
+            --only-assembler \
             --memory $maxmem \
             --pe1-1 ${reads[0]} \
             --pe1-2 ${reads[1]} \
@@ -40,12 +40,12 @@ process SPADES {
         gzip "${prefix}_graph.gfa"
         gzip -c "${prefix}_scaffolds.fasta" > "${prefix}_scaffolds.fasta.gz"
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: \$(python --version 2>&1 | sed 's/Python //g')
-        metaspades: \$(metaspades.py --version | sed "s/SPAdes genome assembler v//; s/ \\[.*//")
-    END_VERSIONS
-    """
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            python: \$(python --version 2>&1 | sed 's/Python //g')
+            metaspades: \$(metaspades.py --version | sed "s/SPAdes genome assembler v//; s/ \\[.*//")
+        END_VERSIONS
+        """
     else
         error "ERROR: '--spades_fix_cpus' was specified, but not succesfully applied. Likely this is caused by changed process properties in a custom config file."
 }

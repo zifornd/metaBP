@@ -11,8 +11,8 @@ process BOWTIE2_ASSEMBLY_ALIGN {
 
     output:
     tuple val(assembly_meta), path(assembly), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}.bam"), path("${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.id}-${reads_meta.trimmer}.bam.bai"), emit: mappings
-    tuple val(assembly_meta), val(reads_meta), path("*.bowtie2.log")                                                                                                                                      , emit: log
-    path 'versions.yml'                                                , emit: versions                                                                                  
+    tuple val(assembly_meta), val(reads_meta), path("*.bowtie2.log")    , emit: log
+    path 'versions.yml'                                                 , emit: versions                                                                                  
 
     script:
 	def args = task.ext.args ?: ''
@@ -29,11 +29,11 @@ process BOWTIE2_ASSEMBLY_ALIGN {
         mv "${name}.bowtie2.log" "${assembly_meta.assembler}-${assembly_meta.id}-${reads_meta.trimmer}.bowtie2.log"
     fi
 
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    bowtie2: \$(echo \$(bowtie2 --version 2>&1) | sed 's/^.*bowtie2-align-s version //; s/ .*\$//')
-    samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
-    pigz: \$( pigz --version 2>&1 | sed 's/pigz //g' )
-END_VERSIONS
-"""
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        bowtie2: \$(echo \$(bowtie2 --version 2>&1) | sed 's/^.*bowtie2-align-s version //; s/ .*\$//')
+        samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+        pigz: \$( pigz --version 2>&1 | sed 's/pigz //g' )
+    END_VERSIONS
+    """
 }

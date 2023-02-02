@@ -18,9 +18,10 @@ process BOWTIE2_REMOVAL_BUILD {
     """
     mkdir bowtie
     bowtie2-build --threads $task.cpus $fasta "bt2_index_base"
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    bowtie2: \$(echo \$(bowtie2 --version 2>&1) | sed 's/^.*bowtie2-align-s version //; s/ .*\$//')
-END_VERSIONS
-"""
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        bowtie2: \$(echo \$(bowtie2 --version 2>&1) | sed 's/^.*bowtie2-align-s version //; s/ .*\$//')
+    END_VERSIONS
+    """
 }

@@ -12,7 +12,7 @@ process BUSCO_PLOT {
     output:
     path("${meta.assembler}-${meta.trimmer}-${meta.id}.*.busco_figure.png") , optional:true, emit: png
     path("${meta.assembler}-${meta.trimmer}-${meta.id}.*.busco_figure.R")   , optional:true, emit: rscript
-    path 'versions.yml'                                                    , emit: versions
+    path 'versions.yml'                                                     , emit: versions
 
     script:
     def args = task.ext.args ?: ''
@@ -36,11 +36,11 @@ process BUSCO_PLOT {
         mv busco_figure.R "${prefix}.\${mode}.\${db_name}.busco_figure.R"
     fi
 
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    python: \$(python --version 2>&1 | sed 's/Python //g')
-    R: \$(R --version 2>&1 | sed -n 1p | sed 's/R version //' | sed 's/ (.*//')
-    busco: \$(busco --version 2>&1 | sed 's/BUSCO //g')
-END_VERSIONS
-"""
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version 2>&1 | sed 's/Python //g')
+        R: \$(R --version 2>&1 | sed -n 1p | sed 's/R version //' | sed 's/ (.*//')
+        busco: \$(busco --version 2>&1 | sed 's/BUSCO //g')
+    END_VERSIONS
+    """
 }

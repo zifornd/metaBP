@@ -20,7 +20,7 @@ process GTDBTK_CLASSIFY {
     path "gtdbtk.${meta.assembler}-${meta.trimmer}-${meta.id}.log"                           , emit: log
     path "gtdbtk.${meta.assembler}-${meta.trimmer}-${meta.id}.warnings.log"                  , emit: warnings
     path "identify/gtdbtk.${meta.assembler}-${meta.trimmer}-${meta.id}.failed_genomes.tsv"   , emit: failed
-    path 'versions.yml'                                                                     , emit: versions
+    path 'versions.yml'                                                                      , emit: versions
 
     script:
     def args = task.ext.args ?: ''
@@ -46,10 +46,10 @@ process GTDBTK_CLASSIFY {
     #gzip "align/gtdbtk.${prefix}".*.msa.fasta > "gtdbtk.${prefix}".*.msa.fasta.gz
     mv gtdbtk.log "gtdbtk.${prefix}.log"
     mv gtdbtk.warnings.log "gtdbtk.${prefix}.warnings.log"
-     
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    gtdbtk: \$(gtdbtk --version | sed -n 1p | sed "s/gtdbtk: version //; s/ Copyright.*//")
-END_VERSIONS
-"""
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        gtdbtk: \$(gtdbtk --version | sed -n 1p | sed "s/gtdbtk: version //; s/ Copyright.*//")
+    END_VERSIONS
+    """
 }

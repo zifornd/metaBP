@@ -179,11 +179,11 @@ process BUSCO {
         mv BUSCO/logs/prodigal_out.log "${bin}_prodigal.gff"
     fi
 
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    python: \$(python --version 2>&1 | sed 's/Python //g')
-    R: \$(R --version 2>&1 | sed -n 1p | sed 's/R version //' | sed 's/ (.*//')
-    busco: \$(busco --version 2>&1 | sed 's/BUSCO //g')
-END_VERSIONS
-"""
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version 2>&1 | sed 's/Python //g')
+        R: \$(R --version 2>&1 | sed -n 1p | sed 's/R version //' | sed 's/ (.*//')
+        busco: \$(busco --version 2>&1 | sed 's/BUSCO //g')
+    END_VERSIONS
+    """
 }

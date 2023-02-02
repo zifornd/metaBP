@@ -15,6 +15,6 @@ process MAG_DEPTHS_SUMMARY {
     def args = task.ext.args ?: ''
     """
     get_mag_depths_summary.py --depths ${mag_depths} \
-                            --out "bin_depths_summary-${task.ext.prefix}.tsv"
+                              --out "bin_depths_summary-${task.ext.prefix}.tsv"
     """
 }

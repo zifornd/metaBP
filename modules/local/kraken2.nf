@@ -21,10 +21,10 @@ process KRAKEN2 {
     def input = meta.single_end ? "\"${reads}\"" :  "--paired \"${reads[0]}\" \"${reads[1]}\""
     def prefix = "${meta.trimmer}-${meta.id}"
     """
-   kraken2 \
+    kraken2 \
         --threads ${task.cpus} \
-	--use-names \
-	--use-mpa-style \
+        --use-names \
+        --use-mpa-style \
         --db database \
         --report ${prefix}_kraken2_report_mpa.txt \
         $input 
@@ -34,11 +34,11 @@ process KRAKEN2 {
         --report ${prefix}_kraken2_report.txt \
         $input \
         > kraken2.kraken
-	cat kraken2.kraken | cut -f 2,3 > results.krona
-    
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    kraken2: \$(echo \$(kraken2 --version 2>&1) | sed 's/^.*Kraken version //' | sed 's/ Copyright.*//')
-END_VERSIONS
-"""
+    cat kraken2.kraken | cut -f 2,3 > results.krona
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        kraken2: \$(echo \$(kraken2 --version 2>&1) | sed 's/^.*Kraken version //' | sed 's/ Copyright.*//')
+    END_VERSIONS
+    """
 }

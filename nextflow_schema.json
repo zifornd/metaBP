@@ -42,7 +42,9 @@
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
                     "fa_icon": "fas fa-file-signature"
                 }
-            }
+            },
+            "required": [
+            ]
         },
         "reference_genome_options": {
             "title": "Reference genome options",
@@ -139,7 +141,7 @@
                 "max_memory": {
                     "type": "string",
                     "description": "Maximum amount of memory that can be requested for any single job.",
-                    "default": "128.GB",
+                    "default": "62.GB",
                     "fa_icon": "fas fa-memory",
                     "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
                     "hidden": true,
@@ -272,12 +274,6 @@
                     "description": "Fix number of CPUs used by SPAdes. Not increased with retries.",
                     "help_text": "SPAdes is designed to be deterministic for a given number of threads. To generate reproducible results fix the number of CPUs using this parameter.\n\nWhen using this parameter do not change the number of CPUs for the `spades` process with a custom config file. This would result in an error.\n\nDefault: -1 (the number of CPUs is specified in the `base.config` or in a custom config file, and increased with each retry)."
                 },
-                "spadeshybrid_fix_cpus": {
-                    "type": "integer",
-                    "default": -1,
-                    "description": "Fix number of CPUs used by SPAdes hybrid. Not increased with retries.",
-                    "help_text": "SPAdes is designed to be deterministic for a given number of threads. To generate reproducible results fix the number of CPUs using this parameter.\n\nWhen using this parameter do not change the number of CPUs for the `spadeshybrid` process with a custom config file. This would result in an error.\n\nDefault: -1 (the number of CPUs is specified in the `base.config` or in a custom config file, and increased with each retry)."
-                },
                 "metabat_rng_seed": {
                     "type": "integer",
                     "default": 1,
@@ -293,23 +289,51 @@
             "description": "",
             "default": "",
             "properties": {
+                "cutadapt": {
+                    "type": "boolean",
+                    "description": "Run Cutadapt for quality trimming.",
+                    "fa_icon": "fas fa-cut"
+                },
+                "cutadapt_quality_cutoff": {
+                    "type": "integer",
+                    "default": 20,
+                    "fa_icon": "fas fa-check-circle"
+                },
+                "cutadapt_min_read_length": {
+                    "type": "integer",
+                    "default": 50,
+                    "fa_icon": "fas fa-ruler-horizontal"
+                },
+                "cutadapt_max_error_rate": {
+                    "type": "number",
+                    "default": 0.25,
+                    "fa_icon": "fas fa-exclamation-triangle"
+                },
+                "trimmomatic": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Run Trimmomatic for quality trimming.",
+                    "fa_icon": "fas fa-cut"
+                },
+                "trimmomatic_illuminaclip": {
+                    "type": "string",
+                    "default": "NexteraPE-PE.fa:2:30:10:8:TRUE"
+                },
+                "trimmomatic_sliding_window": {
+                    "type": "string",
+                    "default": "4:20",
+                    "fa_icon": "fas fa-sliders-h"
+                },
+                "trimmomatic_min_length": {
+                    "type": "integer",
+                    "default": 50,
+                    "fa_icon": "fas fa-ruler-horizontal"
+                },
                 "save_trimmed_fail": {
                     "type": "boolean",
                     "fa_icon": "fas fa-save",
-                    "description": "Save the by fastp trimmed FastQ files in the results directory.",
+                    "description": "Save the trimmed FastQ files in the results directory.",
                     "help_text": "By default, trimmed FastQ files will not be saved to the results directory. Specify this flag (or set to true in your config file) to copy these files to the results directory when complete."
-                },
-                "fastp_qualified_quality": {
-                    "type": "integer",
-                    "default": 15,
-                    "description": "Minimum phred quality value of a base to be qualified.",
-                    "help": "Reads with more than 40% of unqualified bases will be discarded."
-                },
-                "fastp_cut_mean_quality": {
-                    "type": "integer",
-                    "default": 15,
-                    "description": "The mean quality requirement used for per read sliding window cutting by fastp.",
-                    "help": "Used in combination with the fastp options '--cut_front' and '--cut_tail'. If the mean quality within a window (of size 4) is below `--fastp_cut_mean_quality`, the bases are dropped and the sliding window is moved further, otherwise it stops."
                 },
                 "host_genome": {
                     "type": "string",
@@ -341,50 +365,17 @@
                 }
             }
         },
-        "quality_control_for_long_reads_options": {
-            "title": "Quality control for long reads options",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "skip_adapter_trimming": {
-                    "type": "boolean",
-                    "description": "Skip removing adapter sequences from long reads."
-                },
-                "longreads_min_length": {
-                    "type": "integer",
-                    "default": 1000,
-                    "description": "Discard any read which is shorter than this value."
-                },
-                "longreads_keep_percent": {
-                    "type": "integer",
-                    "default": 90,
-                    "description": "Keep this percent of bases."
-                },
-                "longreads_length_weight": {
-                    "type": "integer",
-                    "default": 10,
-                    "description": "The higher the more important is read length when choosing the best reads.",
-                    "help_text": "The default value focuses on length instead of quality to improve assembly size.\nIn order to assign equal weights to read lengths and read qualities set this parameter to 1.\nThis might be useful, for example, to benefit indirectly from the removal of short host reads (causing lower qualities for reads not overlapping filtered short reads)."
-                },
-                "keep_lambda": {
-                    "type": "boolean",
-                    "description": "Keep reads similar to the ONT internal standard Escherichia virus Lambda genome."
-                },
-                "lambda_reference": {
-                    "type": "string",
-                    "default": "${baseDir}/assets/data/GCA_000840245.1_ViralProj14204_genomic.fna.gz",
-                    "hidden": true,
-                    "description": "Genome reference used to remove ONT Lambda contaminant reads."
-                }
-            }
-        },
         "taxonomic_profiling_options": {
             "title": "Taxonomic profiling options",
             "type": "object",
             "description": "Taxonomic classification is disabled by default. You have to specify one of the options below to activate it.",
             "default": "",
             "properties": {
+                "kraken2": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Run Kraken2 for taxonomic classification of reads."
+                },
                 "kraken2_db": {
                     "type": "string",
                     "description": "Database for taxonomic binning with kraken2.",
@@ -393,6 +384,10 @@
                 "skip_krona": {
                     "type": "boolean",
                     "description": "Skip creating a krona plot for taxonomic binning."
+                },
+                "gtdbtk": {
+                    "type": "boolean",
+                    "description": "Run GTDB-Tk for taxonomic classification of bins."
                 },
                 "gtdb": {
                     "type": "string",
@@ -442,23 +437,28 @@
                     "description": "Reduce GTDB-Tk memory consumption by running pplacer in a setting writing to disk.",
                     "help_text": "Will be slower. Set to `false` to turn this off."
                 },
-		        "sourmash_db": {
+                "sourmash": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Run Sourmash or taxonomic classification of bins."
+                },
+                "sourmash_db": {
                     "type": "string",
                     "description": "Sourmash LCA database.",
                     "help_text": "The database file must be an LCA(.lca.json.gz) database."
-		        },
+                },
                 "sourmash_sketch_scaled": {
                     "type": "number",
                     "default": 1000,
                     "description": "Create a scaled MinHash with k-mers sampled deterministically at 1 per <scaled> value.",
                     "minimum": 0
-		        },
-                "sourmash_Sketch_k": {
+                },
+                "sourmash_sketch_k": {
                     "type": "number",
                     "default": 31,
                     "description": "k-mer size to create a sketch at this size.",
                     "help_text": "Typically ksize is between 4 and 100."
-		        }
+                }
             }
         },
         "assembly_options": {
@@ -484,10 +484,6 @@
                 "skip_spades": {
                     "type": "boolean",
                     "description": "Skip Illumina-only SPAdes assembly."
-                },
-                "skip_spadeshybrid": {
-                    "type": "boolean",
-                    "description": "Skip SPAdes hybrid assembly."
                 },
                 "skip_megahit": {
                     "type": "boolean",
@@ -573,7 +569,7 @@
                 },
                 "busco_auto_lineage_prok": {
                     "type": "boolean",
-                    "description": "Run BUSCO with automated lineage selection, but ignoring eukaryotes (saves runtime)."
+                    "description": "Run BUSCO with automated lineage selection but ignoring eukaryotes (saves runtime)."
                 },
                 "save_busco_reference": {
                     "type": "boolean",
@@ -604,9 +600,6 @@
         },
         {
             "$ref": "#/definitions/quality_control_for_short_reads_options"
-        },
-        {
-            "$ref": "#/definitions/quality_control_for_long_reads_options"
         },
         {
             "$ref": "#/definitions/taxonomic_profiling_options"

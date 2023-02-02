@@ -11,18 +11,19 @@ process QUAST_MEGAHIT {
     //tuple val(meta), path(contigs_gz)
 
     output:
-    path "QUAST/*" , emit: qc
+    path "QUAST/*"        , emit: qc
     path 'versions.yml'   , emit: versions
 
     script:
     def args = task.ext.args ?: ''
     def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
-       """
-       metaquast.py --threads "${task.cpus}" --max-ref-number 0 -l "${prefix}_contigs" "${assembly}" -o "QUAST"
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    python: \$(python --version 2>&1 | sed 's/Python //g')
-    metaquast: \$(metaquast.py --version | sed "s/QUAST v//; s/ (MetaQUAST mode)//")
-END_VERSIONS
-"""
+    """
+    metaquast.py --threads "${task.cpus}" --max-ref-number 0 -l "${prefix}_contigs" "${assembly}" -o "QUAST"
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version 2>&1 | sed 's/Python //g')
+        metaquast: \$(metaquast.py --version | sed "s/QUAST v//; s/ (MetaQUAST mode)//")
+    END_VERSIONS
+    """
 }

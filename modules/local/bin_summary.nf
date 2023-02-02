@@ -20,12 +20,11 @@ process BIN_SUMMARY {
     def busco_summary  = busco_sum.sort().size() > 0 ?  "--busco_summary ${busco_sum}" : ""
     def quast_summary  = quast_sum.sort().size() > 0 ?  "--quast_summary ${quast_sum}" : ""
     def gtdbtk_summary = gtdbtk_sum.sort().size() > 0 ? "--gtdbtk_summary ${gtdbtk_sum}" : ""
-    //def prefix = options.suffix ? "${meta.assembler}-${meta.id}-${options.suffix}":"${meta.id}"
     """
     combine_tables.py --depths_summary ${bin_depths} \
-                    $busco_summary \
-		    $quast_summary \
-		    $gtdbtk_summary \
-                    --out bin_summary_${prefix}.tsv
+                      $busco_summary \
+                      $quast_summary \
+                      $gtdbtk_summary \
+                      --out bin_summary_${prefix}.tsv
     """
 }

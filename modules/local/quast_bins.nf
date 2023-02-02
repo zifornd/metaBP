@@ -12,7 +12,7 @@ process QUAST_BINS {
     output:
     path "QUAST/*", type: 'dir'
     path "QUAST/*-quast_summary.tsv", emit: quast_bin_summaries
-    path 'versions.yml'            , emit: versions
+    path 'versions.yml'             , emit: versions
 
     script:
     def args = task.ext.args ?: ''
@@ -28,10 +28,11 @@ process QUAST_BINS {
             tail -n +2 "QUAST/\${bin}/transposed_report.tsv" >> "QUAST/${prefix}-quast_summary.tsv"
         fi
     done
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    python: \$(python --version 2>&1 | sed 's/Python //g')
-    metaquast: \$(metaquast.py --version | sed "s/QUAST v//; s/ (MetaQUAST mode)//")
-END_VERSIONS
-"""
+    
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version 2>&1 | sed 's/Python //g')
+        metaquast: \$(metaquast.py --version | sed "s/QUAST v//; s/ (MetaQUAST mode)//")
+    END_VERSIONS
+    """
 }

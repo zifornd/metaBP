@@ -4,13 +4,7 @@
 process TRIMMOMATIC {
     tag "$meta.id"
     label 'process_medium'
-    
-    /* conda (params.enable_conda ? 'bioconda::trimmomatic=0.36' : null)
-    if ( workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container){
-        container 'https://depot.galaxyproject.org/singularity/trimmomatic:0.32--hdfd78af_4'
-    } else {
-       container 'quay.io/biocontainers/trimmomatic:0.38--0'
-    } */
+
     conda (params.enable_conda ? "bioconda::trimmomatic=0.39" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/trimmomatic:0.39--hdfd78af_2':
@@ -46,9 +40,9 @@ process TRIMMOMATIC {
         $args \\
         2> ${meta.id}.trimmomatic.log
 
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    trimmomatic: \$(trimmomatic -version)
-END_VERSIONS
-"""
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        trimmomatic: \$(trimmomatic -version)
+    END_VERSIONS
+    """
 }

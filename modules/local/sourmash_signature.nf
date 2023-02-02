@@ -1,9 +1,8 @@
 /*
---------------------------Sourmash added for Taxonomic Classification by Zifo----------------------
+-----------------------------Sourmash added for Taxonomic Classification by Zifo----------------------------
 */
 process SOURMASH_SIGNATURE {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
-
     label 'process_medium'
 
     conda (params.enable_conda ? 'bioconda::sourmash=4.4.0' : null)
@@ -16,19 +15,17 @@ process SOURMASH_SIGNATURE {
 
     output:
     tuple val(meta), path('*.sig')	    , emit: signatures
-    path "versions.yml"                , emit: versions
+    path "versions.yml"                 , emit: versions
     
     script:
     def args = task.ext.args ?: ''
     def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
-    
-	"""
+    """
     sourmash sketch dna ${args} ${bins} --output "${prefix}.sig"   
 
-cat <<-END_VERSIONS > versions.yml
-"${task.process}":
-    sourmash: \$(sourmash --version)
-END_VERSIONS
-
-"""
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        sourmash: \$(sourmash --version)
+    END_VERSIONS
+    """
 }
