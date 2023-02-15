@@ -35,7 +35,7 @@ if(hasExtension(params.input, "csv")){
 }
 
 // Validate input parameters
-WorkflowMag.initialise(params, log, hybrid)
+WorkflowMetaBP.initialise(params, log, hybrid)
 
 // Check input path parameters to see if they exist
 def checkPathParamList = [ params.input, params.multiqc_config, params.phix_reference, params.host_fasta, params.kraken2_db, params.gtdb, params.lambda_reference, params.busco_reference ]
@@ -714,7 +714,7 @@ workflow METABP {
     //
     // MODULE: MultiQC
     //
-    workflow_summary    = WorkflowMag.paramsSummaryMultiqc(workflow, summary_params)
+    workflow_summary    = WorkflowMetaBP.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
 
     ch_multiqc_files = Channel.empty()
@@ -1168,7 +1168,7 @@ workflow METABP {
     //
     // MODULE: MultiQC
     //
-    workflow_summary    = WorkflowMag.paramsSummaryMultiqc(workflow, summary_params)
+    workflow_summary    = WorkflowMetaBP.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
 
     ch_multiqc_files = Channel.empty()
