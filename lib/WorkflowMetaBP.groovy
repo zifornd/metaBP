@@ -2,7 +2,7 @@
 // This file holds several functions specific to the workflow/mag.nf in the nf-core/mag pipeline
 //
 
-class WorkflowMag {
+class WorkflowMetaBP {
 
     //
     // Check and validate parameters
