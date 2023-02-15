@@ -67,7 +67,7 @@ When group-wise co-assembly is enabled, `SPAdes` is run on accordingly pooled re
 
 ## Credits
 
-zifornd/metaBP was originally written by Mohamed Kassam ([@Mohamed-Kassam](https://github.com/mohamedkassamzifo)), Ragavi Shanmugam([@Ragavi-Shanmugam](https://github.com/ragavishanmugam)), Asma Ali ([@Asma-Ali](https://github.com/asmaali98)), Diya Basu ([@Diya-Basu](https://github.com/diyabasu97)), and Lathika Madhan Mohan ([@Lathika-Madhan-Mohan](https://github.com/lathikaa)) from [Zifo RnD Solutions](https://www.zifornd.com/).
+zifornd/metaBP was originally written by Ragavi Shanmugam([@Ragavi-Shanmugam](https://github.com/ragavishanmugam)), Riya Saju([@Riya-Saju](https://github.com/Riya327)), Asma Ali ([@Asma-Ali](https://github.com/asmaali98)) , Lathika Madhan Mohan ([@Lathika-Madhan-Mohan](https://github.com/lathikaa)), Diya Basu ([@Diya-Basu](https://github.com/diyabasu97)) and  Mohamed Kassam ([@Mohamed-Kassam](https://github.com/mohamedkassamzifo)) from [Zifo RnD Solutions](https://www.zifornd.com/).
 
 The current pipeline is made using the [nf-core/mag](https://github.com/nf-core/mag) as the base framework to which various tools have been added for benchmarking. 
 
