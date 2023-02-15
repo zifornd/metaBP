@@ -79,8 +79,6 @@ include { KRONA_DB as KRONA_DB_TRIMMOMATIC                                    } 
 include { KRAKEN2_DB_PREPARATION                                              } from '../modules/local/kraken2_db_preparation'
 include { KRONA_DB                                                            } from '../modules/local/krona_db'
 include { POOL_SINGLE_READS                                                   } from '../modules/local/pool_single_reads'
-include { POOL_SINGLE_READS as POOL_SINGLE_READS_CUTADAPT                     } from '../modules/local/pool_single_reads'
-include { POOL_SINGLE_READS as POOL_SINGLE_READS_TRIMMOMATIC                  } from '../modules/local/pool_single_reads'
 include { POOL_PAIRED_READS as POOL_PAIRED_READS_CUTADAPT                     } from '../modules/local/pool_paired_reads'
 include { POOL_PAIRED_READS as POOL_PAIRED_READS_TRIMMOMATIC                  } from '../modules/local/pool_paired_reads'
 include { POOL_SINGLE_READS as POOL_LONG_READS                                } from '../modules/local/pool_single_reads'
