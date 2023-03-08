@@ -1,36 +1,29 @@
-// Import generic module functions
-include { initOptions; saveFiles; getSoftwareName } from './functions'
-
-params.options = [:]
-options    = initOptions(params.options)
-
 process QUAST_MEGAHIT {
     tag "${meta.assembler}-${meta.trimmer}-${meta.id}"
 
-    publishDir "${params.outdir}",
-        mode: params.publish_dir_mode,
-        saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), meta:meta, publish_by_meta:['assembler', 'id']) }
-
     conda (params.enable_conda ? "bioconda::quast=5.0.2" : null)
-    if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/quast:5.0.2--py37pl526hb5aa323_2"
-    } else {
-        container "quay.io/biocontainers/quast:5.0.2--py37pl526hb5aa323_2"
-    }
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/quast:5.0.2--py37pl526hb5aa323_2' :
+        'quay.io/biocontainers/quast:5.0.2--py37pl526hb5aa323_2' }"
 
     input:
     tuple val(meta), path(assembly)
     //tuple val(meta), path(contigs_gz)
 
     output:
-    path "QUAST/*" , emit: qc
-    path '*.version.txt'   , emit: version
+    path "QUAST/*"        , emit: qc
+    path 'versions.yml'   , emit: versions
 
     script:
-    def software = getSoftwareName(task.process)
+    def args = task.ext.args ?: ''
     def prefix = "${meta.assembler}-${meta.trimmer}-${meta.id}"
-       """
-       metaquast.py --threads "${task.cpus}" --max-ref-number 0 -l "${prefix}_contigs" "${assembly}" -o "QUAST"
-       metaquast.py --version | sed "s/QUAST v//; s/ (MetaQUAST mode)//" > ${software}.version.txt
-       """
+    """
+    metaquast.py --threads "${task.cpus}" --max-ref-number 0 -l "${prefix}_contigs" "${assembly}" -o "QUAST"
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version 2>&1 | sed 's/Python //g')
+        metaquast: \$(metaquast.py --version | sed "s/QUAST v//; s/ (MetaQUAST mode)//")
+    END_VERSIONS
+    """
 }

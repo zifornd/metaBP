@@ -1,8 +1,8 @@
 //
-// This file holds several functions specific to the workflow/mag.nf in the nf-core/mag pipeline
+// This file holds several functions specific to the workflow/metaBP.nf in the zifornd/metaBP pipeline
 //
 
-class WorkflowMag {
+class WorkflowMetaBP {
 
     //
     // Check and validate parameters

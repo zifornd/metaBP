@@ -1,18 +1,10 @@
-// Import generic module functions
-include { initOptions; saveFiles; getSoftwareName } from './functions'
-
-params.options = [:]
-options    = initOptions(params.options)
-
 process GTDBTK_DB_PREPARATION {
     tag "${database}"
 
     conda (params.enable_conda ? "conda-forge::sed=4.7" : null)
-    if (workflow.containerEngine == 'singularity' && !params.singularity_pull_docker_container) {
-        container "https://depot.galaxyproject.org/singularity/ubuntu:20.04"
-    } else {
-        container "ubuntu:20.04"
-    }
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/ubuntu:20.04' :
+        'ubuntu:20.04' }"
 
     input:
     path(database)
