@@ -1,6 +1,6 @@
 ## Introduction
 
-**zifornd/metaBP** is a bioinformatics best-practise analysis pipeline for QC,assembly, binning and annotation of metagenomes.
+**zifornd/metaBP** is a bioinformatics best-practice benchmarking pipeline for QC,assembly, binning and annotation of metagenomes.
 
 <p align="center">
     <img src="docs/images/metaBP_workflow.png" alt="zifornd/metaBP workflow overview" width="90%">
