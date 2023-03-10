@@ -1,14 +1,17 @@
 ## Introduction
 
-**zifornd/metaBP** is a bioinformatics best-practice benchmarking pipeline for QC,assembly, binning and annotation of metagenomes.
+Shotgun metagenomic sequencing involves randomly fragmenting DNA into many small pieces. These fragmented pieces of DNA are then sequenced, and their DNA sequences are stitched back together using bioinformatics tools to identify the species and genes present in the sample. Metagenomics requires several tools for processing and analyzing raw sequencing data. There are already numerous open-source tools available for processing each step. While this is helpful, it can also be difficult to determine which tools to use and how they compare to one another. There are several advantages with open-source resources like flexibility to customize, cost efficiency, collaboration with the community, transparency, and reproducibility.  But the open-source tools have their own set of disadvantages such as lack of maintenance, compatibility issues with in-house applications or environments, open bug issues and security vulnerabilities. Thus, there is a need for a benchmarking pipeline that could help us compare the performance of different metagenomics data processing tools.
+
+
+**zifornd/metaBP** is a bioinformatics best-practice benchmarking pipeline for QC, assembly, binning and annotation of metagenomes.
+
+The current pipeline is made by using **[nf-core/mag](https://github.com/nf-core/mag/releases/tag/2.1.1)** pipeline **version 2.1.1** as the base framework to which various tools have been added for benchmarking. 
 
 <p align="center">
     <img src="docs/images/metaBP_workflow.png" alt="zifornd/metaBP workflow overview" width="90%">
 </p>
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been installed from [nf-core/modules](https://github.com/nf-core/modules). 
-
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.
 
 ## Pipeline summary
 
@@ -69,7 +72,7 @@ When group-wise co-assembly is enabled, `SPAdes` is run on accordingly pooled re
 
 zifornd/metaBP was originally written by Ragavi Shanmugam([@Ragavi-Shanmugam](https://github.com/ragavishanmugam)), Riya Saju([@Riya-Saju](https://github.com/Riya327)), Asma Ali ([@Asma-Ali](https://github.com/asmaali98)) , Lathika Madhan Mohan ([@Lathika-Madhan-Mohan](https://github.com/lathikaa)), Diya Basu ([@Diya-Basu](https://github.com/diyabasu97)) and  Mohamed Kassam ([@Mohamed-Kassam](https://github.com/mohamedkassamzifo)) from [Zifo RnD Solutions](https://www.zifornd.com/).
 
-The current pipeline is made using the [nf-core/mag](https://github.com/nf-core/mag) as the base framework to which various tools have been added for benchmarking. 
+The current pipeline is made using the [nf-core/mag](https://github.com/nf-core/mag) version 2.1.1 by adding tools for benchmarking. 
 
 
 <img src="docs/images/zifo_logo.jpg" alt="Zifo RnD Solutions" width="200"/>
