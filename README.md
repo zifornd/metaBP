@@ -1,6 +1,11 @@
 ## Introduction
 
+Shotgun metagenomic sequencing involves randomly fragmenting DNA into many small pieces. These fragmented pieces of DNA are then sequenced, and their DNA sequences are stitched back together using bioinformatics tools to identify the species and genes present in the sample. Metagenomics requires several tools for processing and analyzing raw sequencing data. There are already numerous open-source tools available for processing each step. While this is helpful, it can also be difficult to determine which tools to use and how they compare to one another. There are several advantages with open-source resources like flexibility to customize, cost efficiency, collaboration with the community, transparency, and reproducibility.  But the open-source tools have their own set of disadvantages such as lack of maintenance, compatibility issues with in-house applications or environments, open bug issues and security vulnerabilities. Thus, there is a need for a benchmarking pipeline that could help us compare the performance of different metagenomics data processing tools.
+
+
 **zifornd/metaBP** is a bioinformatics best-practice benchmarking pipeline for QC,assembly, binning and annotation of metagenomes.
+
+The current pipeline is made by using **nf-core/mag** pipeline **version 2.1.1** [nf-core/mag](https://github.com/nf-core/mag/releases/tag/2.1.1) as the base framework to which various tools have been added for benchmarking. 
 
 <p align="center">
     <img src="docs/images/metaBP_workflow.png" alt="zifornd/metaBP workflow overview" width="90%">
